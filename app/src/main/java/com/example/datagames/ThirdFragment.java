@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -105,7 +106,7 @@ public class ThirdFragment extends Fragment {
 
                 //init the bottom sheet view
 
-                BottomSheetDialog bottomSheetDialog =new BottomSheetDialog(v.getContext());
+                final BottomSheetDialog bottomSheetDialog =new BottomSheetDialog(v.getContext());
                 bottomSheetDialog.setContentView(R.layout.btn_sheet_login);
                 bottomSheetDialog.setCanceledOnTouchOutside(false);
 
@@ -133,13 +134,16 @@ public class ThirdFragment extends Fragment {
                         password=ePasswordLog.getText().toString();
                         //Verification
                         if(!email.isEmpty()  && !password.isEmpty()){
+
                             loginUser(vv);
+
                         }else{
                             Toast.makeText(vv.getContext(),"Debe completar los campos",Toast.LENGTH_SHORT).show();
                         }
+                        bottomSheetDialog.dismiss();
                     }
                 });
-                bottomSheetDialog.dismiss();
+
                 bottomSheetDialog.show();
             }
 
@@ -158,7 +162,7 @@ public class ThirdFragment extends Fragment {
             public void onClick(final View view) {
 
 
-                BottomSheetDialog bottomSheetDialog2 =new BottomSheetDialog(view.getContext());
+                final BottomSheetDialog bottomSheetDialog2 =new BottomSheetDialog(view.getContext());
                 bottomSheetDialog2.setContentView(R.layout.btn_sheet_registrer);
                 bottomSheetDialog2.setCanceledOnTouchOutside(false);
 
@@ -184,13 +188,13 @@ public class ThirdFragment extends Fragment {
                         }else{
                             Toast.makeText(v.getContext(),"Debe completar los campos",Toast.LENGTH_SHORT).show();
                         }
-
+                        bottomSheetDialog2.dismiss();
 
                     }
                 });
 
 
-                bottomSheetDialog2.dismiss();
+
                 bottomSheetDialog2.show();
             }
         });
@@ -201,7 +205,11 @@ public class ThirdFragment extends Fragment {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
+                    Map<String,Object> map= new HashMap<>();
+                    map.put("password",password);
+                    String id=mAuth.getCurrentUser().getUid();
 
+                    mDatabase.child("usuarios").child(id).updateChildren(map);
                     startActivity(new Intent(v1.getContext(),Menu.class));
                     getActivity().finish();
                 }else {

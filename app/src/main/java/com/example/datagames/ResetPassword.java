@@ -13,6 +13,8 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class ResetPassword extends AppCompatActivity {
 
@@ -21,6 +23,7 @@ public class ResetPassword extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private String email="";
     private ProgressDialog mDialog;
+    private DatabaseReference mDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +34,7 @@ public class ResetPassword extends AppCompatActivity {
         btnResetPassword=findViewById(R.id.btnResetPassword);
 
         mAuth=FirebaseAuth.getInstance();
+
 
         mDialog=new ProgressDialog(this);
 
@@ -44,6 +48,7 @@ public class ResetPassword extends AppCompatActivity {
                     mDialog.setCanceledOnTouchOutside(false);
                     mDialog.show();
                     resetPassword();
+
                 }else{
                     Toast.makeText(ResetPassword.this,"Debes ingresar el email",Toast.LENGTH_SHORT).show();
                 }
