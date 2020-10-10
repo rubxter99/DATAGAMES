@@ -4,7 +4,9 @@
     <string name="title2">Tiendas</string>
     <string name="title3">Bienvenido</string>
     <string name="description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto facilis id minus voluptas. Architecto beatae delectus enim magnam neque ratione repellat sint veritatis. Deserunt dolorum excepturi sapiente, sunt tempora tenetur.</string>
-    <string name="next">Siguiente</string>
-    <string name="back">Atrás</string>
+    <string name="next">Next</string>
+    <string name="back">Back</string>
+    <string name="login">Login</string>
+    <string name="registrer">Registrer</string>
 
 </resources>

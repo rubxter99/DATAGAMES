@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="480dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+
+    android:background="@drawable/shape_login_btn_sheet"
+    android:padding="20dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Bienvenido"
+        android:textColor="@android:color/black"
+        android:textSize="30dp"
+        android:layout_marginBottom="10dp"
+        android:gravity="center"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Crea una nueva cuenta"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="25dp"
+        android:gravity="center"
+        android:layout_marginBottom="20dp"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="UserName"
+        android:textColorHint="@color/colorRegistrer"
+        android:layout_marginBottom="20dp"
+        android:id="@+id/text_usernamereg"
+        android:background="@drawable/shape_edit_text"
+        android:padding="12.5dp"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Mail"
+        android:textColorHint="@color/colorRegistrer"
+        android:layout_marginBottom="20dp"
+        android:id="@+id/text_mailreg"
+        android:background="@drawable/shape_edit_text"
+        android:padding="12.5dp"/>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:passwordToggleEnabled="true"
+        android:textColorHint="@color/colorRegistrer">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Password"
+            android:id="@+id/text_passwordreg"
+            android:background="@drawable/shape_edit_text"
+            android:padding="12.5dp"
+            android:layout_marginBottom="20dp"
+            android:inputType="textPassword"/>
+
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnRegistrer2"
+        android:layout_alignParentBottom="true"
+        android:text="Registrar"
+        android:textAllCaps="false"
+        android:textColor="@android:color/white"
+        android:background="@drawable/shape_registrer_btn"
+        android:layout_marginBottom="20dp"/>
+
+
+
+
+</LinearLayout>
+

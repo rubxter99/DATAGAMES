@@ -10,5 +10,8 @@
         parent="@android:style/Theme.DeviceDefault.Light.NoActionBar">
         <item name="android:windowBackground">@drawable/splash1</item>
     </style>
-
+    <style name="BottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog"></style>
+    <style name="BottomSheetDialogStyle" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@android:color/transparent</item>
+    </style>
 </resources>

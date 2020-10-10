@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1014534584551",
+    "firebase_url": "https://datagames-e30b3.firebaseio.com",
+    "project_id": "datagames-e30b3",
+    "storage_bucket": "datagames-e30b3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1014534584551:android:945fd18d1e6d130f8f0a42",
+        "android_client_info": {
+          "package_name": "com.example.datagames"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1014534584551-fu987q58bhlnu40q0btfh7pnvn5fmufk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.datagames",
+            "certificate_hash": "e713a4f69fe1d467ee95b367f8e7b9bd59dc286e"
+          }
+        },
+        {
+          "client_id": "1014534584551-186c0gi4v5pdf592g2t863nv8tk54nd3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBzTUP2qpu61vxQ5xYd6-KOuI537aFWm3U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1014534584551-186c0gi4v5pdf592g2t863nv8tk54nd3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
