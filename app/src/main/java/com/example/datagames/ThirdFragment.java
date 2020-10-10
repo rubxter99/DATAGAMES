@@ -44,7 +44,6 @@ public class ThirdFragment extends Fragment {
    private TextView back;
     private ViewPager viewPager;
     private Button LoginButton,RegisterButton,LoginButton2,RegisterButton2;
-    private LinearLayout linearLayout;
     private String name="";
     private String email="";
     private String password="";
@@ -106,7 +105,7 @@ public class ThirdFragment extends Fragment {
 
                 //init the bottom sheet view
 
-                BottomSheetDialog bottomSheetDialog =new BottomSheetDialog(v.getContext(),R.style.BottomSheetDialogTheme);
+                BottomSheetDialog bottomSheetDialog =new BottomSheetDialog(v.getContext());
                 bottomSheetDialog.setContentView(R.layout.btn_sheet_login);
                 bottomSheetDialog.setCanceledOnTouchOutside(false);
 
@@ -138,25 +137,6 @@ public class ThirdFragment extends Fragment {
                         }else{
                             Toast.makeText(vv.getContext(),"Debe completar los campos",Toast.LENGTH_SHORT).show();
                         }
-                       /* if(eUserNameLog.getText().toString().equals("admin") && ePasswordLog.getText().toString().equals("admin")){
-                            AlertDialog.Builder builder=new AlertDialog.Builder(vv.getContext());
-                            builder.setTitle("Login Successful");
-                            builder.setMessage("Welcome to DATAGAMES");
-
-                            builder.setNegativeButton("OK", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    dialogInterface.dismiss();
-                                }
-                            });
-                            AlertDialog alertDialog=builder.create();
-                            //Show AlertDialog
-                            alertDialog.show();
-
-                        }else {
-                            Toast.makeText(vv.getContext(),"Login Failed!",Toast.LENGTH_SHORT).show();
-
-                        }*/
                     }
                 });
                 bottomSheetDialog.dismiss();
@@ -221,10 +201,11 @@ public class ThirdFragment extends Fragment {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
-                    startActivity(new Intent(v1.getContext(),Profile.class));
+
+                    startActivity(new Intent(v1.getContext(),Menu.class));
                     getActivity().finish();
                 }else {
-                    Toast.makeText(v1.getContext(),"No se pudo iniciar sesion y que compruebe los datos",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(v1.getContext(),"No se pudo iniciar sesion, compruebe los datos",Toast.LENGTH_SHORT).show();
                 }
             }
         });

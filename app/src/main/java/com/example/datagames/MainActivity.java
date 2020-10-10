@@ -21,8 +21,8 @@ public class MainActivity extends AppCompatActivity {
     Button LoginButton,RegisterButton;
     LinearLayout linearLayout;
     DatabaseReference mDatabase;
-
     FirebaseAuth mAuth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
     public void onStart() {
         super.onStart();
         if(mAuth.getCurrentUser()!=null){
-            startActivity(new Intent(MainActivity.this,Profile.class));
+            startActivity(new Intent(MainActivity.this,Menu.class));
             finish();
         }
 

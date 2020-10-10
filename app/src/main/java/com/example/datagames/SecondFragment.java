@@ -37,8 +37,8 @@ public class SecondFragment extends Fragment {
                 viewPager.setCurrentItem(2);
             }
         });
-        back=view.findViewById(R.id.slideOneBack1);
 
+        back=view.findViewById(R.id.slideOneBack1);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
