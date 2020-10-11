@@ -57,6 +57,7 @@
                 app:cardElevation="6dp"
                 app:cardCornerRadius="12dp"
                 android:layout_margin="12dp"
+                android:id="@+id/cd_comics"
 
 
                 >

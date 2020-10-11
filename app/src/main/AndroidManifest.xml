@@ -19,8 +19,10 @@
         <activity android:name=".Menu"></activity>
         <activity android:name=".ResetPassword" />
         <activity android:name=".Profile" />
-        <activity android:name=".MainActivity"
-            android:screenOrientation="portrait">
+        <activity android:name=".FirstFragment" />
+        <activity android:name=".SecondFragment" />
+        <activity android:name=".ThirdFragment" />
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

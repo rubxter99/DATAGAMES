@@ -17,6 +17,7 @@ public class Menu extends Activity {
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
     private CardView cdPerfil;
+    private CardView cdComics;
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +32,15 @@ public class Menu extends Activity {
             public void onClick(View v) {
                 mAuth.getCurrentUser();
                 startActivity(new Intent(Menu.this,Profile.class));
+
+            }
+        });
+        cdComics=findViewById(R.id.cd_comics);
+        cdComics.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                mAuth.getCurrentUser();
+                startActivity(new Intent(Menu.this,GameList.class));
 
             }
         });
