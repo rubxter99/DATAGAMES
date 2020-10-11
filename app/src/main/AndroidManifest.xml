@@ -22,6 +22,7 @@
         <activity android:name=".FirstFragment" />
         <activity android:name=".SecondFragment" />
         <activity android:name=".ThirdFragment" />
+        <activity android:name=".GameList" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
