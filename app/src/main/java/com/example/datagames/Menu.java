@@ -17,6 +17,7 @@ public class Menu extends Activity {
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
     private CardView cdPerfil;
+    private CardView cdMapas;
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +33,18 @@ public class Menu extends Activity {
                 mAuth.getCurrentUser();
                 startActivity(new Intent(Menu.this,Profile.class));
 
+            }
+        });
+
+        cdMapas = findViewById(R.id.cd_mapas);
+        cdMapas.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Menu.this, MapsActivity.class);
+                /*intent.putExtra("TITLE", mResults.get(i).title);
+                intent.putExtra("LAT", mResults.get(i).location.latitude);
+                intent.putExtra("LON", mResults.get(i).location.longitude);*/
+                startActivity(intent);
             }
         });
     }

@@ -8,5 +8,6 @@
     <string name="back">Back</string>
     <string name="login">Login</string>
     <string name="registrer">Registrer</string>
+    <string name="title_activity_maps">Map</string>
 
 </resources>
