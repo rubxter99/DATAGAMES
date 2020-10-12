@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Menu"
-    android:background="@color/colorPrimary">
+    android:background="@color/logoBlack">
 
 
     <LinearLayout
@@ -25,16 +25,11 @@
 
             <ImageView
 
-                android:layout_width="82dp"
-                android:layout_height="82dp"
-                android:src="@drawable/charla"/>
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:src="@drawable/logo"/>
 
-            <TextView
-                android:text="DataGames"
-                android:textSize="40sp"
-                android:textColor="#FFFFFF"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+
 
 
 
@@ -57,8 +52,6 @@
                 app:cardElevation="6dp"
                 app:cardCornerRadius="12dp"
                 android:layout_margin="12dp"
-
-
                 >
 
                 <LinearLayout
@@ -67,11 +60,11 @@
                     android:layout_gravity="center"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-
+                    android:background="@color/colorLogo"
                     >
 
                     <ImageView
-                        android:src="@drawable/calendario"
+                        android:src="@drawable/videojuegos"
                         android:layout_width="80dp"
                         android:layout_height="80dp"
                         android:layout_gravity="center"/>
@@ -80,7 +73,8 @@
                         android:layout_height="wrap_content"
                         android:text="Videojuegos"
                         android:textStyle="bold"
-                        android:textSize="20sp"
+                        android:textSize="17sp"
+                        android:textColor="@color/logoBlack"
                         android:textAlignment="center"/>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
@@ -100,10 +94,11 @@
                     android:padding="16dp"
                     android:layout_gravity="center"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:background="@color/colorLogo">
 
                     <ImageView
-                        android:src="@drawable/calendario"
+                        android:src="@drawable/tienda"
                         android:layout_width="80dp"
                         android:layout_height="80dp"
                         android:layout_gravity="center"/>
@@ -112,7 +107,8 @@
                         android:layout_height="wrap_content"
                         android:text="Tiendas"
                         android:textStyle="bold"
-                        android:textSize="20sp"
+                        android:textSize="17sp"
+                        android:textColor="@color/logoBlack"
                         android:textAlignment="center"/>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
@@ -131,10 +127,11 @@
                     android:padding="16dp"
                     android:layout_gravity="center"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:background="@color/colorLogo">
 
                     <ImageView
-                        android:src="@drawable/calendario"
+                        android:src="@drawable/megusta"
                         android:layout_width="80dp"
                         android:layout_height="80dp"
                         android:layout_gravity="center"/>
@@ -143,7 +140,8 @@
                         android:layout_height="wrap_content"
                         android:text="Favoritos"
                         android:textStyle="bold"
-                        android:textSize="20sp"
+                        android:textSize="17sp"
+                        android:textColor="@color/logoBlack"
                         android:textAlignment="center"/>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
@@ -163,10 +161,11 @@
                     android:padding="16dp"
                     android:layout_gravity="center"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:background="@color/colorLogo">
 
                     <ImageView
-                        android:src="@drawable/calendario"
+                        android:src="@drawable/mapa"
                         android:layout_width="80dp"
                         android:layout_height="80dp"
                         android:layout_gravity="center"/>
@@ -175,7 +174,8 @@
                         android:layout_height="wrap_content"
                         android:text="Mapa"
                         android:textStyle="bold"
-                        android:textSize="20sp"
+                        android:textSize="17sp"
+                        android:textColor="@color/logoBlack"
                         android:textAlignment="center"/>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
@@ -195,10 +195,11 @@
                     android:padding="16dp"
                     android:layout_gravity="center"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:background="@color/colorLogo">
 
                     <ImageView
-                        android:src="@drawable/calendario"
+                        android:src="@drawable/perfil"
                         android:layout_width="80dp"
                         android:layout_height="80dp"
                         android:layout_gravity="center"/>
@@ -207,11 +208,13 @@
                         android:layout_height="wrap_content"
                         android:text="Perfil"
                         android:textStyle="bold"
-                        android:textSize="20sp"
+                        android:textSize="17sp"
+                        android:textColor="@color/logoBlack"
                         android:textAlignment="center"/>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
             <androidx.cardview.widget.CardView
+                android:id="@+id/cd_acercade"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_columnWeight="1"
@@ -222,23 +225,26 @@
                 >
 
                 <LinearLayout
+
                     android:orientation="vertical"
                     android:padding="16dp"
                     android:layout_gravity="center"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:background="@color/colorLogo">
 
                     <ImageView
-                        android:src="@drawable/calendario"
+                        android:src="@drawable/informacion"
                         android:layout_width="80dp"
                         android:layout_height="80dp"
                         android:layout_gravity="center"/>
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Ajustes"
+                        android:text="Acerca de"
                         android:textStyle="bold"
-                        android:textSize="20sp"
+                        android:textSize="17sp"
+                        android:textColor="@color/logoBlack"
                         android:textAlignment="center"/>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>

@@ -9,5 +9,6 @@
     <color name="colorLogo">#79D1C2</color>
     <color name="colorLogin">#79D1C2</color>
     <color name="colorRegistrer">#C1FF9800</color>
+    <color name="logoBlack">#000000</color>
 
 </resources>
