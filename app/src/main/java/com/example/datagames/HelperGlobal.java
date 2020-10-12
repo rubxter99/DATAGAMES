@@ -31,7 +31,7 @@ public class HelperGlobal {
     public final static String PERMISSIONDENIEDUSER= "Permission denied by user!";
     public final static String MARKEROPTIONSTITLE=" Estas aquí ";
     public final static String PERMISSIONGRANTEDPAST="[LOCATION] Permission granted in the past!";
-    public                                                                             final static String IMAGEURL1="https://img.icons8.com/bubbles/2x/iron-man.png";
+    public final static String IMAGEURL1="https://img.icons8.com/bubbles/2x/iron-man.png";
     public final static String IMAGEURL2="https://synth.agency/wp-content/uploads/2019/07/Marvel-Hulk-1024x819.png";
     public final static String IMAGEURL3="https://cdn4.iconfinder.com/data/icons/superhero-3/500/Superhero-01-512.png";
     public final static String IMAGEURL4="https://icons-for-free.com/iconfiles/png/512/super+thor+wings+icon-1320166699905266736.png";
@@ -51,13 +51,18 @@ public class HelperGlobal {
     public final static String PARCELABLEKEYARRAY="KEY_ARRAY";
     public final static String JSONOBJECTDATA="data";
     public final static String JSONARRAY="results";
-    public final static String JSONDATATITLE="title";
+    public final static String JSONDATATITLE="name";
     public final static String JSONDATADESCRIPTION="description";
     public final static String JSONDATAPRICES="prices";
     public final static String JSONOBJECTPRICE="price";
     public final static String JSONDATAIMAGES="images";
     public final static String JSONOBJECTPATH="path";
     public final static String JSONOBJECTEXTENSION="extension";
+    public final static String JSONIMAGE="background_image";
+    public final static String JSONRATING="rating";
+    public final static String JSONRELEASED="released";
+    public final static String JSONGENRES="genres";
+    public final static String JSONGENRESNAME="name";
     public final static String URLGAMES="https://api.rawg.io/api/games?page_size=100";
     public final static String PROGRESSTITTLE="COMICS";
     public final static String PROGRESSMESSAGE="SEARCHING... WAIT A SECOND";

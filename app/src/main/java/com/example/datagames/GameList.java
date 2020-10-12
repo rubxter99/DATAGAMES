@@ -1,8 +1,10 @@
 package com.example.datagames;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.PendingIntent;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
@@ -10,11 +12,24 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.os.Bundle;
 import android.view.ContextMenu;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.BaseAdapter;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.google.gson.Gson;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,24 +37,37 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import com.squareup.picasso.Picasso;
+import java.util.ArrayList;
 
-public class GameList extends AppCompatActivity {
+public class GameList extends Activity {
     private ListView mLv = null;
     private ProgressDialog mPd;
     private static final Integer MY_PERMISSIONS_GPS_FINE_LOCATION = 1;
-
+    private ArrayList<GamesParse.game> mGames = new ArrayList<>();
+    private  ArrayList<GamesParse.game> mGamesRellenos = new ArrayList<>();
+    private Boolean relleno;
+    private  BaseAdapter mAdapter = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_juegos);
 
-        pedirPermisos();
+        mPd = new ProgressDialog(GameList.this);
+        mPd.setProgressStyle(Spinner.ACCESSIBILITY_LIVE_REGION_ASSERTIVE);
+        mPd.setTitle(HelperGlobal.PROGRESSTITTLE);
+        mPd.setMessage(HelperGlobal.PROGRESSMESSAGE);
+        mPd.setProgress(100);
+        mPd.show();
+
+        loadGames();
 
         mLv = findViewById(R.id.list_notify);
 
        /* LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
                 new IntentFilter(HelperGlobal.INTENT_LOCALIZATION_ACTION));*/
+
 
         mLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -49,15 +77,7 @@ public class GameList extends AppCompatActivity {
                 startActivity(i3);
             }
         });
-        mLv.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
-            @Override
-            public void onCreateContextMenu(ContextMenu contextMenu,
-                                            View view,
-                                            ContextMenu.ContextMenuInfo contextMenuInfo) {
-                contextMenu.add(0, 1, 0, HelperGlobal.ABRIRMAPSCONTEXTMENU);
-                contextMenu.add(0, 2, 0, HelperGlobal.AÑADIRFAV);
-            }
-        });
+
 
       /*  ImageButton filtroButton = findViewById(R.id.imgBtnFiltros);
         filtroButton.setOnClickListener(new View.OnClickListener() {
@@ -171,6 +191,94 @@ public class GameList extends AppCompatActivity {
     public void onPointerCaptureChanged(boolean hasCapture) {
 
     }*/
+   private void loadGames(){
+
+       RequestQueue queue = Volley.newRequestQueue(this);
+       String url = HelperGlobal.URLGAMES;
+       StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+               new Response.Listener<String>() {
+                   @Override
+                   public void onResponse(String response) {
+                       GamesParse gamesParse = new GamesParse();
+                       mGames = gamesParse.parseGame(response);
+
+                       for (int i = 0; i< mGames.size(); i++){
+                           relleno = true;
+                           if(mGames.get(i).getName() == "" || mGames.get(i).getImage() == "" ||
+                                   mGames.get(i).getRating().contentEquals("0") || mGames.get(i).getReleased() == "null" ||mGames.get(i).getGenres() == "" ){
+
+                           }else{
+                               mGamesRellenos.add(mGames.get(i));
+                           }
+                       }
+                       mPd.dismiss();
+                       if(mAdapter==null){
+                           mAdapter = new GamesAdapter();
+                           mLv.setAdapter(mAdapter);
+                       }else{
+                           mAdapter.notifyDataSetChanged();
+                       }
+                      // actualizar();
+                   }
+               }, new Response.ErrorListener() {
+           @Override
+           public void onErrorResponse(VolleyError error) {
+
+           }
+       });
+       stringRequest.setShouldCache(false);
+       queue.add(stringRequest);
+   }
+    public class GamesAdapter extends BaseAdapter {
+
+        Integer i = 0;
+
+        @Override
+        public int getCount() {
+            return mGames.size();
+        }
+
+        @Override
+        public Object getItem(int i) {
+            return mGames.get(i);
+        }
+
+        @Override
+        public long getItemId(int i) {
+            return 0;
+        }
+
+        @Override
+        public View getView(int i, View view, ViewGroup viewGroup) {
+            View view2 = null;
+
+            if (view == view2) {
+                LayoutInflater inflater = (LayoutInflater) GameList.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                view2 = inflater.inflate(R.layout.final_lista_juegos, null);
+            } else {
+                view2 = view;
+            }
+
+            ImageView img = view2.findViewById(R.id.imageIcon);
+            Picasso.get().load(mGames.get(i).getImage())
+                    .into(img);
+
+            TextView txtTitle = view2.findViewById(R.id.titleGame);
+            txtTitle.setText(mGames.get(i).getName());
+
+            TextView txtGenres = view2.findViewById(R.id.genres);
+            txtGenres.setText(mGames.get(i).getGenres());
+
+            TextView txtRating = view2.findViewById(R.id.rating);
+            txtRating.setText(mGames.get(i).getRating() );
+
+            TextView txtReleased = view2.findViewById(R.id.released);
+            txtReleased.setText(mGames.get(i).getReleased());
+
+            return view2;
+        }
+    }
+
     private void pedirPermisos(){
         // Ask user permission for location.
         if (PackageManager.PERMISSION_GRANTED !=

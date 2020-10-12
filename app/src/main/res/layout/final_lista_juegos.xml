@@ -22,10 +22,6 @@
         android:layout_marginLeft="12dp"
         android:layout_marginRight="12dp"
         android:layout_marginBottom="16dp"
-
-
-
-
         >
     <ImageView
         android:id="@+id/imageIcon"
@@ -46,7 +42,7 @@
         >
 
         <TextView
-            android:id="@+id/title"
+            android:id="@+id/titleGame"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="16dp"
@@ -66,7 +62,16 @@
             />
 
         <TextView
-            android:id="@+id/distance"
+            android:id="@+id/genres"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14dp"
+            android:textColor="@color/colorBlack"
+            android:layout_weight="1"
+            android:maxLines="1"
+            />
+        <TextView
+            android:id="@+id/released"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="14dp"
