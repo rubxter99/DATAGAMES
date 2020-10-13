@@ -37,11 +37,14 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
+import java.util.List;
 
 public class GameList extends Activity {
-    private ListView mLv = null;
+    private ListView mLv ;
     private ProgressDialog mPd;
     private static final Integer MY_PERMISSIONS_GPS_FINE_LOCATION = 1;
     private ArrayList<GamesParse.game> mGames = new ArrayList<>();
@@ -69,14 +72,7 @@ public class GameList extends Activity {
                 new IntentFilter(HelperGlobal.INTENT_LOCALIZATION_ACTION));*/
 
 
-        mLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent i3=new Intent(GameList.this,GameList.class);
-                startActivity(i3);
-            }
-        });
 
 
       /*  ImageButton filtroButton = findViewById(R.id.imgBtnFiltros);
@@ -229,9 +225,10 @@ public class GameList extends Activity {
        stringRequest.setShouldCache(false);
        queue.add(stringRequest);
    }
-    public class GamesAdapter extends BaseAdapter {
+    public class GamesAdapter extends  BaseAdapter{
 
         Integer i = 0;
+
 
         @Override
         public int getCount() {
@@ -260,7 +257,7 @@ public class GameList extends Activity {
             }
 
             ImageView img = view2.findViewById(R.id.imageIcon);
-            Picasso.get().load(mGames.get(i).getImage())
+            Picasso.get().load(mGames.get(i).getImage()).resize(2048, 1600)
                     .into(img);
 
             TextView txtTitle = view2.findViewById(R.id.titleGame);

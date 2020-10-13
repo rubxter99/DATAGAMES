@@ -54,12 +54,12 @@ public class GamesParse {
 
         JSONArray array;
         JSONObject json = null;
-        JSONObject data = null;
+
 
         try {
             json = new JSONObject(content);
-            data = json.getJSONObject(HelperGlobal.JSONOBJECTDATA);
-            array = data.getJSONArray(HelperGlobal.JSONARRAY);
+
+            array = json.getJSONArray(HelperGlobal.JSONARRAY);
 
             for(int i = 0; i < array.length();i++){
                 JSONObject node = array.getJSONObject(i);
@@ -87,14 +87,10 @@ public class GamesParse {
             if(jsonData.has(HelperGlobal.JSONRELEASED))
                 released = jsonData.getString(HelperGlobal.JSONRELEASED);
             if(jsonData.has(HelperGlobal.JSONIMAGE)){
-                JSONArray images = jsonData.getJSONArray(HelperGlobal.JSONIMAGE);
-                for(int i = 0; i < images.length();i++) {
-                    JSONObject node = images.getJSONObject(i);
-                    if(node.has(HelperGlobal.JSONOBJECTPATH))
-                        image = node.getString(HelperGlobal.JSONOBJECTPATH);
+                image = jsonData.getString(HelperGlobal.JSONIMAGE);
+
                    // if(node.has(HelperGlobal.JSONOBJECTEXTENSION))
                       //  extensionImg = node.getString(HelperGlobal.JSONOBJECTEXTENSION);
-                }
             }
             if(jsonData.has(HelperGlobal.JSONRATING)){
                 rating = jsonData.getString(HelperGlobal.JSONRATING);
@@ -104,7 +100,7 @@ public class GamesParse {
                 for(int i = 0; i < genress.length();i++) {
                     JSONObject node = genress.getJSONObject(i);
                     if(node.has(HelperGlobal.JSONGENRESNAME))
-                        namegenres = jsonData.getString(HelperGlobal.JSONGENRESNAME);
+                        namegenres = node.getString(HelperGlobal.JSONGENRESNAME);
                     // if(node.has(HelperGlobal.JSONOBJECTEXTENSION))
                     //  extensionImg = node.getString(HelperGlobal.JSONOBJECTEXTENSION);
                 }
