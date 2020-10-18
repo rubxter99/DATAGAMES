@@ -168,7 +168,8 @@
                 android:layout_gravity="center"
                 android:layout_marginBottom="30dp"
                 app:cardCornerRadius="12dp"
-                app:cardElevation="6dp">
+                app:cardElevation="6dp"
+                >
 
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -327,13 +328,13 @@
                         android:layout_width="80dp"
                         android:layout_height="80dp"
                         android:layout_gravity="center"
-                        android:src="@drawable/ajustes_menu" />
+                        android:src="@drawable/info" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="casual"
-                        android:text="Ajustes"
+                        android:text="Acerca de"
                         android:textAlignment="center"
                         android:textColor="#121111"
                         android:textSize="25dp"

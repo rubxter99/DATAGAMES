@@ -18,6 +18,7 @@ public class Menu extends Activity  {
     private DatabaseReference mDatabase;
     private CardView cdPerfil;
     private CardView cdGames;
+    private CardView cdMaps;
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +26,7 @@ public class Menu extends Activity  {
         setContentView(R.layout.activity_menu);
 
         mAuth= FirebaseAuth.getInstance();
+
 
         cdPerfil=findViewById(R.id.cd_perfil);
         cdPerfil.setOnClickListener(new View.OnClickListener() {
@@ -42,6 +44,15 @@ public class Menu extends Activity  {
                 mAuth.getCurrentUser();
                 startActivity(new Intent(Menu.this,GameList.class));
 
+            }
+        });
+
+        cdMaps = findViewById(R.id.cd_mapa);
+        cdMaps.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mAuth.getCurrentUser();
+                startActivity(new Intent(Menu.this,MapsActivity.class));
             }
         });
     }
