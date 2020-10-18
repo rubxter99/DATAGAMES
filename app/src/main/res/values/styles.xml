@@ -5,10 +5,15 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+
+    </style>
+    <style name="navigationTheme">
+        <item name="colorPrimary"> @color/colorPrimary</item>
+        <item name="colorControlHighlight">@color/colorLogin</item>
     </style>
     <style name="SplashTheme"
         parent="@android:style/Theme.DeviceDefault.Light.NoActionBar">
-        <item name="android:windowBackground">@drawable/splash1</item>
+        <item name="android:windowBackground">@mipmap/datagames_icon</item>
     </style>
     <style name="BottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog"></style>
     <style name="BottomSheetDialogStyle" parent="Widget.Design.BottomSheet.Modal">

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="200dp"
+    android:background="#FFFFFF"
+    android:foregroundTint="#121010"
+    android:paddingLeft="15dp">
+
+    <TextView
+        android:id="@+id/menu_slogan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="10dp"
+        android:text="Since 2020"
+        android:textColor="@color/colorBlack" />
+
+    <TextView
+        android:id="@+id/app_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/menu_slogan"
+        android:fontFamily="@font/alfa_slab_one"
+        android:text="Search Your Game"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:textColor="@color/colorBlack"
+        android:textSize="24sp" />
+
+    <ImageView
+        android:layout_width="67dp"
+        android:layout_height="38dp"
+        android:layout_above="@id/app_name"
+        android:layout_marginBottom="2dp"
+        android:src="@drawable/icon_game" />
+
+    <ImageView
+        android:layout_width="304dp"
+        android:layout_height="160dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="-46dp"
+        android:layout_marginBottom="82dp"
+        android:src="@drawable/tetris" />
+
+</RelativeLayout>

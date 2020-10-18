@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:title="Menu"
+            />
+        <item
+            android:id="@+id/nav_search"
+            android:title="Maps"
+            />
+        <item
+            android:id="@+id/nav_all_categories"
+            android:title="Shops"
+           />
+        <item
+            android:id="@+id/nav_add_missing_place"
+            android:title="Favoritos"
+           />
+
+        <item android:id="@+id/nav_settings"
+            android:title="Settings"
+
+            />
+    </group>
+
+    <item android:title="Profile">
+        <menu>
+            <group android:checkableBehavior="single">
+
+                <item
+                    android:id="@+id/nav_profile"
+                    android:title="Profile" />
+                <item
+                    android:id="@+id/nav_logout"
+                    android:title="Sign out" />
+            </group>
+        </menu>
+    </item>
+</menu>

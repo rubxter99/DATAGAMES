@@ -11,17 +11,25 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -29,13 +37,20 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.gson.Gson;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -43,15 +58,21 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GameList extends Activity {
+public class GameList extends AppCompatActivity {
     private ListView mLv ;
     private ProgressDialog mPd;
     private static final Integer MY_PERMISSIONS_GPS_FINE_LOCATION = 1;
     private ArrayList<GamesParse.game> mGames = new ArrayList<>();
-    private  ArrayList<GamesParse.game> mGamesRellenos = new ArrayList<>();
+    private ArrayList<GamesParse.game> mGamesRellenos = new ArrayList<>();
     private Boolean relleno;
-    private  BaseAdapter mAdapter = null;
-
+    private BaseAdapter mAdapter = null;
+    private DrawerLayout drawerLayout;
+    private NavigationView navigationView;
+    private Toolbar toolbar;
+    private FirebaseAuth mAuth;
+    private EditText filtro;
+    private ArrayAdapter arrayAdapter;
+    private ImageView iconsearch;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,7 +87,39 @@ public class GameList extends Activity {
 
         loadGames();
 
+        mAuth= FirebaseAuth.getInstance();
         mLv = findViewById(R.id.list_notify);
+        toolbar=findViewById(R.id.toolbar);
+        setToolBar();
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        navigationView = (NavigationView)findViewById(R.id.navview);
+        navigationDrawer();
+
+        filtro=findViewById(R.id.filtros);
+        arrayAdapter=new ArrayAdapter<>(this,R.layout.final_lista_juegos,R.id.titleGame,mGames);
+        mLv.setAdapter(arrayAdapter);
+        filtro.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                GameList.this.arrayAdapter.getFilter().filter(s);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+
+
+
+
 
        /* LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
                 new IntentFilter(HelperGlobal.INTENT_LOCALIZATION_ACTION));*/
@@ -187,6 +240,72 @@ public class GameList extends Activity {
     public void onPointerCaptureChanged(boolean hasCapture) {
 
     }*/
+   public boolean onCreateOptionsMenu(Menu menu){
+       getMenuInflater().inflate(R.menu.menu_toolbar, menu);
+       return true;
+   }
+   private void setToolBar(){
+       setSupportActionBar(toolbar);
+       getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu_drawer);
+       getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+       getSupportActionBar().setDisplayShowTitleEnabled(false);
+   }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:
+                if(drawerLayout.isDrawerVisible(GravityCompat.START)){
+                    drawerLayout.closeDrawer(GravityCompat.START);
+                }else{
+                    drawerLayout.openDrawer(GravityCompat.START);
+                }
+
+                //return true;
+                break;
+            case R.id.toolbar_filtro:
+                Intent intent=new Intent(GameList.this,Profile.class);
+                startActivity(intent);
+                finish();
+                break;
+
+        }
+
+            return true;
+
+       // return super.onOptionsItemSelected(item);
+    }
+    private void navigationDrawer(){
+        navigationView.bringToFront();
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()){
+
+                    case R.id.nav_home:
+                        Intent intent1=new Intent(GameList.this, com.example.datagames.Menu.class);
+                        startActivity(intent1);
+                        finish();
+                        break;
+                    case R.id.nav_profile:
+                        Intent intent2=new Intent(GameList.this, Profile.class);
+                        startActivity(intent2);
+                        finish();
+                        break;
+                    case R.id.nav_logout:
+                        mAuth.signOut();
+                        Intent intent3=new Intent(GameList.this, MainActivity.class);
+                        startActivity(intent3);
+                        finish();
+                        break;
+
+                }
+                return true;
+            }
+        });
+        navigationView.setCheckedItem(R.id.nav_home);
+
+    }
+
    private void loadGames(){
 
        RequestQueue queue = Volley.newRequestQueue(this);

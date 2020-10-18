@@ -4,127 +4,147 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#CBD5D3"
+    android:background="@color/lightWhite"
     android:orientation="vertical"
-    tools:context="com.example.datagames.GameList">
+    tools:context="com.example.datagames.GameList"
+    >
 
-    <RelativeLayout
+    <androidx.drawerlayout.widget.DrawerLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="20dp">
-
-        <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:src="@android:drawable/ic_menu_sort_by_size" />
-
-        <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:background="#81FFEB3B"
-            android:padding="5dp"
-            android:src="@android:drawable/ic_menu_add" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <TextView
-
-            android:id="@+id/app_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:text="VideoGames"
-            android:textColor="@color/colorBlack"
-            android:textSize="30dp"
-            android:textStyle="bold" />
-
-        <RelativeLayout
-            android:id="@+id/searchtext"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_below="@id/app_name"
-            android:layout_marginLeft="40dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginRight="40dp"
-            android:layout_marginBottom="20dp"
-            android:background="@color/colorGame"
-            android:elevation="8dp">
-
-            <EditText
-                android:layout_width="257dp"
-                android:layout_height="match_parent"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="15dp"
-                android:hint="Search..."
-                android:textColor="@color/colorBlack"
-                android:textColorHint="@color/colorBlack" />
-
-            <ImageView
-                android:id="@+id/iconsearch"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="15dp"
-                android:src="@android:drawable/ic_menu_search" />
-
-        </RelativeLayout>
-
-    </RelativeLayout>
-
-
-    <LinearLayout
-        android:layout_width="78dp"
-        android:layout_height="76dp"
-        android:layout_gravity="center"
-        android:background="#BAE4E4E4"
-        android:orientation="vertical">
-
-        <RelativeLayout
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_gravity="center"
-            android:layout_margin="10dp"
-            android:elevation="8dp">
-
-            <ImageView
-                android:id="@+id/shop"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_centerInParent="true"
-                android:src="@drawable/store" />
-
-        </RelativeLayout>
-
-
-    </LinearLayout>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:text="Shops"
-        android:textAlignment="center"
-        android:textColor="@color/colorBlack" />
-
-
-    <LinearLayout
-        android:layout_width="364dp"
         android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:layout_weight="1">
+        android:id="@+id/drawer_layout"
 
-        <ListView
-            android:id="@+id/list_notify"
+
+       >
+
+        <LinearLayout
+            android:id="@+id/content_frame"
+            android:orientation="vertical"
+
             android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-            android:layout_height="match_parent"
+            <include android:id="@id/toolbar"
+                layout="@layout/toolbar1"
+               ></include>
 
-            />
-    </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+
+                    android:id="@+id/app_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:fontFamily="@font/bungee"
+                    android:text="VideoGames"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="30dp" />
+
+                <RelativeLayout
+                    android:id="@+id/searchtext"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_below="@id/app_name"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="40dp"
+                    android:layout_marginBottom="20dp"
+                    android:background="@color/colorGame"
+                    android:elevation="8dp">
+
+                    <EditText
+                        android:layout_width="257dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="15dp"
+                        android:id="@+id/filtros"
+                        android:hint="Search..."
+                        android:textColor="@color/colorBlack"
+                        android:textColorHint="@color/colorBlack" />
+
+                    <ImageView
+                        android:id="@+id/iconsearch"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="15dp"
+                        android:src="@android:drawable/ic_menu_search" />
+
+                </RelativeLayout>
+
+            </RelativeLayout>
+
+
+            <LinearLayout
+                android:layout_width="61dp"
+                android:layout_height="59dp"
+                android:layout_gravity="center"
+                android:background="#BAE4E4E4"
+                android:orientation="vertical"
+                android:layout_marginTop="12dp">
+
+
+                <ImageView
+                    android:id="@+id/shop"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_centerInParent="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/store" />
+
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/bungee"
+                android:gravity="center_horizontal"
+                android:text="Shops"
+                android:textAlignment="center"
+                android:textColor="@color/colorBlack" />
+
+
+                <LinearLayout
+                    android:layout_width="361dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:id="@+id/listagames"
+                    >
+
+                    <ListView
+                        android:id="@+id/list_notify"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+
+                        />
+
+                </LinearLayout>
+
+
+
+
+        </LinearLayout>
+            <com.google.android.material.navigation.NavigationView
+                android:id="@+id/navview"
+                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                android:fitsSystemWindows="true"
+                android:theme="@style/navigationTheme"
+                app:headerLayout="@layout/header_navigation_drawer"
+                app:menu="@menu/nav_options"
+                android:layout_gravity="start">
+
+            </com.google.android.material.navigation.NavigationView>
+
+
+
+    </androidx.drawerlayout.widget.DrawerLayout>
+
 
 </LinearLayout>

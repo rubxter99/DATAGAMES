@@ -13,11 +13,11 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class Menu extends Activity {
+public class Menu extends Activity  {
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
     private CardView cdPerfil;
-    private CardView cdComics;
+    private CardView cdGames;
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,8 +35,8 @@ public class Menu extends Activity {
 
             }
         });
-        cdComics=findViewById(R.id.cd_comics);
-        cdComics.setOnClickListener(new View.OnClickListener(){
+        cdGames=findViewById(R.id.cd_games);
+        cdGames.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 mAuth.getCurrentUser();

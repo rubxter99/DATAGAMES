@@ -64,7 +64,7 @@ public class HelperGlobal {
     public final static String JSONGENRES="genres";
     public final static String JSONGENRESNAME="name";
     public final static String URLGAMES="https://api.rawg.io/api/games?page_size=40";
-    public final static String PROGRESSTITTLE="COMICS";
+    public final static String PROGRESSTITTLE="GAMES";
     public final static String PROGRESSMESSAGE="SEARCHING... WAIT A SECOND";
     public final static String AÑADIRFAV="AÑADIR A FAVORITOS";
     public final static String PROGRESSTITTLELIBRARIES="LIBRARIES";
