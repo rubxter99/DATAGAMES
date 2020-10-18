@@ -10,4 +10,5 @@
     <color name="colorLogin">#79D1C2</color>
     <color name="colorRegistrer">#C1FF9800</color>
     <color name="lightWhite">#f2f5f8</color>
+    <color name="logoNegro">#000000</color>
 </resources>
