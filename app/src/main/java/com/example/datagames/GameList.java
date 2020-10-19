@@ -12,20 +12,27 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.os.Bundle;
 import android.text.Editable;
+
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
+
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -37,6 +44,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.common.internal.Constants;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.gson.Gson;
@@ -65,7 +73,7 @@ public class GameList extends AppCompatActivity {
     private ArrayList<GamesParse.game> mGames = new ArrayList<>();
     private ArrayList<GamesParse.game> mGamesRellenos = new ArrayList<>();
     private Boolean relleno;
-    private BaseAdapter mAdapter = null;
+    private GamesAdapter mAdapter = null;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     private Toolbar toolbar;
@@ -73,6 +81,9 @@ public class GameList extends AppCompatActivity {
     private EditText filtro;
     private ArrayAdapter arrayAdapter;
     private ImageView iconsearch;
+    private ScrollView scrollView;
+    private List<GamesParse.game> myData;
+    private ArrayList<GamesParse.game> mOriginalNames;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,11 +105,31 @@ public class GameList extends AppCompatActivity {
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         navigationView = (NavigationView)findViewById(R.id.navview);
         navigationDrawer();
+        scrollView=findViewById(R.id.scrollView6);
+        filtro=findViewById(R.id.filtros);
+        filtro.addTextChangedListener(searchTextWatcher);
+
+        scrollView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                findViewById(R.id.list_notify).getParent()
+                        .requestDisallowInterceptTouchEvent(false);
+                return false;
+            }
+        });
+        mLv.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                v.getParent().requestDisallowInterceptTouchEvent(true);
+                return false;
+
+            }
+        });
 
         filtro=findViewById(R.id.filtros);
         //arrayAdapter=new ArrayAdapter<GameList>(this,R.layout.final_lista_juegos,R.id.titleGame,mAdapter);
         //mLv.setAdapter(arrayAdapter);
-        filtro.addTextChangedListener(new TextWatcher() {
+        /*filtro.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -114,7 +145,7 @@ public class GameList extends AppCompatActivity {
             public void afterTextChanged(Editable s) {
 
             }
-        });
+        });*/
 
 
 
@@ -240,7 +271,26 @@ public class GameList extends AppCompatActivity {
     public void onPointerCaptureChanged(boolean hasCapture) {
 
     }*/
-   public boolean onCreateOptionsMenu(Menu menu){
+   private TextWatcher searchTextWatcher = new TextWatcher() {
+       @Override
+       public void onTextChanged(CharSequence s, int start, int before, int count) {
+           // ignore
+       }
+
+       @Override
+       public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+           // ignore
+       }
+
+       @Override
+       public void afterTextChanged(Editable s) {
+
+           mAdapter.getFilter().filter(s.toString());
+       }
+   };
+
+
+    public boolean onCreateOptionsMenu(Menu menu){
        getMenuInflater().inflate(R.menu.menu_toolbar, menu);
        return true;
    }
@@ -344,7 +394,7 @@ public class GameList extends AppCompatActivity {
        stringRequest.setShouldCache(false);
        queue.add(stringRequest);
    }
-    public class GamesAdapter extends  BaseAdapter{
+    public class GamesAdapter extends  BaseAdapter  implements Filterable {
 
         Integer i = 0;
 
@@ -363,6 +413,7 @@ public class GameList extends AppCompatActivity {
         public long getItemId(int i) {
             return 0;
         }
+
 
         @Override
         public View getView(int i, View view, ViewGroup viewGroup) {
@@ -393,6 +444,55 @@ public class GameList extends AppCompatActivity {
 
             return view2;
         }
+        @Override
+        public Filter getFilter() {
+            Filter filter = new Filter() {
+                @SuppressWarnings("unchecked")
+                @Override
+                protected void publishResults(CharSequence constraint, FilterResults results) {
+
+                    mGames = (ArrayList<GamesParse.game>) results.values;
+                    notifyDataSetChanged();
+                }
+
+                @Override
+                protected FilterResults performFiltering(CharSequence constraint) {
+
+
+                    FilterResults results = new FilterResults();
+                    ArrayList<GamesParse.game> FilteredArrayNames = new ArrayList<GamesParse.game>();
+
+
+                    if(mOriginalNames == null ){
+                        mOriginalNames = new ArrayList<GamesParse.game>(mGames);
+
+                    }
+                    if(constraint == null || constraint.length() == 0){
+                        results.count = mOriginalNames.size();
+                        results.values = mOriginalNames;
+                    }
+                    else{
+                        constraint = constraint.toString().toLowerCase();
+                        for(int i = 0; i < mOriginalNames.size(); i++){
+
+                            if(mOriginalNames.get(i).getName().toLowerCase().startsWith(constraint.toString())){
+                                FilteredArrayNames.add(mOriginalNames.get(i));
+                            }
+                        }
+
+                        results.count = FilteredArrayNames.size();
+                        System.out.println(results.count);
+
+                        results.values = FilteredArrayNames;
+                        
+                    }
+
+                    return results;
+                }
+            };
+            return filter;
+        }
+
     }
 
     private void pedirPermisos(){

@@ -14,19 +14,29 @@
         android:layout_height="match_parent"
         android:id="@+id/drawer_layout"
 
-
        >
-
-        <LinearLayout
+       <LinearLayout
             android:id="@+id/content_frame"
             android:orientation="vertical"
-
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <include android:id="@id/toolbar"
                 layout="@layout/toolbar1"
                ></include>
+
+           <ScrollView
+               android:layout_width="match_parent"
+               android:layout_height="match_parent"
+               android:id="@+id/scrollView6" android:fillViewport="true">
+
+           <LinearLayout
+                android:id="@+id/scroll"
+                android:orientation="vertical"
+
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
 
 
             <RelativeLayout
@@ -110,26 +120,88 @@
                 android:textColor="@color/colorBlack" />
 
 
-                <LinearLayout
-                    android:layout_width="361dp"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:id="@+id/listagames"
-                    >
+               <LinearLayout
+                   android:id="@+id/listagames"
+                   android:layout_width="361dp"
+                   android:layout_height="335dp"
+                   android:layout_gravity="center">
 
-                    <ListView
-                        android:id="@+id/list_notify"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
 
-                        />
+                   <ListView
+                       android:id="@+id/list_notify"
+                       android:layout_width="match_parent"
+                       android:layout_height="match_parent"></ListView>
 
-                </LinearLayout>
 
+               </LinearLayout>
+               <LinearLayout
+                   android:layout_width="61dp"
+                   android:layout_height="59dp"
+                   android:layout_gravity="center"
+                   android:background="#BAE4E4E4"
+                   android:orientation="vertical"
+                   android:layout_marginTop="12dp">
+
+
+                   <ImageView
+                       android:id="@+id/SHOP"
+                       android:layout_width="match_parent"
+                       android:layout_height="match_parent"
+                       android:layout_centerInParent="true"
+                       android:layout_centerHorizontal="true"
+                       android:layout_centerVertical="true"
+                       android:src="@drawable/store" />
+
+
+               </LinearLayout>
+               <LinearLayout
+                   android:layout_width="61dp"
+                   android:layout_height="59dp"
+                   android:layout_gravity="center"
+                   android:background="#BAE4E4E4"
+                   android:orientation="vertical"
+                   android:layout_marginTop="12dp">
+
+
+                   <ImageView
+                       android:id="@+id/SHO2"
+                       android:layout_width="match_parent"
+                       android:layout_height="match_parent"
+                       android:layout_centerInParent="true"
+                       android:layout_centerHorizontal="true"
+                       android:layout_centerVertical="true"
+                       android:src="@drawable/store" />
+
+
+               </LinearLayout>
+               <LinearLayout
+                   android:layout_width="61dp"
+                   android:layout_height="59dp"
+                   android:layout_gravity="center"
+                   android:background="#BAE4E4E4"
+                   android:orientation="vertical"
+                   android:layout_marginTop="12dp">
+
+
+                   <ImageView
+                       android:id="@+id/SHO3"
+                       android:layout_width="match_parent"
+                       android:layout_height="match_parent"
+                       android:layout_centerInParent="true"
+                       android:layout_centerHorizontal="true"
+                       android:layout_centerVertical="true"
+                       android:src="@drawable/store" />
+
+
+               </LinearLayout>
+            </LinearLayout>
+
+           </ScrollView>
 
 
 
         </LinearLayout>
+
             <com.google.android.material.navigation.NavigationView
                 android:id="@+id/navview"
                 android:layout_height="match_parent"

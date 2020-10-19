@@ -114,4 +114,5 @@ public class GamesParse {
         game game = new game(name,released,image,rating,namegenres);
         return game;
     }
+
 }
