@@ -147,7 +147,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onClick(View v)
     {
         //String comic = "store" ;
-        String centro_comercial="shopping_mall";
+        String centro_comercial="book_store";
         Object transferData[] = new Object[2];
         GetNearbyPlaces getNearbyPlaces = new GetNearbyPlaces();
 
@@ -310,6 +310,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
     }
+
     @SuppressWarnings({"MissingPermission"})
     private void startLocation() {
 

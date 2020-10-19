@@ -19,6 +19,7 @@ public class Menu extends Activity  {
     private CardView cdPerfil;
     private CardView cdGames;
     private CardView cdMaps;
+    private CardView cdInfo;
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +54,15 @@ public class Menu extends Activity  {
             public void onClick(View view) {
                 mAuth.getCurrentUser();
                 startActivity(new Intent(Menu.this,MapsActivity.class));
+            }
+        });
+
+        cdInfo = findViewById(R.id.cd_settings);
+        cdInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mAuth.getCurrentUser();
+                startActivity(new Intent(Menu.this, About.class));
             }
         });
     }
