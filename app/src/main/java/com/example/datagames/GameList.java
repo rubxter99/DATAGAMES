@@ -96,8 +96,8 @@ public class GameList extends AppCompatActivity {
         navigationDrawer();
 
         filtro=findViewById(R.id.filtros);
-        arrayAdapter=new ArrayAdapter<>(this,R.layout.final_lista_juegos,R.id.titleGame,mGames);
-        mLv.setAdapter(arrayAdapter);
+        //arrayAdapter=new ArrayAdapter<GameList>(this,R.layout.final_lista_juegos,R.id.titleGame,mAdapter);
+        //mLv.setAdapter(arrayAdapter);
         filtro.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {

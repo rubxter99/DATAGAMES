@@ -99,15 +99,6 @@ public class Profile extends AppCompatActivity {
                     nameprofile.setText(name);
                     emailprofile.setText(email);
 
-
-
-
-
-
-
-
-
-
                 }
             }
 
