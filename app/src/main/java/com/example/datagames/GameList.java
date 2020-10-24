@@ -325,7 +325,7 @@ public class GameList extends AppCompatActivity {
        @Override
        public void afterTextChanged(Editable s) {
 
-           mAdapter.getFilter().filter(s.toString());
+          // mAdapter.getFilter().filter(s.toString());
        }
    };
 
