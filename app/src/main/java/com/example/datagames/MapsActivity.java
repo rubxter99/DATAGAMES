@@ -70,8 +70,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
 
-        initGoogleAPIClient();
-        checkPermissions();
+
         Intent intent = getIntent();
         if (intent != null)
         {
@@ -89,12 +88,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     //////////////////////////////////////////////////////////////GPS/////////////////////////////////////////////////////////////////
-    private void initGoogleAPIClient() {
-        googleApiClient = new GoogleApiClient.Builder(MapsActivity.this)
-                .addApi(LocationServices.API)
-                .build();
-        googleApiClient.connect();
-    }
+
     private void checkPermissions() {
         if (Build.VERSION.SDK_INT >= 23) {
             if (ContextCompat.checkSelfPermission(MapsActivity.this,
@@ -127,9 +121,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)== PackageManager.PERMISSION_GRANTED){
 
+
+
+        if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)== PackageManager.PERMISSION_GRANTED){
             buildGoogleApiClient();
+            checkPermissions();
+
             LatLng myloc = new LatLng(mLat, mLon);
             //mMap.addMarker(new MarkerOptions().position(myloc).title(mTitle));
             mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);

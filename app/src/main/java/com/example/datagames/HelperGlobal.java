@@ -11,6 +11,11 @@ public class HelperGlobal {
     public  final static  String KEY_MESSAGE = "message";
     public final static String NAMEPARCELABLEARRAY="ARRAY_CERCANO";
     public final static String TITLEINPUTTIENDASCERCANAS="TITLE";
+    public static final String EXTRA_NAME = "name";
+    public static final String EXTRA_DRAWABLE = "image";
+    public static final String EXTRA_GENRE = "genre";
+    public static final String EXTRA_RELEASED = "released";
+    public static final String EXTRA_RATING = "rating";
     public final static String LATINPUTTIENDASCERCANAS="LAT";
     public final static String LONINPUTTIENDASCERCANAS="LON";
     public final static String MAPSTOAST="MAPS";
@@ -44,12 +49,13 @@ public class HelperGlobal {
     public final static String GOOGLEPLACESLOCATION="location";
     public final static String GOOGLEPLACESREFERENCE="reference";
     public final static String ELIMINADOFAV="ELIMINADO DE FAVORITOS";
-    public final static String ABRIRMAPSCONTEXTMENU="ABRIR EN MAPA";
+    public final static String ABRIRGAME="VER DETALLES DEL JUEGO";
     public final static String ELIMINARFAVCONTEXTMENU="ELIMINAR DE FAVORITOS";
     public final static String LOCATIONLAT="locationLat";
     public final static String LOCATIONLONG="locationLong";
     public final static String PARCELABLEKEYARRAY="KEY_ARRAY";
     public final static String JSONOBJECTDATA="data";
+    public final static String JSONPAGE="page";
     public final static String JSONARRAY="results";
     public final static String JSONDATATITLE="name";
     public final static String JSONDATADESCRIPTION="description";
@@ -63,7 +69,7 @@ public class HelperGlobal {
     public final static String JSONRELEASED="released";
     public final static String JSONGENRES="genres";
     public final static String JSONGENRESNAME="name";
-    public final static String URLGAMES="https://api.rawg.io/api/games?page_size=40";
+    public final static String URLGAMES="https://api.rawg.io/api/games?";
     public final static String PROGRESSTITTLE="GAMES";
     public final static String PROGRESSMESSAGE="SEARCHING... WAIT A SECOND";
     public final static String AÑADIRFAV="AÑADIR A FAVORITOS";

@@ -33,7 +33,6 @@
            <LinearLayout
                 android:id="@+id/scroll"
                 android:orientation="vertical"
-
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
@@ -121,79 +120,91 @@
 
 
                <LinearLayout
-                   android:id="@+id/listagames"
-                   android:layout_width="361dp"
-                   android:layout_height="335dp"
-                   android:layout_gravity="center">
-
-
-                   <ListView
-                       android:id="@+id/list_notify"
-                       android:layout_width="match_parent"
-                       android:layout_height="match_parent"></ListView>
-
-
-               </LinearLayout>
-               <LinearLayout
-                   android:layout_width="61dp"
-                   android:layout_height="59dp"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
                    android:layout_gravity="center"
-                   android:background="#BAE4E4E4"
-                   android:orientation="vertical"
-                   android:layout_marginTop="12dp">
+                   android:layout_marginTop="25dp"
+                   android:orientation="vertical">
+
+                   <TextView
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:fontFamily="@font/bungee"
+                       android:gravity="center"
+                       android:text="New Games"
+                       android:textAllCaps="true"
+                       android:textColor="@color/colorBlack"
+                       android:textSize="20dp" />
 
 
-                   <ImageView
-                       android:id="@+id/SHOP"
+                   <LinearLayout
+                       android:id="@+id/listanewgames"
+                       android:layout_width="361dp"
+                       android:layout_height="335dp"
+                       android:layout_gravity="center">
+
+
+                       <ListView
+                           android:id="@+id/recicler"
+                           android:layout_width="match_parent"
+                           android:layout_height="match_parent"></ListView>
+
+
+                   </LinearLayout>
+
+                   <TextView
                        android:layout_width="match_parent"
                        android:layout_height="match_parent"
-                       android:layout_centerInParent="true"
-                       android:layout_centerHorizontal="true"
-                       android:layout_centerVertical="true"
-                       android:src="@drawable/store" />
+                       android:fontFamily="@font/bungee"
+                       android:gravity="center"
+                       android:text="Upcoming Games"
+                       android:textAllCaps="true"
+                       android:textColor="@color/colorBlack"
+                       android:layout_marginTop="55dp"
+                       android:textSize="20dp" />
+                   <LinearLayout
+                       android:id="@+id/listaupcomiggames"
+                       android:layout_width="361dp"
+                       android:layout_height="335dp"
+                       android:layout_gravity="center">
 
 
-               </LinearLayout>
-               <LinearLayout
-                   android:layout_width="61dp"
-                   android:layout_height="59dp"
-                   android:layout_gravity="center"
-                   android:background="#BAE4E4E4"
-                   android:orientation="vertical"
-                   android:layout_marginTop="12dp">
+                       <ListView
+                           android:id="@+id/upcoming"
+                           android:layout_width="match_parent"
+                           android:layout_height="match_parent"></ListView>
 
 
-                   <ImageView
-                       android:id="@+id/SHO2"
+                   </LinearLayout>
+                   <TextView
                        android:layout_width="match_parent"
                        android:layout_height="match_parent"
-                       android:layout_centerInParent="true"
-                       android:layout_centerHorizontal="true"
-                       android:layout_centerVertical="true"
-                       android:src="@drawable/store" />
+                       android:fontFamily="@font/bungee"
+                       android:gravity="center"
+                       android:text="List Games"
+                       android:textAllCaps="true"
+                       android:layout_marginTop="55dp"
+                       android:textColor="@color/colorBlack"
+                       android:textSize="20dp" />
+
+                   <LinearLayout
+                       android:id="@+id/listagames"
+                       android:layout_width="361dp"
+                       android:layout_height="335dp"
+                       android:layout_gravity="center">
 
 
-               </LinearLayout>
-               <LinearLayout
-                   android:layout_width="61dp"
-                   android:layout_height="59dp"
-                   android:layout_gravity="center"
-                   android:background="#BAE4E4E4"
-                   android:orientation="vertical"
-                   android:layout_marginTop="12dp">
+                       <ListView
+                           android:id="@+id/list_notify"
+                           android:layout_width="match_parent"
+                           android:layout_height="match_parent"></ListView>
 
 
-                   <ImageView
-                       android:id="@+id/SHO3"
-                       android:layout_width="match_parent"
-                       android:layout_height="match_parent"
-                       android:layout_centerInParent="true"
-                       android:layout_centerHorizontal="true"
-                       android:layout_centerVertical="true"
-                       android:src="@drawable/store" />
-
+                   </LinearLayout>
 
                </LinearLayout>
+
+
             </LinearLayout>
 
            </ScrollView>

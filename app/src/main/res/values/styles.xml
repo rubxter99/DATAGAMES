@@ -19,4 +19,9 @@
     <style name="BottomSheetDialogStyle" parent="Widget.Design.BottomSheet.Modal">
         <item name="android:background">@android:color/transparent</item>
     </style>
+    <style name="foodRatingBar" parent="@android:style/Widget.RatingBar">
+
+        <item name="android:minHeight">22dip</item>
+        <item name="android:maxHeight">22dip</item>
+    </style>
 </resources>
