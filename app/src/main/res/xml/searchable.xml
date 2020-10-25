@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<searchable
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:label="@string/app_name"
+    android:hint="Search"
+    android:searchButtonText="Search"
+
+    >
+    <item android:id="@+id/app_bar_search" android:icon="@drawable/ic_arrow_back" android:orderInCategory="101" android:title="search" />
+
+
+</searchable>

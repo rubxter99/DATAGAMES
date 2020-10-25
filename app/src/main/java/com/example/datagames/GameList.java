@@ -2,9 +2,11 @@ package com.example.datagames;
 
 import android.Manifest;
 import android.app.ProgressDialog;
+import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -12,6 +14,7 @@ import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
@@ -25,6 +28,7 @@ import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ScrollView;
+import android.widget.SearchView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -46,7 +50,9 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.squareup.picasso.Picasso;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class GameList extends AppCompatActivity {
@@ -65,7 +71,6 @@ public class GameList extends AppCompatActivity {
     private NavigationView navigationView;
     private Toolbar toolbar;
     private FirebaseAuth mAuth;
-    private EditText filtro;
     private ArrayAdapter arrayAdapter;
     private ImageView iconsearch;
     private ScrollView scrollView;
@@ -91,18 +96,18 @@ public class GameList extends AppCompatActivity {
         loadNewGames();
         loadUpcomingGames();
 
-        mAuth= FirebaseAuth.getInstance();
+        mAuth = FirebaseAuth.getInstance();
         mLv = findViewById(R.id.list_notify);
-        newgames=findViewById(R.id.recicler);
-        upcoming=findViewById(R.id.upcoming);
-        toolbar=findViewById(R.id.toolbar);
+        newgames = findViewById(R.id.recicler);
+        upcoming = findViewById(R.id.upcoming);
+        toolbar = findViewById(R.id.toolbar);
         setToolBar();
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        navigationView = (NavigationView)findViewById(R.id.navview);
+        navigationView = (NavigationView) findViewById(R.id.navview);
         navigationDrawer();
-        scrollView=findViewById(R.id.scrollView6);
-        filtro=findViewById(R.id.filtros);
-        filtro.addTextChangedListener(searchTextWatcher);
+        scrollView = findViewById(R.id.scrollView6);
+
+
 
         scrollView.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -127,8 +132,35 @@ public class GameList extends AppCompatActivity {
             public void onCreateContextMenu(ContextMenu contextMenu,
                                             View view,
                                             ContextMenu.ContextMenuInfo contextMenuInfo) {
-                contextMenu.add(0, 1, 0, HelperGlobal.ABRIRGAME);
                 contextMenu.add(0, 2, 0, HelperGlobal.AÑADIRFAV);
+            }
+        });
+        newgames.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
+            @Override
+            public void onCreateContextMenu(ContextMenu contextMenu,
+                                            View view,
+                                            ContextMenu.ContextMenuInfo contextMenuInfo) {
+                contextMenu.add(0, 2, 0, HelperGlobal.AÑADIRFAV);
+            }
+        });
+        upcoming.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
+            @Override
+            public void onCreateContextMenu(ContextMenu contextMenu,
+                                            View view,
+                                            ContextMenu.ContextMenuInfo contextMenuInfo) {
+                contextMenu.add(0, 2, 0, HelperGlobal.AÑADIRFAV);
+            }
+        });
+
+
+        mLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(GameList.this, DetailActivity.class);
+                intent.putExtra(HelperGlobal.EXTRA_ID,mGamesRellenos.get(position).getId());
+                startActivity(intent);
+
+                mAdapter.notifyDataSetChanged();
             }
         });
         newgames.setOnTouchListener(new View.OnTouchListener() {
@@ -138,6 +170,17 @@ public class GameList extends AppCompatActivity {
                 return false;
             }
         });
+        newgames.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(GameList.this, DetailActivity.class);
+                intent.putExtra(HelperGlobal.EXTRA_ID,mNewGamesRellenos.get(position).getId());
+
+                startActivity(intent);
+
+                mNewAdapter.notifyDataSetChanged();
+            }
+        });
         upcoming.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v3, MotionEvent event) {
@@ -145,194 +188,66 @@ public class GameList extends AppCompatActivity {
                 return false;
             }
         });
-
-
-
-
-
-
-       /* LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
-                new IntentFilter(HelperGlobal.INTENT_LOCALIZATION_ACTION));*/
-
-
-
-
-
-      /*  ImageButton filtroButton = findViewById(R.id.imgBtnFiltros);
-        filtroButton.setOnClickListener(new View.OnClickListener() {
+        upcoming.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onClick(View view) {
-                Intent filtroTienda = new Intent(ListTiendas.this, FiltroTiendas.class);
-                startActivityForResult(filtroTienda, CODINTFILTROTIENDA);
-            }
-        });*/
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(GameList.this, DetailActivity.class);
+                intent.putExtra(HelperGlobal.EXTRA_ID,mUpcomingRellenos.get(position).getId());
+                startActivity(intent);
 
-       /* final ImageButton favoritosButton = findViewById(R.id.imgBtnFavoritos);
-        favoritosButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent favoritosLista = new Intent(ListTiendas.this, FavoritosTiendas.class);
-                favoritosLista.putParcelableArrayListExtra(HelperGlobal.PARCELABLEKEYARRAY, mTiendasFavorito);
-                favoritosLista.putExtra(HelperGlobal.LOCATIONLAT, mCurrentLocation.getLatitude());
-                favoritosLista.putExtra(HelperGlobal.LOCATIONLONG, mCurrentLocation.getLongitude());
-                startActivityForResult(favoritosLista, CODINTFAVORITOTIENDA);
+                mUpcomingGames.notifyDataSetChanged();
             }
         });
-        leerDatosSPFavs();*/
     }
 
-   /* public void startService() {
-        mServiceIntent = new Intent(getApplicationContext(), MyService.class);
-        startService(mServiceIntent);
-    }
-
-    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            Location posicion = intent.getParcelableExtra(HelperGlobal.KEY_MESSAGE);
-            ArrayList<TiendasParse.Tiendas> tiendasCercanas = new ArrayList<>();
-            leerDatosSPFavs();
-            int cont = 0;
-            for(int i = 0; i<mTiendasFavorito.size();i++){
-                Location location = new Location("");
-                location.setLatitude(mTiendasFavorito.get(i).getLat());
-                location.setLongitude(mTiendasFavorito.get(i).getLng());
-
-                double distance = posicion.distanceTo(location);
-                mTiendasFavorito.get(i).setDistance(distance);
-                if(distance<1000){
-                    cont++;
-                    tiendasCercanas.add(mTiendasFavorito.get(i));
-                }
-            }
-
-            NotificationManager notificationManager=(NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-            String CHANNEL_ID="my_channel_01";
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-                CharSequence name="my_channel";
-                String Description="This is my channel";
-                int importance=NotificationManager.IMPORTANCE_HIGH;
-                NotificationChannel mChannel=new NotificationChannel(CHANNEL_ID,name,importance);
-                mChannel.setDescription(Description);
-                mChannel.enableLights(true);
-                mChannel.setLightColor(Color.RED);
-                mChannel.enableVibration(true);
-                mChannel.setVibrationPattern(new long[]{100,200,300,400,500,400,300,200,400});
-                mChannel.setShowBadge(false);
-                notificationManager.createNotificationChannel(mChannel);
-            }
-
-            Intent cercanas = new Intent(ListTiendas.this, TiendasCercanas.class);
-            cercanas.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK| Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            cercanas.putParcelableArrayListExtra(HelperGlobal.PARCELABLEARRAYNEARBY,tiendasCercanas);
-            PendingIntent pendingIntent=PendingIntent.getActivity(ListTiendas.this,0,cercanas,PendingIntent.FLAG_UPDATE_CURRENT);
-
-            NotificationCompat.Builder builder = new NotificationCompat.Builder(ListTiendas.this, CHANNEL_ID)
-                    .setSmallIcon(R.drawable.marv_serv)
-                    .setContentTitle(HelperGlobal.NOTIFICATIONNEARBYTITLE)
-                    .setContentText("Tienes " + cont + " tiendas favoritas cerca de ti.")
-                    .setContentIntent(pendingIntent)
-                    .setAutoCancel(true)
-                    .setPriority(NotificationCompat.PRIORITY_DEFAULT);
-            notificationManager.notify(2,builder.build());
-        }
-    };
-
-    @Override
-    protected void onDestroy() {
-        if (mLocManager != null) {
-            mLocManager.removeUpdates(this);
-        }
-        super.onDestroy();
-    }
-
-    @Override
-    public void onLocationChanged(@NonNull Location location) {
-
-    }
-
-    @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {
-
-    }
-
-    @Override
-    public void onProviderEnabled(@NonNull String provider) {
-
-    }
-
-    @Override
-    public void onProviderDisabled(@NonNull String provider) {
-
-    }
-
-    @Override
-    public void onPointerCaptureChanged(boolean hasCapture) {
-
-    }*/
-   /*private void newgames(){
-       newgames.setHasFixedSize(true);
-       newgames.setLayoutManager(new LinearLayoutManager(this));
-       RequestQueue queue = Volley.newRequestQueue(this);
-       String url = HelperGlobal.URLGAMES;
-       StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
-               new Response.Listener<String>() {
-                   @Override
-                   public void onResponse(String response) {
-                       GamesParse gamesParse = new GamesParse();
-                       mGames = gamesParse.parseGame(response);
-
-                       for (int i = 0; i< mGames.size(); i++){
-                           relleno = true;
-                           if(mGames.get(i).getName() == "" || mGames.get(i).getImage() == "" ||
-                                   mGames.get(i).getRating().contentEquals("0") || mGames.get(i).getReleased() == "null" ||mGames.get(i).getGenres() == "" ){
-
-                           }else{
-                               mGamesRellenos.add(mGames.get(i));
-                           }
-                       }
-                       mPd.dismiss();
-                       if(mAdapter2==null){
-                           mAdapter2 = new NewGamesAdapter();
-                          // mLv.setAdapter(mAdapter2);
-                       }else{
-                           mAdapter2.notifyDataSetChanged();
-                       }
-                       // actualizar();
-                   }
-               }, new Response.ErrorListener() {
-           @Override
-           public void onErrorResponse(VolleyError error) {
-
-           }
-       });
-       stringRequest.setShouldCache(false);
-       queue.add(stringRequest);
-
-   }*/
-
-   private TextWatcher searchTextWatcher = new TextWatcher() {
-       @Override
-       public void onTextChanged(CharSequence s, int start, int before, int count) {
-           // ignore
-       }
-
-       @Override
-       public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-           // ignore
-       }
-
-       @Override
-       public void afterTextChanged(Editable s) {
-
-          // mAdapter.getFilter().filter(s.toString());
-       }
-   };
 
 
     public boolean onCreateOptionsMenu(Menu menu){
        getMenuInflater().inflate(R.menu.menu_toolbar, menu);
-       return true;
+        // Associate searchable configuration with the SearchView
+        SearchManager searchManager =
+                (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView =
+                (SearchView) menu.findItem(R.id.toolbar_search).getActionView();
+
+       /* int searchHintBtnId = searchView.getContext().getResources()
+                .getIdentifier("android:id/search_mag_icon", null, null);
+
+        int id =  searchView.getContext().getResources().getIdentifier("android:id/search_src_text", null, null);
+
+
+        int closeBtnId = searchView.getContext()
+                .getResources()
+                .getIdentifier("android:id/search_close_btn", null, null);
+
+        ImageView closeIcon = (ImageView) searchView.findViewById(closeBtnId);
+        closeIcon.setColorFilter(Color.BLACK);
+
+        ImageView searchHintIcon = (ImageView) searchView.findViewById(searchHintBtnId);
+        searchHintIcon.setColorFilter(Color.BLACK);
+
+        TextView textView = (TextView) searchView.findViewById(id);
+        textView.setTextColor(Color.BLACK);
+        textView.setHintTextColor(Color.BLUE);
+*/
+
+
+        searchView.setBackgroundColor(Color.BLACK);
+        searchView.setSearchableInfo(
+                searchManager.getSearchableInfo(getComponentName()));
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                mAdapter.getFilter().filter(newText);
+                return true;
+            }
+        });
+       return super.onCreateOptionsMenu(menu);
    }
    private void setToolBar(){
        setSupportActionBar(toolbar);
@@ -352,11 +267,7 @@ public class GameList extends AppCompatActivity {
 
                 //return true;
                 break;
-            case R.id.toolbar_filtro:
-                Intent intent=new Intent(GameList.this,Profile.class);
-                startActivity(intent);
-                finish();
-                break;
+
 
         }
 
@@ -408,7 +319,6 @@ public class GameList extends AppCompatActivity {
        RequestQueue queue = Volley.newRequestQueue(this);
        for ( page=1;page<=max;page++){
            String url = "https://api.rawg.io/api/games?page="+page;
-          Log.d("this",url);
            StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                    new Response.Listener<String>() {
                        @Override
@@ -417,11 +327,12 @@ public class GameList extends AppCompatActivity {
                            mGames = gamesParse.parseGame(response);
                            relleno = false;
                            for (int i = 0; i < mGames.size(); i++) {
-                               if (mGames.get(i).getName() == "" || mGames.get(i).getImage() == "" ||
+                               if (mGames.get(i).getId()==""||mGames.get(i).getName() == "" || mGames.get(i).getImage() == "" ||
                                        mGames.get(i).getRating().contentEquals("0") || mGames.get(i).getReleased() == "null" || mGames.get(i).getGenres() == "") {
 
                                }else{
                                    mGamesRellenos.add(mGames.get(i));
+
                                }
                            }
                            if(mAdapter==null){
@@ -443,13 +354,14 @@ public class GameList extends AppCompatActivity {
            stringRequest.setShouldCache(false);
            queue.add(stringRequest);
        }
+
    }
     private void loadNewGames(){
         int page = 0;
         RequestQueue queue2 = Volley.newRequestQueue(this);
 
             String url2 = "https://api.rawg.io/api/games?dates=2020-05-05,2020-10-10";
-            Log.d("this",url2);
+
             StringRequest stringRequest2 = new StringRequest(Request.Method.GET, url2,
                     new Response.Listener<String>() {
                         @Override
@@ -458,11 +370,12 @@ public class GameList extends AppCompatActivity {
                             mGames = gamesParse.parseGame(response);
                             relleno = false;
                             for (int i = 0; i < mGames.size(); i++) {
-                                if (mGames.get(i).getName() == "" || mGames.get(i).getImage() == "" ||
+                                if (mGames.get(i).getId()==""||mGames.get(i).getName() == "" || mGames.get(i).getImage() == "" ||
                                         mGames.get(i).getRating().contentEquals("0") || mGames.get(i).getReleased() == "null" || mGames.get(i).getGenres() == "") {
 
                                 }else{
                                     mNewGamesRellenos.add(mGames.get(i));
+
                                 }
                             }
                             if(mNewAdapter==null){
@@ -488,8 +401,10 @@ public class GameList extends AppCompatActivity {
         int page = 0;
         RequestQueue queue3 = Volley.newRequestQueue(this);
 
-        String url3 = "https://api.rawg.io/api/games?dates=2020-10-10,2021-10-10&ordering=-added";
-        Log.d("this",url3);
+        Date date = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        System.out.println(formatter.format(date));
+        String url3 = "https://api.rawg.io/api/games?dates="+formatter.format(date)+",2023-10-10&ordering=-added&page_size=40";
         StringRequest stringRequest3 = new StringRequest(Request.Method.GET, url3,
                 new Response.Listener<String>() {
                     @Override
@@ -498,7 +413,7 @@ public class GameList extends AppCompatActivity {
                         mGames = gamesParse.parseGame(response);
                         relleno = false;
                         for (int i = 0; i < mGames.size(); i++) {
-                            if (mGames.get(i).getName() == "" || mGames.get(i).getImage() == "" ||
+                            if (mGames.get(i).getId()==""||mGames.get(i).getName() == "" || mGames.get(i).getImage() == "" ||
                                     mGames.get(i).getRating().contentEquals("0") || mGames.get(i).getReleased() == "null" || mGames.get(i).getGenres() == "") {
 
                             }else{
@@ -530,7 +445,7 @@ public class GameList extends AppCompatActivity {
         AdapterView.AdapterContextMenuInfo info=(AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         switch (item.getItemId()) {
 
-            case 1:
+           /* case 1:
                 Intent intent = new Intent(GameList.this, DetailActivity.class);
                 intent.putExtra(HelperGlobal.EXTRA_NAME, mGamesRellenos.get(info.position).getName());
                 intent.putExtra(HelperGlobal.EXTRA_DRAWABLE, mGamesRellenos.get(info.position).getImage());
@@ -541,7 +456,7 @@ public class GameList extends AppCompatActivity {
 
                 mAdapter.notifyDataSetChanged();
                 break;
-            /* case 2:
+             case 2:
                boolean encontrado = false;
                 GamesParse.game gamesfav = mTiendasFinal.get(info.position);
                 if(mTiendasFavorito.size()!=0) {
@@ -643,30 +558,30 @@ public class GameList extends AppCompatActivity {
 
 
                     FilterResults results = new FilterResults();
-                    ArrayList<GamesParse.game> FilteredArrayNames = new ArrayList<GamesParse.game>();
+                    ArrayList<GamesParse.game> FilteredGames = new ArrayList<GamesParse.game>();
 
 
-                    if(mOriginalNames == null ){
-                        mOriginalNames = new ArrayList<GamesParse.game>(mGamesRellenos);
+                    if(mOriginalNames  == null ){
+                        mOriginalNames  = new ArrayList<GamesParse.game>(mGamesRellenos);
 
                     }
                     if(constraint == null || constraint.length() == 0){
-                        results.count = mOriginalNames.size();
-                        results.values = mOriginalNames;
+                        results.count = mOriginalNames .size();
+                        results.values = mOriginalNames ;
                     }
                     else{
                         constraint = constraint.toString().toLowerCase();
-                        for(int i = 0; i < mOriginalNames.size(); i++){
+                        for(int i = 0; i < mOriginalNames .size(); i++){
 
-                            if(mOriginalNames.get(i).getName().toLowerCase().startsWith(constraint.toString())){
-                                FilteredArrayNames.add(mOriginalNames.get(i));
+                            if(mOriginalNames .get(i).getName().toLowerCase().startsWith(constraint.toString())){
+                                FilteredGames.add(mOriginalNames .get(i));
                             }
                         }
 
-                        results.count = FilteredArrayNames.size();
+                        results.count = FilteredGames.size();
                         System.out.println(results.count);
 
-                        results.values = FilteredArrayNames;
+                        results.values = FilteredGames;
 
                     }
 

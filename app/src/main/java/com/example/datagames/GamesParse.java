@@ -17,15 +17,21 @@ public class GamesParse {
         private String image;
         private String rating;
         private String genres;
+        private String id;
       //  private String extensionImg;
       //  private String price;
 
-        public game(String name, String released, String image, String rating,String genres) {
+        public game(String name, String released, String image, String rating,String genres,String id) {
             this.name = name;
             this.released = released;
             this.image = image;
             this.genres=genres;
             this.rating = rating;
+            this.id = id;
+        }
+
+        public String getId() {
+            return id;
         }
 
         public String getName() {
@@ -75,13 +81,16 @@ public class GamesParse {
     }
 
     private game parseGame(JSONObject jsonData) throws JSONException {
+        String id= "";
         String name = "";
         String released = "";
         String image = "";
         String rating = "";
         String namegenres="";
 
+
         try{
+
             if(jsonData.has(HelperGlobal.JSONDATATITLE))
                 name = jsonData.getString(HelperGlobal.JSONDATATITLE);
             if(jsonData.has(HelperGlobal.JSONRELEASED))
@@ -106,12 +115,14 @@ public class GamesParse {
                 }
 
             }
+            if(jsonData.has(HelperGlobal.JSONDATAID))
+                id = jsonData.getString(HelperGlobal.JSONDATAID);
 
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        game game = new game(name,released,image,rating,namegenres);
+        game game = new game(name,released,image,rating,namegenres,id);
         return game;
     }
 

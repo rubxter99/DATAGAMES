@@ -44,7 +44,11 @@
         <activity android:name=".Menu" />
         <activity android:name=".ResetPassword" />
         <activity android:name=".Profile" />
-        <activity android:name=".GameList" />
+        <activity android:name=".GameList">
+            <meta-data android:name="android.app.searchable"
+                android:resource="@xml/searchable"
+                />
+        </activity>
         <activity android:name=".MainActivity" />
         <activity android:name=".DetailActivity" />
         <activity android:name=".Splash">
