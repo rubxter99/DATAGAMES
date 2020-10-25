@@ -97,9 +97,6 @@ public class GamesParse {
                 released = jsonData.getString(HelperGlobal.JSONRELEASED);
             if(jsonData.has(HelperGlobal.JSONIMAGE)){
                 image = jsonData.getString(HelperGlobal.JSONIMAGE);
-
-                   // if(node.has(HelperGlobal.JSONOBJECTEXTENSION))
-                      //  extensionImg = node.getString(HelperGlobal.JSONOBJECTEXTENSION);
             }
             if(jsonData.has(HelperGlobal.JSONRATING)){
                 rating = jsonData.getString(HelperGlobal.JSONRATING);

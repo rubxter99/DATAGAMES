@@ -112,8 +112,8 @@ public class DetailParse {
 
 
     }
-    public ArrayList<details> parseDetailsGame (String content){
-        ArrayList<details> lplaces = new ArrayList<>();
+    public JSONObject parseDetailsGame (String content){
+
 
         JSONArray array;
         JSONObject json = null;
@@ -121,8 +121,10 @@ public class DetailParse {
 
         try {
             json = new JSONObject(content);
+            DetailParse.details pnode = parseDetailGame (json);
 
-            return lplaces;
+
+            return json;
             } catch (JSONException e) {
             Log.d(TAG, e.getMessage());
             return null;
@@ -148,7 +150,7 @@ public class DetailParse {
 
 
         try{
-
+            if(jsonData.has(HelperGlobal.JSONDATAID))
                 id = jsonData.getString(HelperGlobal.JSONDATAID);
             if(jsonData.has(HelperGlobal.JSONDATATITLE))
                 name = jsonData.getString(HelperGlobal.JSONDATATITLE);

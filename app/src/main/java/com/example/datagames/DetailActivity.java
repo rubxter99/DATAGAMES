@@ -1,4 +1,5 @@
 package com.example.datagames;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -54,7 +55,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 
-
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -82,6 +82,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -97,9 +101,10 @@ public class DetailActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
-   // private DetailParse.details mDetailsGames = new DetailParse.details();
-    private ArrayList<DetailParse.details> mDetailsGamesRellenos = new ArrayList<>();
-    //private DetailsGamesAdapter mDetailAdapter;
+    private JSONObject mDetailsGames = new JSONObject();
+    private ArrayList<JSONObject> mDetailsGamesRellenos = new ArrayList<>();
+    private DetailsGamesAdapter mDetailAdapter;
+    private TextView txtTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,7 +113,7 @@ public class DetailActivity extends AppCompatActivity {
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         navigationView = (NavigationView) findViewById(R.id.navview);
         mAuth = FirebaseAuth.getInstance();
-        scrollView=findViewById(R.id.scrollView6);
+        scrollView = findViewById(R.id.scrollView6);
         // Añadir action bar
 
         if (getSupportActionBar() != null) // Habilitar up button
@@ -118,9 +123,12 @@ public class DetailActivity extends AppCompatActivity {
         Intent intent = getIntent();
 
         if (intent != null) {
-            mId=intent.getStringExtra(HelperGlobal.EXTRA_ID);
-          //  loadGameDetail(mId);
-            Log.d("id2:",mId);
+
+            mId = intent.getStringExtra(HelperGlobal.EXTRA_ID);
+            loadGameDetail(mId);
+
+
+            Log.d("id2:", mId);
             ImageView imagegame = findViewById(R.id.image_paralax);
             TextView titlegame = findViewById(R.id.titleGame);
 
@@ -128,25 +136,22 @@ public class DetailActivity extends AppCompatActivity {
             TextView genresgame = findViewById(R.id.genres);
 
             navigationDrawer();
-            setToolbar();
-
-
-
 
 
         }
-
 
 
     }
 
     private void setToolbar() {
         // Añadir la Toolbar
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu_drawer);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle(mTitle);
+        getSupportActionBar().setTitle(txtTitle.getText());
+
     }
 
     private void navigationDrawer() {
@@ -244,11 +249,12 @@ public class DetailActivity extends AppCompatActivity {
 
 
     }
-   /* private void loadGameDetail(String mId){
+
+    private void loadGameDetail(String mId) {
 
         RequestQueue queue4 = Volley.newRequestQueue(this);
-        String url4 = "https://api.rawg.io/api/games/"+mId;
-        Log.d("idgame",url4);
+        String url4 = "https://api.rawg.io/api/games/" + mId;
+        Log.d("idgame", url4);
         StringRequest stringRequest4 = new StringRequest(Request.Method.GET, url4,
                 new Response.Listener<String>() {
                     @Override
@@ -256,23 +262,45 @@ public class DetailActivity extends AppCompatActivity {
                         DetailParse detailParse = new DetailParse();
                         mDetailsGames = detailParse.parseDetailsGame(response);
 
-                        for (int i = 0; i < mDetailsGames.size(); i++) {
-                            if (mDetailsGames.get(i).getName() == "" || mDetailsGames.get(i).getImage() == "" ||
-                                    mDetailsGames.get(i).getRating().contentEquals("0") || mDetailsGames.get(i).getReleased() == "null" || mDetailsGames.get(i).getGenres() == ""||mDetailsGames.get(i).getId()=="") {
-                                Log.d("nombre",mDetailsGames.get(i).getName()) ;
-                            }else{
-                                mDetailsGamesRellenos.add(mDetailsGames.get(i));
 
+                        try {
+                            Log.d("onResponse:", mDetailsGames.get("name").toString());
+                            if (mDetailsGames.get("name").toString() == "" || mDetailsGames.get("description").toString() == "" ||
+                                    mDetailsGames.get("rating").toString().contentEquals("0") || mDetailsGames.get("released").toString() == "null" || mDetailsGames.get("genres").toString() == "" || mDetailsGames.get("id").toString() == "") {
+
+                            } else {
+                                Log.d("mdetails1", mDetailsGames.get("name").toString());
+                                mDetailsGamesRellenos.add(mDetailsGames);
+                                Log.d("mdetails", mDetailsGamesRellenos.get(0).get("name").toString());
                             }
+
+
+                            try {
+                                Log.d("mDetailsAdapter", mDetailsGamesRellenos.get(0).get("name").toString());
+                                ImageView img = findViewById(R.id.image_paralax);
+                                Picasso.get().load(mDetailsGamesRellenos.get(0).get("background_image").toString()).resize(2048, 1600)
+                                        .into(img);
+
+
+                                txtTitle = findViewById(R.id.titleGame);
+                                txtTitle.setText(mDetailsGamesRellenos.get(0).get("name").toString());
+
+                                TextView txtGenres = findViewById(R.id.genres);
+                                txtGenres.setText(mDetailsGamesRellenos.get(0).get("description").toString());
+
+
+                                TextView txtReleased = findViewById(R.id.released);
+                                txtReleased.setText(mDetailsGamesRellenos.get(0).get("released").toString());
+
+                                setToolbar();
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
-                        if(mDetailAdapter==null){
-                            mDetailAdapter = new DetailsGamesAdapter(DetailActivity.this);
 
-
-
-                        }else{
-                            mDetailAdapter.notifyDataSetChanged();
-                        }
 
                         // actualizar();
                     }
@@ -286,7 +314,8 @@ public class DetailActivity extends AppCompatActivity {
         queue4.add(stringRequest4);
 
     }
-    public class DetailsGamesAdapter extends  BaseAdapter   {
+
+    public class DetailsGamesAdapter extends BaseAdapter {
 
         Integer i = 0;
         private Context context;
@@ -316,22 +345,9 @@ public class DetailActivity extends AppCompatActivity {
         @Override
         public View getView(int i, View view1, ViewGroup viewGroup) {
 
-            ImageView img = view1.findViewById(R.id.image_paralax);
-            Picasso.get().load(mDetailsGamesRellenos.get(i).getImage()).resize(2048, 1600)
-                    .into(img);
-
-            TextView txtTitle = view1.findViewById(R.id.titleGame);
-            txtTitle.setText(mDetailsGamesRellenos.get(i).getName());
-
-            TextView txtGenres = view1.findViewById(R.id.genres);
-            txtGenres.setText(mDetailsGamesRellenos.get(i).getGenres());
-
-
-            TextView txtReleased = view1.findViewById(R.id.released);
-            txtReleased.setText(mDetailsGamesRellenos.get(i).getReleased());
 
             return view1;
         }
-    }*/
+    }
 
 }
