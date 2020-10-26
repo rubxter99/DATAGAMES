@@ -17,6 +17,11 @@ public class HelperGlobal {
     public static final String EXTRA_GENRE = "genre";
     public static final String EXTRA_RELEASED = "released";
     public static final String EXTRA_RATING = "rating";
+    public static final String EXTRA_SHORTSCREENSHOT = "short_screenshots";
+    public static final String EXTRA_CLIP = "clip";
+    public static final String EXTRA_WEBSITE = "website";
+    public static final String EXTRA_STORE = "stores";
+    public static final String EXTRA_PLATFORM = "platforms";
     public final static String LATINPUTTIENDASCERCANAS="LAT";
     public final static String LONINPUTTIENDASCERCANAS="LON";
     public final static String MAPSTOAST="MAPS";
@@ -67,6 +72,8 @@ public class HelperGlobal {
     public final static String JSONOBJECTPATH="path";
     public final static String JSONOBJECTEXTENSION="extension";
     public final static String JSONIMAGE="background_image";
+    public final static String JSONSHORTSCREEN="short_screenshots";
+    public final static String JSONSHORTSCREENIMAGE="image";
     public final static String JSONWEBSITE="website";
     public final static String JSONRATING="rating";
     public final static String JSONRELEASED="released";
@@ -81,7 +88,7 @@ public class HelperGlobal {
     public final static String JSONREQUIREMENTSMINIMUM="minimum";
     public final static String JSONREQUIREMENTSMAXIMUM="recommended";
     public final static String JSONSTORES="stores";
-    public final static String JSONSTORESURL="url";
+    public final static String JSONSTORESURL="url_en";
     public final static String JSONSTORE="store";
     public final static String JSONSTORENAME="name";
     public final static String JSONDEVELOPERS="developers";

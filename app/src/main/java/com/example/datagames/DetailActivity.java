@@ -3,8 +3,10 @@ package com.example.datagames;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
+import android.text.method.LinkMovementMethod;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -50,9 +52,11 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.MediaController;
 import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.VideoView;
 
 
 import com.android.volley.Request;
@@ -82,6 +86,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -96,6 +101,10 @@ public class DetailActivity extends AppCompatActivity {
     private String mTitle;
     private String mReleased;
     private String mGenres;
+    private String mVideo;
+    private String mWebsite;
+    private String mStore;
+    private String mPlatform;
     private Double mRating;
     private ScrollView scrollView;
     private FirebaseAuth mAuth;
@@ -125,16 +134,29 @@ public class DetailActivity extends AppCompatActivity {
         if (intent != null) {
 
             mId = intent.getStringExtra(HelperGlobal.EXTRA_ID);
+            imageUrl = intent.getStringExtra(HelperGlobal.EXTRA_SHORTSCREENSHOT);
+            mGenres=intent.getStringExtra(HelperGlobal.EXTRA_GENRE);
+            mVideo=intent.getStringExtra(HelperGlobal.EXTRA_CLIP);
+            mStore= intent.getStringExtra(HelperGlobal.EXTRA_STORE);
+            mPlatform= intent.getStringExtra(HelperGlobal.EXTRA_PLATFORM);
             loadGameDetail(mId);
-
-
             Log.d("id2:", mId);
-            ImageView imagegame = findViewById(R.id.image_paralax);
-            TextView titlegame = findViewById(R.id.titleGame);
-
-            TextView releasedgame = findViewById(R.id.released);
+            ImageView shorts_imageview = findViewById(R.id.snapshot);
+            Picasso.get().load(imageUrl).fit().centerCrop().into(shorts_imageview);
             TextView genresgame = findViewById(R.id.genres);
-
+            genresgame.setText(mGenres);
+            VideoView video = findViewById(R.id.video);
+            Log.d("viedo:", mVideo.toString());
+            Uri uri= Uri.parse(mVideo);
+            MediaController mediaController=new MediaController(this);
+            mediaController.setAnchorView(video);
+            video.setMediaController(mediaController);
+            video.setVideoURI(uri);
+            video.requestFocus();
+            TextView txtStore = findViewById(R.id.store);
+            txtStore.setText(mStore);
+            TextView txtPlatform = findViewById(R.id.platform);
+            txtPlatform.setText(mPlatform);
             navigationDrawer();
 
 
@@ -269,9 +291,10 @@ public class DetailActivity extends AppCompatActivity {
                                     mDetailsGames.get("rating").toString().contentEquals("0") || mDetailsGames.get("released").toString() == "null" || mDetailsGames.get("genres").toString() == "" || mDetailsGames.get("id").toString() == "") {
 
                             } else {
-                                Log.d("mdetails1", mDetailsGames.get("name").toString());
+
                                 mDetailsGamesRellenos.add(mDetailsGames);
-                                Log.d("mdetails", mDetailsGamesRellenos.get(0).get("name").toString());
+
+                                Log.d("mdetails", mDetailsGamesRellenos.get(0).get("background_image").toString());
                             }
 
 
@@ -285,12 +308,16 @@ public class DetailActivity extends AppCompatActivity {
                                 txtTitle = findViewById(R.id.titleGame);
                                 txtTitle.setText(mDetailsGamesRellenos.get(0).get("name").toString());
 
-                                TextView txtGenres = findViewById(R.id.genres);
-                                txtGenres.setText(mDetailsGamesRellenos.get(0).get("description").toString());
+                                TextView txtDescription = findViewById(R.id.description);
+                                txtDescription.setText(mDetailsGamesRellenos.get(0).get("description_raw").toString());
 
 
                                 TextView txtReleased = findViewById(R.id.released);
                                 txtReleased.setText(mDetailsGamesRellenos.get(0).get("released").toString());
+
+                                TextView txtWebsite = findViewById(R.id.website);
+
+                                txtWebsite.setText(mDetailsGamesRellenos.get(0).get("website").toString());
 
                                 setToolbar();
 

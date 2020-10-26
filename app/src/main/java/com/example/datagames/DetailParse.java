@@ -179,11 +179,10 @@ public class DetailParse {
                 for(int i = 0; i < platforms.length();i++) {
                     JSONObject node = platforms.getJSONObject(i);
                     if(node.has(HelperGlobal.JSONPLATFORM)){
-                        JSONArray platform = node.getJSONArray(HelperGlobal.JSONPLATFORM);
-                        for(int j = 0; j < platform.length();j++) {
-                            JSONObject node2 = platform.getJSONObject(j);
-                            if (node2.has(HelperGlobal.JSONPLATFORMNAME))
-                                nameplatforms = node2.getString(HelperGlobal.JSONPLATFORMNAME);
+                        JSONObject platform = node.getJSONObject(HelperGlobal.JSONPLATFORM);
+
+                            if (platform.has(HelperGlobal.JSONPLATFORMNAME))
+                                nameplatforms = platform.getString(HelperGlobal.JSONPLATFORMNAME);
                             // if(node.has(HelperGlobal.JSONOBJECTEXTENSION))
                             //  extensionImg = node.getString(HelperGlobal.JSONOBJECTEXTENSION);
                         }
@@ -191,7 +190,7 @@ public class DetailParse {
 
                 }
 
-            }
+
             if(jsonData.has(HelperGlobal.JSONGENRES)){
                 JSONArray genress = jsonData.getJSONArray(HelperGlobal.JSONGENRES);
                 for(int i = 0; i < genress.length();i++) {

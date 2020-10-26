@@ -91,10 +91,10 @@ public class GameList extends AppCompatActivity {
         mPd.setMessage(HelperGlobal.PROGRESSMESSAGE);
         mPd.setProgress(100);
         mPd.show();
-
-        loadGames(200);
         loadNewGames();
         loadUpcomingGames();
+        loadGames(200);
+
 
         mAuth = FirebaseAuth.getInstance();
         mLv = findViewById(R.id.list_notify);
@@ -158,6 +158,13 @@ public class GameList extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(GameList.this, DetailActivity.class);
                 intent.putExtra(HelperGlobal.EXTRA_ID,mGamesRellenos.get(position).getId());
+                intent.putExtra(HelperGlobal.EXTRA_SHORTSCREENSHOT,mGamesRellenos.get(position).getShort_screenshots());
+                intent.putExtra(HelperGlobal.EXTRA_GENRE,mGamesRellenos.get(position).getGenres());
+                intent.putExtra(HelperGlobal.EXTRA_CLIP,mGamesRellenos.get(position).getClip());
+                intent.putExtra(HelperGlobal.EXTRA_STORE,mGamesRellenos.get(position).getStore());
+                intent.putExtra(HelperGlobal.EXTRA_STORE,mGamesRellenos.get(position).getUrlstore());
+                intent.putExtra(HelperGlobal.EXTRA_PLATFORM,mGamesRellenos.get(position).getPlatforms());
+
                 startActivity(intent);
 
                 mAdapter.notifyDataSetChanged();
@@ -175,7 +182,15 @@ public class GameList extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(GameList.this, DetailActivity.class);
                 intent.putExtra(HelperGlobal.EXTRA_ID,mNewGamesRellenos.get(position).getId());
-
+                Log.d("mrellenos",mNewGamesRellenos.get(position).getShort_screenshots());
+                intent.putExtra(HelperGlobal.EXTRA_SHORTSCREENSHOT,mNewGamesRellenos.get(position).getShort_screenshots());
+                intent.putExtra(HelperGlobal.EXTRA_GENRE,mNewGamesRellenos.get(position).getGenres());
+                intent.putExtra(HelperGlobal.EXTRA_CLIP,mNewGamesRellenos.get(position).getClip());
+                Log.d("holaaaa1",mNewGamesRellenos.get(position).getClip());
+                intent.putExtra(HelperGlobal.EXTRA_STORE,mNewGamesRellenos.get(position).getStore());
+                Log.d("galery",mNewGamesRellenos.get(position).getUrlstore());
+                intent.putExtra(HelperGlobal.EXTRA_STORE,mNewGamesRellenos.get(position).getUrlstore());
+                intent.putExtra(HelperGlobal.EXTRA_PLATFORM,mNewGamesRellenos.get(position).getPlatforms());
                 startActivity(intent);
 
                 mNewAdapter.notifyDataSetChanged();
@@ -193,6 +208,12 @@ public class GameList extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(GameList.this, DetailActivity.class);
                 intent.putExtra(HelperGlobal.EXTRA_ID,mUpcomingRellenos.get(position).getId());
+                intent.putExtra(HelperGlobal.EXTRA_SHORTSCREENSHOT,mUpcomingRellenos.get(position).getShort_screenshots());
+                intent.putExtra(HelperGlobal.EXTRA_GENRE,mUpcomingRellenos.get(position).getGenres());
+                intent.putExtra(HelperGlobal.EXTRA_CLIP,mUpcomingRellenos.get(position).getClip());
+                intent.putExtra(HelperGlobal.EXTRA_STORE,mUpcomingRellenos.get(position).getStore());
+                intent.putExtra(HelperGlobal.EXTRA_STORE,mUpcomingRellenos.get(position).getUrlstore());
+                intent.putExtra(HelperGlobal.EXTRA_PLATFORM,mUpcomingRellenos.get(position).getPlatforms());
                 startActivity(intent);
 
                 mUpcomingGames.notifyDataSetChanged();
@@ -375,7 +396,7 @@ public class GameList extends AppCompatActivity {
 
                                 }else{
                                     mNewGamesRellenos.add(mGames.get(i));
-
+                                    Log.d("holaaaa1",mNewGamesRellenos.get(i).getClip());
                                 }
                             }
                             if(mNewAdapter==null){
