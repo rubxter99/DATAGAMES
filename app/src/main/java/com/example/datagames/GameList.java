@@ -5,16 +5,14 @@ import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
@@ -22,9 +20,9 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
-import android.widget.EditText;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ScrollView;
@@ -33,12 +31,16 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -48,6 +50,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
@@ -56,7 +59,7 @@ import java.util.Date;
 import java.util.List;
 
 public class GameList extends AppCompatActivity {
-    private ListView mLv ;
+    private ListView mLv;
     private ListView upcoming;
     private ProgressDialog mPd;
     private static final Integer MY_PERMISSIONS_GPS_FINE_LOCATION = 1;
@@ -64,9 +67,12 @@ public class GameList extends AppCompatActivity {
     private ArrayList<GamesParse.game> mGamesRellenos = new ArrayList<>();
     private ArrayList<GamesParse.game> mNewGamesRellenos = new ArrayList<>();
     private ArrayList<GamesParse.game> mUpcomingRellenos = new ArrayList<>();
+    private ArrayList<GamesParse.game> mGamesFiltrados= new ArrayList<>();
+    public static ArrayList<GamesParse.game> mGamesFav = new ArrayList<>();
+
     private Boolean relleno;
     private GamesAdapter mAdapter = null;
-    private NewGamesAdapter mNewAdapter=null;
+    private NewGamesAdapter mNewAdapter = null;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     private Toolbar toolbar;
@@ -76,8 +82,14 @@ public class GameList extends AppCompatActivity {
     private ScrollView scrollView;
     private List<GamesParse.game> myData;
     private ArrayList<GamesParse.game> mOriginalNames;
+    private ArrayList<String> mScreenshoots;
     private ListView newgames;
     private UpcomingGamesAdapter mUpcomingGames = null;
+    private RecyclerView recyclerView;
+    private MainAdapter mainAdapter;
+    private final int CODINFILTROGAME = 0;
+    private static final int CODINTFAVGAME = 1;
+    private ObjectFilterGame mFiltroGame = null;
 
 
     @Override
@@ -91,22 +103,24 @@ public class GameList extends AppCompatActivity {
         mPd.setMessage(HelperGlobal.PROGRESSMESSAGE);
         mPd.setProgress(100);
         mPd.show();
-        loadNewGames();
-        loadUpcomingGames();
-        loadGames(200);
-
-
         mAuth = FirebaseAuth.getInstance();
+        recyclerView = findViewById(R.id.recycler_view);
         mLv = findViewById(R.id.list_notify);
         newgames = findViewById(R.id.recicler);
         upcoming = findViewById(R.id.upcoming);
         toolbar = findViewById(R.id.toolbar);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(GameList.this, LinearLayoutManager.HORIZONTAL, false);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        loadGames();
+        loadNewGames();
+        loadUpcomingGames();
+
         setToolBar();
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         navigationView = (NavigationView) findViewById(R.id.navview);
         navigationDrawer();
         scrollView = findViewById(R.id.scrollView6);
-
 
 
         scrollView.setOnTouchListener(new View.OnTouchListener() {
@@ -157,13 +171,14 @@ public class GameList extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(GameList.this, DetailActivity.class);
-                intent.putExtra(HelperGlobal.EXTRA_ID,mGamesRellenos.get(position).getId());
-                intent.putExtra(HelperGlobal.EXTRA_SHORTSCREENSHOT,mGamesRellenos.get(position).getShort_screenshots());
-                intent.putExtra(HelperGlobal.EXTRA_GENRE,mGamesRellenos.get(position).getGenres());
-                intent.putExtra(HelperGlobal.EXTRA_CLIP,mGamesRellenos.get(position).getClip());
-                intent.putExtra(HelperGlobal.EXTRA_STORE,mGamesRellenos.get(position).getStore());
-                intent.putExtra(HelperGlobal.EXTRA_STORE,mGamesRellenos.get(position).getUrlstore());
-                intent.putExtra(HelperGlobal.EXTRA_PLATFORM,mGamesRellenos.get(position).getPlatforms());
+                intent.putExtra(HelperGlobal.EXTRA_ID, mGamesFiltrados.get(position).getId());
+                intent.putExtra(HelperGlobal.EXTRA_SHORTSCREENSHOT, mGamesFiltrados.get(position).getShort_screenshots());
+                intent.putExtra(HelperGlobal.EXTRA_GENRE, mGamesFiltrados.get(position).getGenres());
+                intent.putExtra(HelperGlobal.EXTRA_CLIP, mGamesFiltrados.get(position).getClip());
+                intent.putExtra(HelperGlobal.EXTRA_STORENAME, mGamesFiltrados.get(position).getStorename());
+                Log.d("store_name", mGamesFiltrados.get(position).getStorename());
+                intent.putExtra(HelperGlobal.EXTRA_STORE, mGamesFiltrados.get(position).getUrlstore());
+                intent.putExtra(HelperGlobal.EXTRA_PLATFORM, mGamesFiltrados.get(position).getPlatforms());
 
                 startActivity(intent);
 
@@ -181,16 +196,16 @@ public class GameList extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(GameList.this, DetailActivity.class);
-                intent.putExtra(HelperGlobal.EXTRA_ID,mNewGamesRellenos.get(position).getId());
-                Log.d("mrellenos",mNewGamesRellenos.get(position).getShort_screenshots());
-                intent.putExtra(HelperGlobal.EXTRA_SHORTSCREENSHOT,mNewGamesRellenos.get(position).getShort_screenshots());
-                intent.putExtra(HelperGlobal.EXTRA_GENRE,mNewGamesRellenos.get(position).getGenres());
-                intent.putExtra(HelperGlobal.EXTRA_CLIP,mNewGamesRellenos.get(position).getClip());
-                Log.d("holaaaa1",mNewGamesRellenos.get(position).getClip());
-                intent.putExtra(HelperGlobal.EXTRA_STORE,mNewGamesRellenos.get(position).getStore());
-                Log.d("galery",mNewGamesRellenos.get(position).getUrlstore());
-                intent.putExtra(HelperGlobal.EXTRA_STORE,mNewGamesRellenos.get(position).getUrlstore());
-                intent.putExtra(HelperGlobal.EXTRA_PLATFORM,mNewGamesRellenos.get(position).getPlatforms());
+                intent.putExtra(HelperGlobal.EXTRA_ID, mNewGamesRellenos.get(position).getId());
+                Log.d("mrellenos", mNewGamesRellenos.get(position).getShort_screenshots());
+                intent.putExtra(HelperGlobal.EXTRA_SHORTSCREENSHOT, mNewGamesRellenos.get(position).getShort_screenshots());
+                intent.putExtra(HelperGlobal.EXTRA_GENRE, mNewGamesRellenos.get(position).getGenres());
+                intent.putExtra(HelperGlobal.EXTRA_CLIP, mNewGamesRellenos.get(position).getClip());
+                Log.d("holaaaa1", mNewGamesRellenos.get(position).getClip());
+                intent.putExtra(HelperGlobal.EXTRA_STORENAME, mNewGamesRellenos.get(position).getStorename());
+                Log.d("galery", mNewGamesRellenos.get(position).getUrlstore());
+                intent.putExtra(HelperGlobal.EXTRA_STORE, mNewGamesRellenos.get(position).getUrlstore());
+                intent.putExtra(HelperGlobal.EXTRA_PLATFORM, mNewGamesRellenos.get(position).getPlatforms());
                 startActivity(intent);
 
                 mNewAdapter.notifyDataSetChanged();
@@ -207,24 +222,25 @@ public class GameList extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(GameList.this, DetailActivity.class);
-                intent.putExtra(HelperGlobal.EXTRA_ID,mUpcomingRellenos.get(position).getId());
-                intent.putExtra(HelperGlobal.EXTRA_SHORTSCREENSHOT,mUpcomingRellenos.get(position).getShort_screenshots());
-                intent.putExtra(HelperGlobal.EXTRA_GENRE,mUpcomingRellenos.get(position).getGenres());
-                intent.putExtra(HelperGlobal.EXTRA_CLIP,mUpcomingRellenos.get(position).getClip());
-                intent.putExtra(HelperGlobal.EXTRA_STORE,mUpcomingRellenos.get(position).getStore());
-                intent.putExtra(HelperGlobal.EXTRA_STORE,mUpcomingRellenos.get(position).getUrlstore());
-                intent.putExtra(HelperGlobal.EXTRA_PLATFORM,mUpcomingRellenos.get(position).getPlatforms());
+                intent.putExtra(HelperGlobal.EXTRA_ID, mUpcomingRellenos.get(position).getId());
+                intent.putExtra(HelperGlobal.EXTRA_SHORTSCREENSHOT, mUpcomingRellenos.get(position).getShort_screenshots());
+                intent.putExtra(HelperGlobal.EXTRA_GENRE, mUpcomingRellenos.get(position).getGenres());
+                intent.putExtra(HelperGlobal.EXTRA_CLIP, mUpcomingRellenos.get(position).getClip());
+                intent.putExtra(HelperGlobal.EXTRA_STORENAME, mUpcomingRellenos.get(position).getStorename());
+                intent.putExtra(HelperGlobal.EXTRA_STORE, mUpcomingRellenos.get(position).getUrlstore());
+                intent.putExtra(HelperGlobal.EXTRA_PLATFORM, mUpcomingRellenos.get(position).getPlatforms());
                 startActivity(intent);
 
                 mUpcomingGames.notifyDataSetChanged();
             }
         });
+
+
     }
 
 
-
-    public boolean onCreateOptionsMenu(Menu menu){
-       getMenuInflater().inflate(R.menu.menu_toolbar, menu);
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_toolbar, menu);
         // Associate searchable configuration with the SearchView
         SearchManager searchManager =
                 (SearchManager) getSystemService(Context.SEARCH_SERVICE);
@@ -268,61 +284,68 @@ public class GameList extends AppCompatActivity {
                 return true;
             }
         });
-       return super.onCreateOptionsMenu(menu);
-   }
-   private void setToolBar(){
-       setSupportActionBar(toolbar);
-       getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu_drawer);
-       getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-       getSupportActionBar().setDisplayShowTitleEnabled(false);
-   }
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    private void setToolBar() {
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu_drawer);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case android.R.id.home:
-                if(drawerLayout.isDrawerVisible(GravityCompat.START)){
+                if (drawerLayout.isDrawerVisible(GravityCompat.START)) {
                     drawerLayout.closeDrawer(GravityCompat.START);
-                }else{
+                } else {
                     drawerLayout.openDrawer(GravityCompat.START);
                 }
 
                 //return true;
                 break;
+            case R.id.toolbar_filtros:
 
+                Intent filtroGame = new Intent(GameList.this, FilterGames.class);
+                startActivityForResult(filtroGame, CODINFILTROGAME);
+                break;
 
         }
 
-            return true;
+        return true;
 
-       // return super.onOptionsItemSelected(item);
+        // return super.onOptionsItemSelected(item);
     }
-    private void navigationDrawer(){
+
+    private void navigationDrawer() {
         navigationView.bringToFront();
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()){
+                switch (item.getItemId()) {
 
                     case R.id.nav_home:
-                        Intent intent1=new Intent(GameList.this, com.example.datagames.Menu.class);
+                        Intent intent1 = new Intent(GameList.this, com.example.datagames.Menu.class);
                         startActivity(intent1);
                         finish();
                         break;
 
                     case R.id.nav_maps:
-                        Intent intent4 =new Intent(GameList.this, MapsActivity.class);
+                        Intent intent4 = new Intent(GameList.this, MapsActivity.class);
                         startActivity(intent4);
                         finish();
                         break;
 
                     case R.id.nav_profile:
-                        Intent intent2=new Intent(GameList.this, Profile.class);
+                        Intent intent2 = new Intent(GameList.this, Profile.class);
                         startActivity(intent2);
                         finish();
                         break;
                     case R.id.nav_logout:
                         mAuth.signOut();
-                        Intent intent3=new Intent(GameList.this, MainActivity.class);
+                        Intent intent3 = new Intent(GameList.this, MainActivity.class);
                         startActivity(intent3);
                         finish();
                         break;
@@ -335,76 +358,34 @@ public class GameList extends AppCompatActivity {
 
     }
 
-   private void loadGames(final int max){
+    private void loadGames() {
         int page = 0;
-       RequestQueue queue = Volley.newRequestQueue(this);
-       for ( page=1;page<=max;page++){
-           String url = "https://api.rawg.io/api/games?page="+page;
-           StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
-                   new Response.Listener<String>() {
-                       @Override
-                       public void onResponse(String response) {
-                           GamesParse gamesParse = new GamesParse();
-                           mGames = gamesParse.parseGame(response);
-                           relleno = false;
-                           for (int i = 0; i < mGames.size(); i++) {
-                               if (mGames.get(i).getId()==""||mGames.get(i).getName() == "" || mGames.get(i).getImage() == "" ||
-                                       mGames.get(i).getRating().contentEquals("0") || mGames.get(i).getReleased() == "null" || mGames.get(i).getGenres() == "") {
+        RequestQueue queue = Volley.newRequestQueue(this);
 
-                               }else{
-                                   mGamesRellenos.add(mGames.get(i));
-
-                               }
-                           }
-                           if(mAdapter==null){
-                               mAdapter = new GamesAdapter(GameList.this);
-                               mLv.setAdapter( mAdapter);
-                               mPd.dismiss();
-                           }else{
-                               mAdapter.notifyDataSetChanged();
-                           }
-
-                           // actualizar();
-                       }
-                   }, new Response.ErrorListener() {
-               @Override
-               public void onErrorResponse(VolleyError error) {
-
-               }
-           });
-           stringRequest.setShouldCache(false);
-           queue.add(stringRequest);
-       }
-
-   }
-    private void loadNewGames(){
-        int page = 0;
-        RequestQueue queue2 = Volley.newRequestQueue(this);
-
-            String url2 = "https://api.rawg.io/api/games?dates=2020-05-05,2020-10-10";
-
-            StringRequest stringRequest2 = new StringRequest(Request.Method.GET, url2,
+            String url = "https://api.rawg.io/api/games?page_size=50";
+            StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
                             GamesParse gamesParse = new GamesParse();
                             mGames = gamesParse.parseGame(response);
-                            relleno = false;
+
                             for (int i = 0; i < mGames.size(); i++) {
-                                if (mGames.get(i).getId()==""||mGames.get(i).getName() == "" || mGames.get(i).getImage() == "" ||
+                                relleno = true;
+                                if (mGames.get(i).getId() == "" || mGames.get(i).getName() == "" || mGames.get(i).getImage() == "" ||
                                         mGames.get(i).getRating().contentEquals("0") || mGames.get(i).getReleased() == "null" || mGames.get(i).getGenres() == "") {
 
-                                }else{
-                                    mNewGamesRellenos.add(mGames.get(i));
-                                    Log.d("holaaaa1",mNewGamesRellenos.get(i).getClip());
+                                } else {
+
+                                   mGamesRellenos.add(mGames.get(i));
+                                    Log.d("thiiiiis",mGamesRellenos.get(i).getName());
+
+
                                 }
                             }
-                            if(mNewAdapter==null){
-                                mNewAdapter = new NewGamesAdapter();
-                                newgames.setAdapter( mNewAdapter);
-                            }else{
-                                mNewAdapter.notifyDataSetChanged();
-                            }
+
+                            mPd.dismiss();
+                            actualizar();
 
                             // actualizar();
                         }
@@ -414,18 +395,72 @@ public class GameList extends AppCompatActivity {
 
                 }
             });
-            stringRequest2.setShouldCache(false);
-            queue2.add(stringRequest2);
+            stringRequest.setShouldCache(false);
+            queue.add(stringRequest);
+
 
     }
-    private void loadUpcomingGames(){
+
+    private void loadNewGames() {
+        int page = 0;
+        RequestQueue queue2 = Volley.newRequestQueue(this);
+        Date date = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        String url2 = "https://api.rawg.io/api/games?dates=2020-09-09," + formatter.format(date) + "&page_size=40";
+        StringRequest stringRequest2 = new StringRequest(Request.Method.GET, url2,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        GamesParse gamesParse = new GamesParse();
+                        mGames = gamesParse.parseGame(response);
+                        relleno = false;
+                        for (int i = 0; i < mGames.size(); i++) {
+                            if (mGames.get(i).getId() == "" || mGames.get(i).getName() == "" || mGames.get(i).getImage() == "" ||
+                                    mGames.get(i).getRating().contentEquals("0") || mGames.get(i).getReleased() == "null" || mGames.get(i).getGenres() == "" || mGames.get(i).getGenres() == "") {
+
+                            } else {
+
+
+                                mNewGamesRellenos.add(mGames.get(i));
+
+
+                            }
+                        }
+                        if (mainAdapter == null) {
+                            mainAdapter = new MainAdapter(GameList.this, mNewGamesRellenos);
+                            recyclerView.setAdapter(mainAdapter);
+
+                        } else {
+                            mainAdapter.notifyDataSetChanged();
+                        }
+                        if (mNewAdapter == null) {
+                            mNewAdapter = new NewGamesAdapter();
+                            newgames.setAdapter(mNewAdapter);
+                        } else {
+                            mNewAdapter.notifyDataSetChanged();
+                        }
+
+                        // actualizar();
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+        stringRequest2.setShouldCache(false);
+        queue2.add(stringRequest2);
+
+    }
+
+    private void loadUpcomingGames() {
         int page = 0;
         RequestQueue queue3 = Volley.newRequestQueue(this);
 
         Date date = new Date();
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        System.out.println(formatter.format(date));
-        String url3 = "https://api.rawg.io/api/games?dates="+formatter.format(date)+",2023-10-10&ordering=-added&page_size=40";
+
+        String url3 = "https://api.rawg.io/api/games?dates=" + formatter.format(date) + ",2023-10-10&ordering=-added&page_size=40";
         StringRequest stringRequest3 = new StringRequest(Request.Method.GET, url3,
                 new Response.Listener<String>() {
                     @Override
@@ -434,17 +469,17 @@ public class GameList extends AppCompatActivity {
                         mGames = gamesParse.parseGame(response);
                         relleno = false;
                         for (int i = 0; i < mGames.size(); i++) {
-                            if (mGames.get(i).getId()==""||mGames.get(i).getName() == "" || mGames.get(i).getImage() == "" ||
+                            if (mGames.get(i).getId() == "" || mGames.get(i).getName() == "" || mGames.get(i).getImage() == "" ||
                                     mGames.get(i).getRating().contentEquals("0") || mGames.get(i).getReleased() == "null" || mGames.get(i).getGenres() == "") {
 
-                            }else{
+                            } else {
                                 mUpcomingRellenos.add(mGames.get(i));
                             }
                         }
-                        if(mUpcomingGames==null){
+                        if (mUpcomingGames == null) {
                             mUpcomingGames = new UpcomingGamesAdapter();
-                            upcoming.setAdapter( mUpcomingGames);
-                        }else{
+                            upcoming.setAdapter(mUpcomingGames);
+                        } else {
                             mUpcomingGames.notifyDataSetChanged();
                         }
 
@@ -460,30 +495,20 @@ public class GameList extends AppCompatActivity {
         queue3.add(stringRequest3);
 
     }
-    @Override
-    public boolean onContextItemSelected(MenuItem item)
-    {
-        AdapterView.AdapterContextMenuInfo info=(AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+
+  /*  @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         switch (item.getItemId()) {
 
-           /* case 1:
-                Intent intent = new Intent(GameList.this, DetailActivity.class);
-                intent.putExtra(HelperGlobal.EXTRA_NAME, mGamesRellenos.get(info.position).getName());
-                intent.putExtra(HelperGlobal.EXTRA_DRAWABLE, mGamesRellenos.get(info.position).getImage());
-                intent.putExtra(HelperGlobal.EXTRA_GENRE, mGamesRellenos.get(info.position).getGenres());
-                intent.putExtra(HelperGlobal.EXTRA_RATING, mGamesRellenos.get(info.position).getRating());
-                intent.putExtra(HelperGlobal.EXTRA_RELEASED, mGamesRellenos.get(info.position).getReleased());
-                startActivity(intent);
 
-                mAdapter.notifyDataSetChanged();
-                break;
-             case 2:
+             case 1:
                boolean encontrado = false;
                 GamesParse.game gamesfav = mTiendasFinal.get(info.position);
-                if(mTiendasFavorito.size()!=0) {
-                    for (int x = 0; x < mTiendasFavorito.size(); x++) {
-                        if (mTiendasFavorito.get(x).getName().equalsIgnoreCase(gamesfav.getName())
-                                && (mTiendasFavorito.get(x).getIcon().equalsIgnoreCase(gamesfav.getIcon()))) {
+                if(mGamesFav.size()!=0) {
+                    for (int x = 0; x < mGamesFav.size(); x++) {
+                        if (mGamesFav.get(x).getName().equalsIgnoreCase(gamesfav.getName())
+                                && (mGamesFav.get(x).getIcon().equalsIgnoreCase(gamesfav.getIcon()))) {
 
                             encontrado = true;
                             break;
@@ -495,21 +520,71 @@ public class GameList extends AppCompatActivity {
                     Toast.makeText(ListTiendas.this,
                             HelperGlobal.TIENDAYAFAV, Toast.LENGTH_LONG).show();
                 }else{
-                    mTiendasFavorito.add(tiendasfav);
+                    mGamesFav.add(tiendasfav);
                     Toast.makeText(ListTiendas.this,
                             HelperGlobal.AÑADIDOFAV, Toast.LENGTH_LONG).show();
                     guardarDatoSPFavs();
                 }
-                break;*/
+                break;
         }
         return true;
-    }
+    }*/
 
     // https://api.rawg.io/api/games?dates=2019-10-10,2020-10-10&ordering=-added
-    public class GamesAdapter extends  BaseAdapter  implements Filterable {
+    public class MainAdapter extends RecyclerView.Adapter<GameList.ViewHolder> {
+
+        ArrayList<GamesParse.game> mNewGamesRellenos;
+        Context context;
+
+        public MainAdapter(Context context, ArrayList<GamesParse.game> mNewGamesRellenos) {
+            this.context = context;
+            this.mNewGamesRellenos = mNewGamesRellenos;
+        }
+
+        @NonNull
+        @Override
+        public GameList.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.listview_horizontal, parent, false);
+            return new ViewHolder(view);
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull GameList.ViewHolder holder, final int position) {
+            Picasso.get().load(mNewGamesRellenos.get(position).getImage()).resize(2048, 1600)
+                    .into(holder.img);
+            holder.img.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(GameList.this, DetailActivity.class);
+                    intent.putExtra(HelperGlobal.EXTRA_ID, mNewGamesRellenos.get(position).getId());
+                    Log.d("mrellenos", mNewGamesRellenos.get(position).getShort_screenshots());
+                    intent.putExtra(HelperGlobal.EXTRA_SHORTSCREENSHOT, mNewGamesRellenos.get(position).getShort_screenshots());
+                    intent.putExtra(HelperGlobal.EXTRA_GENRE, mNewGamesRellenos.get(position).getGenres());
+                    intent.putExtra(HelperGlobal.EXTRA_CLIP, mNewGamesRellenos.get(position).getClip());
+                    Log.d("holaaaa1", mNewGamesRellenos.get(position).getClip());
+                    intent.putExtra(HelperGlobal.EXTRA_STORENAME, mNewGamesRellenos.get(position).getStorename());
+                    Log.d("galery", mNewGamesRellenos.get(position).getUrlstore());
+                    intent.putExtra(HelperGlobal.EXTRA_STORE, mNewGamesRellenos.get(position).getUrlstore());
+                    intent.putExtra(HelperGlobal.EXTRA_PLATFORM, mNewGamesRellenos.get(position).getPlatforms());
+                    startActivity(intent);
+
+                    mainAdapter.notifyDataSetChanged();
+                }
+            });
+        }
+
+        @Override
+        public int getItemCount() {
+            return mNewGamesRellenos.size();
+        }
+
+
+    }
+
+    public class GamesAdapter extends BaseAdapter implements Filterable {
 
         Integer i = 0;
-        private  Context context;
+        private Context context;
 
         public GamesAdapter(Context context) {
             this.context = context;
@@ -519,12 +594,12 @@ public class GameList extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            return mGamesRellenos.size();
+            return mGamesFiltrados.size();
         }
 
         @Override
         public Object getItem(int i) {
-            return mGamesRellenos.get(i);
+            return mGamesFiltrados.get(i);
         }
 
         @Override
@@ -545,20 +620,20 @@ public class GameList extends AppCompatActivity {
             }
 
             ImageView img = view1.findViewById(R.id.imageIcon);
-            Picasso.get().load(mGamesRellenos.get(i).getImage()).resize(2048, 1600)
+            Picasso.get().load(mGamesFiltrados.get(i).getImage()).resize(2048, 1600)
                     .into(img);
 
             TextView txtTitle = view1.findViewById(R.id.titleGame);
-            txtTitle.setText(mGamesRellenos.get(i).getName());
+            txtTitle.setText(mGamesFiltrados.get(i).getName());
 
             TextView txtGenres = view1.findViewById(R.id.genres);
-            txtGenres.setText(mGamesRellenos.get(i).getGenres());
+            txtGenres.setText(mGamesFiltrados.get(i).getGenres());
 
             TextView txtRating = view1.findViewById(R.id.rating);
-            txtRating.setText(mGamesRellenos.get(i).getRating() );
+            txtRating.setText(mGamesFiltrados.get(i).getRating());
 
             TextView txtReleased = view1.findViewById(R.id.released);
-            txtReleased.setText(mGamesRellenos.get(i).getReleased());
+            txtReleased.setText(mGamesFiltrados.get(i).getReleased());
 
             return view1;
         }
@@ -570,7 +645,7 @@ public class GameList extends AppCompatActivity {
                 @Override
                 protected void publishResults(CharSequence constraint, FilterResults results) {
 
-                    mGamesRellenos = (ArrayList<GamesParse.game>) results.values;
+                    mGamesFiltrados = (ArrayList<GamesParse.game>) results.values;
                     notifyDataSetChanged();
                 }
 
@@ -582,20 +657,19 @@ public class GameList extends AppCompatActivity {
                     ArrayList<GamesParse.game> FilteredGames = new ArrayList<GamesParse.game>();
 
 
-                    if(mOriginalNames  == null ){
-                        mOriginalNames  = new ArrayList<GamesParse.game>(mGamesRellenos);
+                    if (mOriginalNames == null) {
+                        mOriginalNames = new ArrayList<GamesParse.game>(mGamesFiltrados);
 
                     }
-                    if(constraint == null || constraint.length() == 0){
-                        results.count = mOriginalNames .size();
-                        results.values = mOriginalNames ;
-                    }
-                    else{
+                    if (constraint == null || constraint.length() == 0) {
+                        results.count = mOriginalNames.size();
+                        results.values = mOriginalNames;
+                    } else {
                         constraint = constraint.toString().toLowerCase();
-                        for(int i = 0; i < mOriginalNames .size(); i++){
+                        for (int i = 0; i < mOriginalNames.size(); i++) {
 
-                            if(mOriginalNames .get(i).getName().toLowerCase().startsWith(constraint.toString())){
-                                FilteredGames.add(mOriginalNames .get(i));
+                            if (mOriginalNames.get(i).getName().toLowerCase().startsWith(constraint.toString())) {
+                                FilteredGames.add(mOriginalNames.get(i));
                             }
                         }
 
@@ -611,8 +685,6 @@ public class GameList extends AppCompatActivity {
             };
             return filter;
         }
-
-
 
 
     }
@@ -670,7 +742,7 @@ public class GameList extends AppCompatActivity {
             return 0;
         }
     }*/
-    public class NewGamesAdapter extends  BaseAdapter  {
+    public class NewGamesAdapter extends BaseAdapter {
 
         Integer i = 0;
 
@@ -723,7 +795,7 @@ public class GameList extends AppCompatActivity {
 
     }
 
-    public class UpcomingGamesAdapter extends  BaseAdapter  {
+    public class UpcomingGamesAdapter extends BaseAdapter {
 
         Integer i = 0;
 
@@ -775,7 +847,7 @@ public class GameList extends AppCompatActivity {
         }
     }
 
-    private void pedirPermisos(){
+    private void pedirPermisos() {
         // Ask user permission for location.
         if (PackageManager.PERMISSION_GRANTED !=
                 ContextCompat.checkSelfPermission(GameList.this,
@@ -796,4 +868,67 @@ public class GameList extends AppCompatActivity {
 
         }
     }
+
+    public class ViewHolder extends RecyclerView.ViewHolder {
+        public ImageView img;
+
+        public ViewHolder(@NonNull View itemView) {
+            super(itemView);
+            img = itemView.findViewById(R.id.imageView);
+
+        }
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == CODINFILTROGAME) {
+            actualizar();
+        }
+    }
+
+    private void actualizar() {
+        leerDatosSPFiltro();
+
+        for (int i = 0; i < mGamesRellenos.size(); i++) {
+            mGamesFiltrados.add(mGamesRellenos.get(i));
+            Log.d("filtros",mGamesFiltrados.get(i).getPlatforms());
+        }
+
+        if (mFiltroGame != null) {
+            String datosRating[] = mFiltroGame.getRating().split(" ");
+            String datosPlatform[] = mFiltroGame.getPlatform().split("  ");
+            String datosGenres[] = mFiltroGame.getGenre().split("  ");
+            for (int i = 0; i <mGamesFiltrados.size(); i++) {
+                if (Double.parseDouble(mGamesFiltrados.get(i).getRating()) > Double.parseDouble(datosRating[0])||!mGamesFiltrados.get(i).getPlatforms().toString().equalsIgnoreCase(datosPlatform[0])||!mGamesFiltrados.get(i).getGenres().equalsIgnoreCase(datosGenres[0])) {
+                    mGamesFiltrados.remove(i);
+                    i--;
+                    Log.d("filtros2",datosPlatform[0]);
+
+                }
+
+
+            }
+        }
+
+        if (mAdapter == null) {
+            mAdapter = new GamesAdapter(GameList.this);
+            mLv.setAdapter(mAdapter);
+        } else {
+            mAdapter.notifyDataSetChanged();
+        }
+    }
+
+    private void leerDatosSPFiltro() {
+        SharedPreferences mPrefs = getSharedPreferences(HelperGlobal.KEYARRAYFILTROSPREFERENCESGAMES, MODE_PRIVATE);
+        Gson gson = new Gson();
+        String json = mPrefs.getString(HelperGlobal.ARRAYGAMESFILTROS, "");
+        ObjectFilterGame jsonFiltro = gson.fromJson(json, ObjectFilterGame.class);
+        if (jsonFiltro != null) {
+            mFiltroGame = jsonFiltro;
+
+        }
+    }
+
 }

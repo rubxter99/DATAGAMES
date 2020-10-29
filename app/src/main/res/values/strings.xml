@@ -10,4 +10,37 @@
     <string name="registrer">Registrer</string>
     <string name="title_activity_maps">Map</string>
 
+    <string-array name="sp_generos">
+        <item>Action</item>
+        <item>Shooter</item>
+        <item>Puzzle</item>
+        <item>Adventure</item>
+        <item>RPG</item>
+        <item>Indie</item>
+        <item>Platformer</item>
+        <item>Racing</item>
+        <item>Family</item>
+    </string-array>
+
+    <string-array name="sp_rating">
+        <item>0.0</item>
+        <item>1.0</item>
+        <item>2.0</item>
+        <item>3.0</item>
+        <item>4.0</item>
+        <item>5.0</item>
+    </string-array>
+
+    <string-array name="sp_plataformas">
+        <item>PC</item>
+        <item>Nintendo Switch</item>
+        <item>PlayStation 4</item>
+        <item>Xbox One</item>
+        <item>Xbox 360</item>
+        <item>PlayStation 3</item>
+        <item>Nintendo DS</item>
+        <item>Nintendo 3DS</item>
+        <item>Wii</item>
+    </string-array>
+
 </resources>

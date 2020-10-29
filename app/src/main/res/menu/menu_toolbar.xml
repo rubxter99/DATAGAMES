@@ -5,7 +5,7 @@
 
     <item
         android:icon="@drawable/ic_menu_filtros"
-        android:id="@+id/toolbar_filtro"
+        android:id="@+id/toolbar_filtros"
         android:title="Menu"
         app:showAsAction="always"
         />

@@ -5,8 +5,8 @@ public class HelperGlobal {
     public final static String ARRAYTIENDASFAV = "ARRAYTIENDASFAVS";
     public  final static  String KEYARRAYFILTROSPREFERENCES = "KEYARRAYFILTROS";
     public final static String ARRAYTIENDASFILTROS = "ARRAYTIENDASFILTROS";
-    public  final static  String KEYARRAYFILTROSPREFERENCESCOMICS = "KEYARRAYFILTROSCOMICS";
-    public final static String ARRAYCOMICSFILTROS = "ARRAYCOMICSFILTROS";
+    public  final static  String KEYARRAYFILTROSPREFERENCESGAMES = "KEYARRAYFILTROGAMES";
+    public final static String ARRAYGAMESFILTROS = "ARRAYGAMESFILTROS";
     public final static  String INTENT_LOCALIZATION_ACTION = "location-event-position";
     public  final static  String KEY_MESSAGE = "message";
     public final static String NAMEPARCELABLEARRAY="ARRAY_CERCANO";
@@ -21,7 +21,9 @@ public class HelperGlobal {
     public static final String EXTRA_CLIP = "clip";
     public static final String EXTRA_WEBSITE = "website";
     public static final String EXTRA_STORE = "stores";
+    public static final String EXTRA_STORENAME = "store";
     public static final String EXTRA_PLATFORM = "platforms";
+    public static final String EXTRA_METACRITIC = "metacritic";
     public final static String LATINPUTTIENDASCERCANAS="LAT";
     public final static String LONINPUTTIENDASCERCANAS="LON";
     public final static String MAPSTOAST="MAPS";

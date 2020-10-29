@@ -1,5 +1,7 @@
 package com.example.datagames;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -10,7 +12,7 @@ import java.util.ArrayList;
 
 public class DetailParse {
     private final String TAG =getClass().getSimpleName();
-    public static class details{
+    public static class details implements Parcelable{
         private String name;
         private String released;
         private String image;
@@ -109,6 +111,41 @@ public class DetailParse {
             return metacritic;
         }
 
+        public  details(Parcel in){
+            name = in.readString();
+            image = in.readString();
+            rating = in.readString();
+            genres=in.readString();
+            released=in.readString();
+        }
+
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel parcel, int i) {
+            parcel.writeString(name);
+            parcel.writeString(image);
+            parcel.writeString(rating);
+            parcel.writeString(genres);
+            parcel.writeString(released);
+        }
+
+        public Parcelable.Creator<DetailParse.details> CREATOR =
+                new Parcelable.Creator<DetailParse.details>() {
+                    @Override
+                    public DetailParse.details createFromParcel(Parcel parcel) {
+                        return new DetailParse.details(parcel);
+                    }
+
+                    @Override
+                    public DetailParse.details[] newArray(int i) {
+                        return new DetailParse.details[i];
+                    }
+                };
 
 
     }
