@@ -121,7 +121,7 @@ public class DetailActivity extends AppCompatActivity {
     private NavigationView navigationView;
     private JSONObject mDetailsGames = new JSONObject();
     private ArrayList<JSONObject> mDetailsGamesRellenos = new ArrayList<>();
-    public static ArrayList<String> mGamesFav = new ArrayList<String>();
+    public static ArrayList<GamesParse.game> mGamesFav = new ArrayList<>();
     private DetailsGamesAdapter mDetailAdapter;
     private TextView txtTitle;
     private static final int CODINTFAVGAME = 1;
@@ -218,7 +218,7 @@ public class DetailActivity extends AppCompatActivity {
                         startActivity(intent4);
                         finish();
                         break;
-
+/*
                     case R.id.nav_fav:
 
 
@@ -229,7 +229,7 @@ public class DetailActivity extends AppCompatActivity {
 
                         leerDatosSPFavs();
 
-                        break;
+                        break;*/
 
                     case R.id.nav_profile:
                         Intent intent2 = new Intent(DetailActivity.this, Profile.class);
@@ -297,7 +297,7 @@ public class DetailActivity extends AppCompatActivity {
                 Intent intent2 = new Intent(DetailActivity.this, Profile.class);
                 startActivity(intent2);
                 return true;
-            case R.id.action_favorite:
+           /* case R.id.action_favorite:
                 boolean encontrado = false;
                 try {
                     if (mGamesFav.size() != 0) {
@@ -333,13 +333,11 @@ public class DetailActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
-                break;
+                break;*/
 
             default:
                 return super.onOptionsItemSelected(item);
         }
-
-        return true;
 
     }
 
@@ -458,7 +456,7 @@ public class DetailActivity extends AppCompatActivity {
         }
     }
 
-    private void leerDatosSPFavs() {
+   /* private void leerDatosSPFavs() {
         SharedPreferences mPrefs = getSharedPreferences(HelperGlobal.KEYARRAYFAVSPREFERENCES, MODE_PRIVATE);
         Gson gson = new Gson();
         String json = mPrefs.getString(HelperGlobal.ARRAYTIENDASFAV, "");
@@ -488,6 +486,30 @@ public class DetailActivity extends AppCompatActivity {
             leerDatosSPFavs();
         }
 
+    }*/
+
+
+    private void leerDatosSPFavs() {
+        SharedPreferences mPrefs = getSharedPreferences(HelperGlobal.KEYARRAYFAVSPREFERENCES, MODE_PRIVATE);
+        Gson gson = new Gson();
+        String json = mPrefs.getString(HelperGlobal.ARRAYTIENDASFAV, "");
+        Type founderListType = new TypeToken<ArrayList<GamesParse.game>>() {
+        }.getType();
+        ArrayList<GamesParse.game> restoreArray = gson.fromJson(json, founderListType);
+
+        if (restoreArray != null) {
+            mGamesFav = restoreArray;
+
+        }
+    }
+
+    private void guardarDatoSPFavs() {
+        SharedPreferences mPrefs = getSharedPreferences(HelperGlobal.KEYARRAYFAVSPREFERENCES, MODE_PRIVATE);
+        SharedPreferences.Editor prefsEditor = mPrefs.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(mGamesFav);
+        prefsEditor.putString(HelperGlobal.ARRAYTIENDASFAV, json);
+        prefsEditor.commit();
     }
 
 }

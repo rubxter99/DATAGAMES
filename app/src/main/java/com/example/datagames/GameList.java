@@ -29,6 +29,7 @@ import android.widget.ScrollView;
 import android.widget.SearchView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -50,9 +51,12 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.squareup.picasso.Picasso;
 
+import java.lang.reflect.Type;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -90,6 +94,7 @@ public class GameList extends AppCompatActivity {
     private final int CODINFILTROGAME = 0;
     private static final int CODINTFAVGAME = 1;
     private ObjectFilterGame mFiltroGame = null;
+    private FirebaseUser firebaseUser;
 
 
     @Override
@@ -103,7 +108,10 @@ public class GameList extends AppCompatActivity {
         mPd.setMessage(HelperGlobal.PROGRESSMESSAGE);
         mPd.setProgress(100);
         mPd.show();
+
         mAuth = FirebaseAuth.getInstance();
+        firebaseUser=mAuth.getCurrentUser();
+
         recyclerView = findViewById(R.id.recycler_view);
         mLv = findViewById(R.id.list_notify);
         newgames = findViewById(R.id.recicler);
@@ -146,7 +154,7 @@ public class GameList extends AppCompatActivity {
             public void onCreateContextMenu(ContextMenu contextMenu,
                                             View view,
                                             ContextMenu.ContextMenuInfo contextMenuInfo) {
-                contextMenu.add(0, 2, 0, HelperGlobal.AÑADIRFAV);
+                contextMenu.add(0, 1, 0, HelperGlobal.AÑADIRFAV);
             }
         });
         newgames.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
@@ -154,7 +162,7 @@ public class GameList extends AppCompatActivity {
             public void onCreateContextMenu(ContextMenu contextMenu,
                                             View view,
                                             ContextMenu.ContextMenuInfo contextMenuInfo) {
-                contextMenu.add(0, 2, 0, HelperGlobal.AÑADIRFAV);
+                contextMenu.add(0, 1, 0, HelperGlobal.AÑADIRFAV);
             }
         });
         upcoming.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
@@ -162,7 +170,7 @@ public class GameList extends AppCompatActivity {
             public void onCreateContextMenu(ContextMenu contextMenu,
                                             View view,
                                             ContextMenu.ContextMenuInfo contextMenuInfo) {
-                contextMenu.add(0, 2, 0, HelperGlobal.AÑADIRFAV);
+                contextMenu.add(0, 1, 0, HelperGlobal.AÑADIRFAV);
             }
         });
 
@@ -320,10 +328,13 @@ public class GameList extends AppCompatActivity {
     }
 
     private void navigationDrawer() {
+
         navigationView.bringToFront();
+
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
                 switch (item.getItemId()) {
 
                     case R.id.nav_home:
@@ -336,6 +347,17 @@ public class GameList extends AppCompatActivity {
                         Intent intent4 = new Intent(GameList.this, MapsActivity.class);
                         startActivity(intent4);
                         finish();
+                        break;
+                    case R.id.nav_fav:
+
+
+                        Intent favGames = new Intent(GameList.this, FavGames.class);
+                        favGames.putParcelableArrayListExtra(HelperGlobal.PARCELABLEKEYARRAY, mGamesFav);
+
+                        startActivityForResult(favGames,CODINTFAVGAME);
+
+                        leerDatosSPFavs();
+
                         break;
 
                     case R.id.nav_profile:
@@ -496,19 +518,19 @@ public class GameList extends AppCompatActivity {
 
     }
 
-  /*  @Override
+   @Override
     public boolean onContextItemSelected(MenuItem item) {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         switch (item.getItemId()) {
 
-
              case 1:
                boolean encontrado = false;
-                GamesParse.game gamesfav = mTiendasFinal.get(info.position);
+                GamesParse.game gamesfav = mGamesRellenos.get(info.position);
+
                 if(mGamesFav.size()!=0) {
                     for (int x = 0; x < mGamesFav.size(); x++) {
                         if (mGamesFav.get(x).getName().equalsIgnoreCase(gamesfav.getName())
-                                && (mGamesFav.get(x).getIcon().equalsIgnoreCase(gamesfav.getIcon()))) {
+                                && (mGamesFav.get(x).getImage().equalsIgnoreCase(gamesfav.getImage()))) {
 
                             encontrado = true;
                             break;
@@ -517,18 +539,19 @@ public class GameList extends AppCompatActivity {
                 }
 
                 if(encontrado){
-                    Toast.makeText(ListTiendas.this,
+                    Toast.makeText(GameList.this,
                             HelperGlobal.TIENDAYAFAV, Toast.LENGTH_LONG).show();
                 }else{
-                    mGamesFav.add(tiendasfav);
-                    Toast.makeText(ListTiendas.this,
+                    mGamesFav.add(gamesfav);
+
+                    Toast.makeText(GameList.this,
                             HelperGlobal.AÑADIDOFAV, Toast.LENGTH_LONG).show();
                     guardarDatoSPFavs();
                 }
                 break;
         }
         return true;
-    }*/
+    }
 
     // https://api.rawg.io/api/games?dates=2019-10-10,2020-10-10&ordering=-added
     public class MainAdapter extends RecyclerView.Adapter<GameList.ViewHolder> {
@@ -885,6 +908,8 @@ public class GameList extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == CODINFILTROGAME) {
             actualizar();
+        }else if(requestCode == CODINTFAVGAME){
+            leerDatosSPFavs();
         }
     }
 
@@ -900,17 +925,21 @@ public class GameList extends AppCompatActivity {
             String datosRating[] = mFiltroGame.getRating().split(" ");
             String datosPlatform[] = mFiltroGame.getPlatform().split("  ");
             String datosGenres[] = mFiltroGame.getGenre().split("  ");
+
             for (int i = 0; i <mGamesFiltrados.size(); i++) {
+
                 if (Double.parseDouble(mGamesFiltrados.get(i).getRating()) > Double.parseDouble(datosRating[0])||!mGamesFiltrados.get(i).getPlatforms().toString().equalsIgnoreCase(datosPlatform[0])||!mGamesFiltrados.get(i).getGenres().equalsIgnoreCase(datosGenres[0])) {
+                   if(mGamesFiltrados.get(i).getName().equalsIgnoreCase(mGamesFiltrados.get(i).getName())){
+
+
                     mGamesFiltrados.remove(i);
                     i--;
                     Log.d("filtros2",datosPlatform[0]);
-
+                   }
                 }
-
-
             }
         }
+
 
         if (mAdapter == null) {
             mAdapter = new GamesAdapter(GameList.this);
@@ -929,6 +958,29 @@ public class GameList extends AppCompatActivity {
             mFiltroGame = jsonFiltro;
 
         }
+    }
+
+    private void leerDatosSPFavs() {
+        SharedPreferences mPrefs = getSharedPreferences(HelperGlobal.KEYARRAYFAVSPREFERENCES, MODE_PRIVATE);
+        Gson gson = new Gson();
+        String json = mPrefs.getString(HelperGlobal.ARRAYTIENDASFAV, "");
+        Type founderListType = new TypeToken<ArrayList<GamesParse.game>>() {
+        }.getType();
+        ArrayList<GamesParse.game> restoreArray = gson.fromJson(json, founderListType);
+
+        if (restoreArray != null) {
+            mGamesFav = restoreArray;
+
+        }
+    }
+
+    private void guardarDatoSPFavs() {
+        SharedPreferences mPrefs = getSharedPreferences(HelperGlobal.KEYARRAYFAVSPREFERENCES, MODE_PRIVATE);
+        SharedPreferences.Editor prefsEditor = mPrefs.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(mGamesFav);
+        prefsEditor.putString(HelperGlobal.ARRAYTIENDASFAV, json);
+        prefsEditor.commit();
     }
 
 }

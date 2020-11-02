@@ -29,7 +29,7 @@ import java.util.Collections;
 import java.util.Comparator;
 
 public class FavGames extends AppCompatActivity {
-    public static ArrayList<String> mGamesFav = new ArrayList<String>();
+    public static ArrayList<GamesParse.game> mGamesFav = new ArrayList<>();
     private ListView mLv = null;
     private MyAdapter mAdapter;
     private Location mCurrentLocation = new Location("");
@@ -40,12 +40,11 @@ public class FavGames extends AppCompatActivity {
         setContentView(R.layout.activity_fav_games);
         Intent getIntent = getIntent();
 
-        ArrayList<String> gamesIntent = getIntent.getStringArrayListExtra(HelperGlobal.PARCELABLEKEYARRAY);
+        ArrayList<GamesParse.game> gamesIntent = getIntent.getParcelableArrayListExtra(HelperGlobal.PARCELABLEKEYARRAY);
         mLv = findViewById(R.id.list_fav);
         mGamesFav = new ArrayList<>();
         for(int i = 0; i<gamesIntent.size();i++){
             mGamesFav.add(gamesIntent.get(i));
-            Log.d("games",mGamesFav.get(i));
 
         }
 
@@ -53,7 +52,21 @@ public class FavGames extends AppCompatActivity {
 
         mAdapter = new MyAdapter();
         mLv.setAdapter(mAdapter);
+        mLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                Intent i3=new Intent(FavGames.this,DetailActivity.class);
+                i3.putExtra(HelperGlobal.EXTRA_DRAWABLE, mGamesFav.get(position).getName());
+                i3.putExtra(HelperGlobal.EXTRA_NAME, mGamesFav.get(position).getImage());
+                i3.putExtra(HelperGlobal.EXTRA_RATING,mGamesFav.get(position).getRating());
+                i3.putExtra(HelperGlobal.EXTRA_GENRE,mGamesFav.get(position).getGenres());
+                i3.putExtra(HelperGlobal.EXTRA_RELEASED, mGamesFav.get(position).getReleased());
+                startActivity(i3);
+            }
+        });
+/*
         mLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
@@ -67,7 +80,7 @@ public class FavGames extends AppCompatActivity {
                 i3.putExtra(HelperGlobal.EXTRA_RELEASED, mGamesFav.get(4));
                 startActivity(i3);
             }
-        });
+        });*/
 
         mLv.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
             @Override
@@ -75,7 +88,7 @@ public class FavGames extends AppCompatActivity {
                                             View view,
                                             ContextMenu.ContextMenuInfo contextMenuInfo) {
 
-                contextMenu.add(0, 2, 0, HelperGlobal.ELIMINARFAVCONTEXTMENU);
+                contextMenu.add(0, 1, 0, HelperGlobal.ELIMINARFAVCONTEXTMENU);
             }
         });
     }
@@ -121,20 +134,20 @@ public class FavGames extends AppCompatActivity {
                 myview = view;
 
             ImageView img = myview.findViewById(R.id.imageIcon);
-            Picasso.get().load(mGamesFav.get(1).toString()).resize(2048, 1600)
+            Picasso.get().load(mGamesFav.get(i).getImage()).resize(2048, 1600)
                     .into(img);
 
             TextView tTitle = myview.findViewById(R.id.title);
-            tTitle.setText(mGamesFav.get(0).toString());
+            tTitle.setText(mGamesFav.get(i).getName());
 
             TextView txtRtaing =  myview.findViewById(R.id.rating);
-            txtRtaing.setText(mGamesFav.get(2).toString());
+            txtRtaing.setText(mGamesFav.get(i).getRating());
 
             TextView txtGenres =  myview.findViewById(R.id.genress);
-            txtGenres.setText(mGamesFav.get(3).toString());
+            txtGenres.setText(mGamesFav.get(i).getGenres());
 
             TextView txtReleased =  myview.findViewById(R.id.releasedd);
-            txtReleased.setText(mGamesFav.get(4).toString());
+            txtReleased.setText(mGamesFav.get(i).getReleased());
 
             return myview;
         }

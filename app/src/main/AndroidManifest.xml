@@ -53,6 +53,7 @@
         <activity android:name=".DetailActivity" />
         <activity android:name=".FilterGames" />
         <activity android:name=".FavGames" />
+        <activity android:name=".EditProfile" />
         <activity android:name=".Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

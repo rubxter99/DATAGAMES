@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public class GamesParse {
     private final String TAG = getClass().getSimpleName();
 
-    public static class game {
+    public static class game  implements Parcelable{
         private String name;
         private String released;
         private String image;
@@ -91,7 +91,41 @@ public class GamesParse {
             return rating;
         }
 
+        public  game(Parcel in){
+            name = in.readString();
+            image = in.readString();
+            rating = in.readString();
+            genres=in.readString();
+            released=in.readString();
+        }
 
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel parcel, int i) {
+            parcel.writeString(name);
+            parcel.writeString(image);
+            parcel.writeString(rating);
+            parcel.writeString(genres);
+            parcel.writeString(released);
+        }
+
+        public static Parcelable.Creator<GamesParse.game> CREATOR =
+                new Parcelable.Creator<GamesParse.game>() {
+                    @Override
+                    public GamesParse.game createFromParcel(Parcel parcel) {
+                        return new GamesParse.game(parcel);
+                    }
+
+                    @Override
+                    public GamesParse.game[] newArray(int i) {
+                        return new GamesParse.game[i];
+                    }
+                };
     }
 
 

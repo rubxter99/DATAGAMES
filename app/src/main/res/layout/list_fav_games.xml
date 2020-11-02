@@ -9,13 +9,13 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        xmlns:card_view="http://schemas.android.com/apk/res-auto">
+        android:orientation="horizontal">
 
 
         <androidx.cardview.widget.CardView
             android:id="@+id/card_view"
-            card_view:cardBackgroundColor="@color/colorGame"
-            card_view:cardCornerRadius="20dp"
+            app:cardBackgroundColor="@color/colorGame"
+            app:cardCornerRadius="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             card_viewIcardUseCompactPadding="true"
@@ -27,21 +27,21 @@
 
 
             >
+
             <ImageView
                 android:id="@+id/imageIcon"
-                android:layout_width="89dp"
-                android:layout_height="50dp"
+                android:layout_width="111dp"
+                android:layout_height="85dp"
 
-                android:layout_margin="25dp"
-                />
+                android:layout_margin="15dp" />
 
             <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_marginLeft="120dp"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-
+                android:layout_width="195dp"
+                android:layout_height="69dp"
                 android:layout_gravity="center_vertical"
+                android:layout_marginLeft="150dp"
+
+                android:orientation="vertical"
 
                 >
 
@@ -49,39 +49,37 @@
                     android:id="@+id/title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="16dp"
-                    android:textColor="@color/colorBlack"
                     android:layout_weight="1"
                     android:maxLines="2"
-                    />
+                    android:textColor="@color/colorBlack"
+                    android:textSize="16dp" />
+
                 <TextView
                     android:id="@+id/rating"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="15dp"
-                    android:textColor="@color/colorBlack"
                     android:layout_weight="1"
                     android:maxLines="1"
-                    />
+                    android:textColor="@color/colorBlack"
+                    android:textSize="15dp" />
 
                 <TextView
                     android:id="@+id/genress"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="14dp"
-                    android:textColor="@color/colorBlack"
                     android:layout_weight="1"
                     android:maxLines="1"
-                    />
+                    android:textColor="@color/colorBlack"
+                    android:textSize="14dp" />
+
                 <TextView
                     android:id="@+id/releasedd"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="14dp"
-                    android:textColor="@color/colorBlack"
                     android:layout_weight="1"
                     android:maxLines="1"
-                    />
+                    android:textColor="@color/colorBlack"
+                    android:textSize="14dp" />
 
 
             </LinearLayout>

@@ -7,6 +7,9 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Build;
@@ -27,6 +30,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
@@ -41,8 +45,15 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.io.IOException;
 import java.util.List;
 
@@ -52,9 +63,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private GoogleApiClient googleApiClient;
     private LocationRequest locationRequest;
     private Location lastLocation;
+    private DatabaseReference mUsers;
     private Marker currentUserLocationMarker;
+    private Marker marker;
     private static final int Request_User_Location_Code=99;
     private static String mTitle;
+    private static String name;
     private  static double  mLat;
     private  static double mLon;
     private static final Integer MY_PERMISSIONS_GPS_FINE_LOCATION = 1;
@@ -63,6 +77,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private static final int REQUEST_CHECK_SETTINGS = 0x1;
     private static final String BROADCAST_ACTION = "android.location.PROVIDERS_CHANGED";
     private final String TAG = getClass().getSimpleName();
+    public FusedLocationProviderClient fusedLocationProviderClient;
 
 
     @Override
@@ -80,6 +95,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             mProximityRadius=intent.getIntExtra(HelperGlobal.RADIUSINPUTTIENDASCERCANAS,1000);
 
         }
+        mUsers= FirebaseDatabase.getInstance().getReference("tiendas");
+        //mUsers.push().setValue(marker);
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -134,35 +151,74 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             CameraUpdate location = CameraUpdateFactory.newLatLngZoom(myloc, 5);
             mMap.moveCamera(location);
             mMap.setMyLocationEnabled(true);
+            mUsers = FirebaseDatabase.getInstance().getReference("tiendas");
+
+            mUsers.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+
+                    for (DataSnapshot child : dataSnapshot.child("tiendas").getChildren()){
+                        mLat = child.child("latitud").getValue(Double.class);
+                        mLon = child.child("longitud").getValue(Double.class);
+                        name = child.child("name").getValue(String.class);
+
+
+                        LatLng latLng = new LatLng(mLat, mLon);
+                        Log.d("errorlat","estoy aqui");
+                        mMap.addMarker(new MarkerOptions()
+                                .position(latLng)
+                                .title(name)
+                                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
+                        CameraUpdate location = CameraUpdateFactory.newLatLngZoom(latLng, 17);
+                        mMap.moveCamera(location);
+                    }
+
+
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+
+            /*try {
+                boolean success = googleMap.setMapStyle(
+                        MapStyleOptions.loadRawResourceStyle(this, R.raw.google_style));
+                if (!success) {
+                    // Handle map style load failure
+                    Log.e("map_style","map style updated please do check it");
+                }
+            } catch (Resources.NotFoundException e) {
+                // Oops, looks like the map style resource couldn't be found!
+                Log.e("map_style","map is not updated yet ... do some other stuff");
+            }*/
+
+
+
+
+
+            //setting the size of marker in map by using Bitmap Class
+
 
         }
 
         mMap.getUiSettings().setZoomControlsEnabled(true);
-
-
     }
+
+
+
+
 
     public void onClick(View v)
     {
         //String comic = "store" ;
+
         String centro_comercial="book_store";
         Object transferData[] = new Object[2];
         GetNearbyPlaces getNearbyPlaces = new GetNearbyPlaces();
 
 
-        switch (v.getId())
-        {
-            case R.id.centrocomercial:
-                mMap.clear();
-                String url2 = getUrl(mLat, mLon, centro_comercial);
-                transferData[0] = mMap;
-                transferData[1] = url2;
-
-                getNearbyPlaces.execute(transferData);
-                Toast.makeText(this, HelperGlobal.SHEARCHINGNEARBYSHOP, Toast.LENGTH_SHORT).show();
-                Toast.makeText(this, HelperGlobal.SHOWINGNEARBYSHOP, Toast.LENGTH_SHORT).show();
-                break;
-        }
     }
 
     private String getUrl(double latitide, double longitude, String nearbyPlace)
