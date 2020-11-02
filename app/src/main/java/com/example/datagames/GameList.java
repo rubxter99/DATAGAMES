@@ -120,7 +120,7 @@ public class GameList extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(GameList.this, LinearLayoutManager.HORIZONTAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        loadGames();
+        loadGames(100);
         loadNewGames();
         loadUpcomingGames();
 
@@ -380,11 +380,11 @@ public class GameList extends AppCompatActivity {
 
     }
 
-    private void loadGames() {
-        int page = 0;
-        RequestQueue queue = Volley.newRequestQueue(this);
+    private void loadGames(int max) {
 
-            String url = "https://api.rawg.io/api/games?page_size=50";
+        RequestQueue queue = Volley.newRequestQueue(this);
+        for(int page=0;page<max;page++) {
+            String url = "https://api.rawg.io/api/games?page_size=50&page="+page;
             StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                     new Response.Listener<String>() {
                         @Override
@@ -399,14 +399,14 @@ public class GameList extends AppCompatActivity {
 
                                 } else {
 
-                                   mGamesRellenos.add(mGames.get(i));
-                                    Log.d("thiiiiis",mGamesRellenos.get(i).getName());
+                                    mGamesRellenos.add(mGames.get(i));
+                                    Log.d("thiiiiis", mGamesRellenos.get(i).getName());
 
 
                                 }
                             }
 
-                            mPd.dismiss();
+
                             actualizar();
 
                             // actualizar();
@@ -419,8 +419,8 @@ public class GameList extends AppCompatActivity {
             });
             stringRequest.setShouldCache(false);
             queue.add(stringRequest);
-
-
+        }
+        mPd.dismiss();
     }
 
     private void loadNewGames() {
