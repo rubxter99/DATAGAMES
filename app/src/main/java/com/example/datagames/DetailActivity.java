@@ -125,6 +125,7 @@ public class DetailActivity extends AppCompatActivity {
     private DetailsGamesAdapter mDetailAdapter;
     private TextView txtTitle;
     private static final int CODINTFAVGAME = 1;
+    private ArrayList<GamesParse.game> mDetailsGamesRellenoFinal=new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -151,6 +152,7 @@ public class DetailActivity extends AppCompatActivity {
             mStoreName = intent.getStringExtra(HelperGlobal.EXTRA_STORENAME);
             mStore = intent.getStringExtra(HelperGlobal.EXTRA_STORE);
             mPlatform = intent.getStringExtra(HelperGlobal.EXTRA_PLATFORM);
+
             loadGameDetail(mId);
             Log.d("image:", imageUrl);
             ImageView shorts_imageview = findViewById(R.id.snapshot);
@@ -297,43 +299,6 @@ public class DetailActivity extends AppCompatActivity {
                 Intent intent2 = new Intent(DetailActivity.this, Profile.class);
                 startActivity(intent2);
                 return true;
-           /* case R.id.action_favorite:
-                boolean encontrado = false;
-                try {
-                    if (mGamesFav.size() != 0) {
-                        for (int x = 0; x < mGamesFav.size(); x++) {
-                            if (mGamesFav.get(x).equalsIgnoreCase(mDetailsGamesRellenos.get(0).get("name").toString())
-                                    && (mGamesFav.get(x).equalsIgnoreCase(mDetailsGamesRellenos.get(0).get("background_image").toString()))) {
-
-                                encontrado = true;
-                                break;
-                            }
-                        }
-                    }
-
-                    if (encontrado) {
-                        Toast.makeText(DetailActivity.this,
-                                HelperGlobal.TIENDAYAFAV, Toast.LENGTH_LONG).show();
-                    } else {
-                        mGamesFav.add(mDetailsGamesRellenos.get(0).get("name").toString());
-                        mGamesFav.add(mDetailsGamesRellenos.get(0).get("background_image").toString());
-                        mGamesFav.add(mDetailsGamesRellenos.get(0).get("rating").toString());
-                        mGamesFav.add(mDetailsGamesRellenos.get(0).get("genres").toString());
-                        mGamesFav.add(mDetailsGamesRellenos.get(0).get("released").toString());
-                        Log.d("fav", mGamesFav.toString());
-                        Toast.makeText(DetailActivity.this,
-                                HelperGlobal.AÑADIDOFAV, Toast.LENGTH_LONG).show();
-                        guardarDatoSPFavs();
-                    }
-
-                    showSnackBar("Añadido a favoritos");
-
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-                break;*/
 
             default:
                 return super.onOptionsItemSelected(item);

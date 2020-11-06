@@ -96,7 +96,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         }
         mUsers= FirebaseDatabase.getInstance().getReference("tiendas");
-        //mUsers.push().setValue(marker);
+        mUsers.push().setValue(marker);
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -157,20 +157,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
 
-                    for (DataSnapshot child : dataSnapshot.child("tiendas").getChildren()){
-                        mLat = child.child("latitud").getValue(Double.class);
-                        mLon = child.child("longitud").getValue(Double.class);
-                        name = child.child("name").getValue(String.class);
-
-
-                        LatLng latLng = new LatLng(mLat, mLon);
+                    for (DataSnapshot child : dataSnapshot.getChildren()){
+                        UserInfromation userInfromation=child.getValue(UserInfromation.class);
+                        LatLng location=new LatLng(Double.parseDouble(userInfromation.latitud),Double.parseDouble(userInfromation.longitud));
                         Log.d("errorlat","estoy aqui");
                         mMap.addMarker(new MarkerOptions()
-                                .position(latLng)
-                                .title(name)
+                                .position(location)
+                                .title(userInfromation.name)
                                 .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
-                        CameraUpdate location = CameraUpdateFactory.newLatLngZoom(latLng, 17);
-                        mMap.moveCamera(location);
+                        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(location, 13));
                     }
 
 

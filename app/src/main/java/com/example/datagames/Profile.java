@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -85,7 +86,13 @@ public class Profile extends AppCompatActivity {
         getUser();
         FirebaseUser user = mAuth.getInstance().getCurrentUser();
         storageReference=FirebaseStorage.getInstance().getReference();
-
+        StorageReference profileRef=storageReference.child("usuarios/"+mAuth.getCurrentUser().getUid()+"/profile.jpg");
+        profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Picasso.get().load(uri).into(profileImageView);
+            }
+        });
         ChangeProfile=findViewById(R.id.btnChangeProfile);
         ChangeProfile.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,8 +101,7 @@ public class Profile extends AppCompatActivity {
                 i.putExtra("fullName",nameprofile.getText().toString());
                 i.putExtra("email",emailprofile.getText().toString());
                 startActivity(i);
-                //Intent openGalleryIntent=new Intent(Intent.ACTION_PICK,MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                //startActivityForResult(openGalleryIntent,1000);
+
             }
         });
 
@@ -147,7 +153,6 @@ public class Profile extends AppCompatActivity {
 
 
     }
-
 
 
 
