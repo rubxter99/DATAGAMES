@@ -91,8 +91,7 @@ public class EditProfile extends AppCompatActivity {
                         Map<String,Object> edited=new HashMap<>();
                         edited.put("email",email);
                         edited.put("name",profileFullName.getText().toString());
-                        mDatabase.child("usuarios").child(id).updateChildren(edited);
-                        mDatabase.updateChildren(edited).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        mDatabase.child("usuarios").child(id).updateChildren(edited).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
                                 Toast.makeText(EditProfile.this, "PERFIL ACTUALIZADO", Toast.LENGTH_SHORT).show();

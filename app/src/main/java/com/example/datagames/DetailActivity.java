@@ -280,7 +280,7 @@ public class DetailActivity extends AppCompatActivity {
         int id = item.getItemId();
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         switch (id) {
-            case android.R.id.home:
+            case R.id.home:
                 if (drawerLayout.isDrawerVisible(GravityCompat.START)) {
                     drawerLayout.closeDrawer(GravityCompat.START);
                 } else {

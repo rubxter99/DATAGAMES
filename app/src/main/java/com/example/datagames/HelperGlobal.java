@@ -37,7 +37,6 @@ public class HelperGlobal {
     public final static String PLEASEWRITETOAST="please write any location name...";
     public final static String SHEARCHINGNEARBYSHOP="Searching for Nearby Shop...";
     public final static String SHOWINGNEARBYSHOP="Showing Nearby Shop...";
-    public final static String GOOGLEURL="https://maps.googleapis.com/maps/api/place/nearbysearch/json?";
     public final static String KEY= "AIzaSyAn93plb2763qJNDzPIzNM0hwKJ1fDYvhk";
     public final static String PERMISIONDENIED="Permission Denied...";
     public final static String GPSPERMISEDGARANTED="GPS Permission granted!";
@@ -98,7 +97,6 @@ public class HelperGlobal {
     public final static String JSONCLIP="clip";
     public final static String JSONCLIPVIDEO="video";
     public final static String JSONCLIPPREVIEW="preview";
-    public final static String URLGAMES="https://api.rawg.io/api/games?";
     public final static String PROGRESSTITTLE="GAMES";
     public final static String PROGRESSMESSAGE="SEARCHING... WAIT A SECOND";
     public final static String AÑADIRFAV="AÑADIR A FAVORITOS";
@@ -107,8 +105,5 @@ public class HelperGlobal {
     public final static String AÑADIDOFAV="AÑADIDO A FAVORITOS";
     public final static String NOTIFICATIONNEARBYTITLE="TIENDAS FAVORITAS CERCA";
     public final static String PARCELABLEARRAYNEARBY="ARRAY_CERCANO";
-
-
-
 
 }
