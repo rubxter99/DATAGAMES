@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorGame"
+    android:background="@drawable/background"
 
     android:orientation="vertical"
     tools:context=".FilterGames">
@@ -24,27 +24,25 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-
             android:gravity="center"
             android:text="FILTROS"
-
             android:textColor="@android:color/background_dark"
             android:textSize="30dp"
             android:textStyle="bold"
-
             ></TextView>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="232dp"
         android:layout_gravity="center"
-        android:layout_margin="44dp"
-        android:background="@color/colorLogin"
+        android:layout_margin="20dp"
+        android:background="@color/logoFiltro"
         android:gravity="center"
         android:orientation="vertical"
 
         >
+
 
 
         <LinearLayout
@@ -59,7 +57,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
                 android:text="Rating"
-                 android:textAlignment="center"
+                android:textAlignment="center"
                 android:textColor="@android:color/black" />
 
             <Spinner
@@ -74,18 +72,19 @@
                 />
 
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:orientation="horizontal"
-            android:paddingRight="40dp">
+            android:paddingRight="30dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:text="Platformas"
+                android:text="Plataformas"
                 android:textAlignment="center"
                 android:textColor="@android:color/black" />
 
@@ -101,6 +100,7 @@
                 />
 
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -127,9 +127,6 @@
                 />
 
         </LinearLayout>
-
-
-
 
 
     </LinearLayout>
