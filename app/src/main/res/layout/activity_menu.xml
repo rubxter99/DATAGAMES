@@ -102,15 +102,18 @@
                         android:text="Videojuegos"
                         android:textAlignment="center"
                         android:textSize="30dp"
+                        android:gravity="center"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.465"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.407"
                         tools:ignore="MissingConstraints" />
 
                     <ImageView
-                        android:layout_width="156dp"
-                        android:layout_height="118dp"
+                        android:layout_width="113dp"
+                        android:layout_height="88dp"
                         android:layout_gravity="right"
 
                         android:src="@drawable/videogames_menu"
@@ -153,6 +156,7 @@
                         android:textSize="30dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.565"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         tools:ignore="MissingConstraints" />
