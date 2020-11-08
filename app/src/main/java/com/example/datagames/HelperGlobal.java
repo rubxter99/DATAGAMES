@@ -105,5 +105,6 @@ public class HelperGlobal {
     public final static String AÑADIDOFAV="AÑADIDO A FAVORITOS";
     public final static String NOTIFICATIONNEARBYTITLE="TIENDAS FAVORITAS CERCA";
     public final static String PARCELABLEARRAYNEARBY="ARRAY_CERCANO";
+    public final static String GOOGLEURL="https://maps.googleapis.com/maps/api/place/nearbysearch/json?";
 
 }
