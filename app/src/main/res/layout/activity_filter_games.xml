@@ -36,7 +36,7 @@
         android:layout_width="match_parent"
         android:layout_height="232dp"
         android:layout_gravity="center"
-        android:layout_margin="20dp"
+        android:layout_margin="15dp"
         android:background="@color/logoFiltro"
         android:gravity="center"
         android:orientation="vertical"
