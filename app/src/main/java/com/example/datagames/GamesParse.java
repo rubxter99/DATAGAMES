@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public class GamesParse {
     private final String TAG = getClass().getSimpleName();
 
-    public static class game  implements Parcelable{
+    public static class game implements Parcelable {
         private String name;
         private String released;
         private String image;
@@ -42,8 +42,6 @@ public class GamesParse {
             this.urlstore = urlstore;
             this.platforms = platforms;
         }
-
-
 
 
         public String getId() {
@@ -91,12 +89,12 @@ public class GamesParse {
             return rating;
         }
 
-        public  game(Parcel in){
+        public game(Parcel in) {
             name = in.readString();
             image = in.readString();
             rating = in.readString();
-            genres=in.readString();
-            released=in.readString();
+            genres = in.readString();
+            released = in.readString();
         }
 
 
@@ -129,8 +127,6 @@ public class GamesParse {
     }
 
 
-
-
     public ArrayList<game> parseGame(String content) {
         ArrayList<game> lGame = new ArrayList<game>();
 
@@ -140,7 +136,6 @@ public class GamesParse {
 
         try {
             json = new JSONObject(content);
-
             array = json.getJSONArray(HelperGlobal.JSONARRAY);
 
             for (int i = 0; i < array.length(); i++) {
@@ -207,20 +202,19 @@ public class GamesParse {
                 }
 
             }
-            if (jsonData.has(HelperGlobal.JSONCLIP)) {
 
-                JSONObject clips = jsonData.getJSONObject(HelperGlobal.JSONCLIP);
-                if (clips.has(HelperGlobal.JSONCLIP)) {
+            if (!jsonData.isNull("clip")) {
 
-                    clip = clips.getString(HelperGlobal.JSONCLIP);
-
+                JSONObject geo = jsonData.getJSONObject("clip");
+                if (geo.has("clips")) {
+                    JSONObject clip3 = geo.getJSONObject("clips");
+                    if (clip3.has("full")) {
+                        clip = clip3.getString("full");
+                    }
                 }
-
-
             }
 
-
-            if (jsonData.has(HelperGlobal.JSONSTORES)) {
+            if (!jsonData.isNull(HelperGlobal.JSONSTORES)) {
                 JSONArray stores = jsonData.getJSONArray(HelperGlobal.JSONSTORES);
                 for (int i = 0; i < stores.length(); i++) {
                     JSONObject node = stores.getJSONObject(i);
@@ -229,8 +223,8 @@ public class GamesParse {
 
                     }
                     if (node.has(HelperGlobal.JSONSTORE)) {
-                        JSONObject node2=node.getJSONObject(HelperGlobal.JSONSTORE);
-                        if (node2.has(HelperGlobal.JSONSTORENAME)){
+                        JSONObject node2 = node.getJSONObject(HelperGlobal.JSONSTORE);
+                        if (node2.has(HelperGlobal.JSONSTORENAME)) {
                             namestore = node2.getString(HelperGlobal.JSONSTORENAME);
                         }
                     }

@@ -74,7 +74,7 @@ public class GameList extends AppCompatActivity {
     private ArrayList<GamesParse.game> mUpcomingRellenos = new ArrayList<>();
     private ArrayList<GamesParse.game> mGamesFiltrados = new ArrayList<>();
     public static ArrayList<GamesParse.game> mGamesFav = new ArrayList<>();
-
+    public static ArrayList<String> mGamesFav2 = new ArrayList<>();
     private Boolean relleno;
     private GamesAdapter mAdapter = null;
     private NewGamesAdapter mNewAdapter = null;
@@ -107,7 +107,7 @@ public class GameList extends AppCompatActivity {
         mPd.setProgressStyle(Spinner.ACCESSIBILITY_LIVE_REGION_ASSERTIVE);
         mPd.setTitle(HelperGlobal.PROGRESSTITTLE);
         mPd.setMessage(HelperGlobal.PROGRESSMESSAGE);
-        mPd.setProgress(100);
+        mPd.setProgress(10);
         mPd.show();
 
         mAuth = FirebaseAuth.getInstance();
@@ -352,7 +352,7 @@ public class GameList extends AppCompatActivity {
                         break;
                     case R.id.nav_fav:
 
-
+/*
                         Intent favGames = new Intent(GameList.this, FavGames.class);
                         favGames.putParcelableArrayListExtra(HelperGlobal.PARCELABLEKEYARRAY, mGamesFav);
 
@@ -360,7 +360,7 @@ public class GameList extends AppCompatActivity {
 
                         leerDatosSPFavs();
 
-                        break;
+                        break;*/
 
                     case R.id.nav_profile:
                         Intent intent2 = new Intent(GameList.this, Profile.class);

@@ -121,11 +121,11 @@ public class DetailActivity extends AppCompatActivity {
     private NavigationView navigationView;
     private JSONObject mDetailsGames = new JSONObject();
     private ArrayList<JSONObject> mDetailsGamesRellenos = new ArrayList<>();
-    public static ArrayList<GamesParse.game> mGamesFav = new ArrayList<>();
+    public static ArrayList<String> mGamesFav = new ArrayList<String>();
     private DetailsGamesAdapter mDetailAdapter;
     private TextView txtTitle;
     private static final int CODINTFAVGAME = 1;
-    private ArrayList<GamesParse.game> mDetailsGamesRellenoFinal=new ArrayList<>();
+    private ArrayList<GamesParse.game> mDetailsGamesRellenoFinal = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -160,8 +160,9 @@ public class DetailActivity extends AppCompatActivity {
             TextView genresgame = findViewById(R.id.genres);
             genresgame.setText(mGenres);
             VideoView video = findViewById(R.id.video);
-            Log.d("viedo:", mVideo.toString());
+
             Uri uri = Uri.parse(mVideo);
+            Log.d("video",mVideo.toString());
             final MediaController mediaController = new MediaController(findViewById(R.id.frame).getContext());
             mediaController.setAnchorView(video);
             video.setMediaController(mediaController);
@@ -220,18 +221,18 @@ public class DetailActivity extends AppCompatActivity {
                         startActivity(intent4);
                         finish();
                         break;
-/*
+
                     case R.id.nav_fav:
 
 
                         Intent favGames = new Intent(DetailActivity.this, FavGames.class);
                         favGames.putStringArrayListExtra(HelperGlobal.PARCELABLEKEYARRAY, mGamesFav);
-                        Log.d("this23",mGamesFav.toString());
-                        startActivityForResult(favGames,CODINTFAVGAME);
+                        Log.d("this23", mGamesFav.toString());
+                        startActivityForResult(favGames, CODINTFAVGAME);
 
                         leerDatosSPFavs();
 
-                        break;*/
+                        break;
 
                     case R.id.nav_profile:
                         Intent intent2 = new Intent(DetailActivity.this, Profile.class);
@@ -280,7 +281,7 @@ public class DetailActivity extends AppCompatActivity {
         int id = item.getItemId();
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         switch (id) {
-            case R.id.home:
+            case android.R.id.home:
                 if (drawerLayout.isDrawerVisible(GravityCompat.START)) {
                     drawerLayout.closeDrawer(GravityCompat.START);
                 } else {
@@ -300,6 +301,45 @@ public class DetailActivity extends AppCompatActivity {
                 startActivity(intent2);
                 return true;
 
+            case R.id.action_favorite:
+                boolean encontrado = false;
+                try {
+                    if (mGamesFav.size() != 0) {
+                        for (int x = 0; x < mGamesFav.size(); x++) {
+                            if (mGamesFav.get(x).equalsIgnoreCase(mDetailsGamesRellenos.get(0).get("name").toString())
+                                    && (mGamesFav.get(x).equalsIgnoreCase(mDetailsGamesRellenos.get(0).get("background_image").toString()))) {
+
+                                encontrado = true;
+                                break;
+                            }
+                        }
+                    }
+
+                    if (encontrado) {
+                        Toast.makeText(DetailActivity.this,
+                                HelperGlobal.TIENDAYAFAV, Toast.LENGTH_LONG).show();
+                    } else {
+                        mGamesFav.add(mDetailsGamesRellenos.get(0).get("name").toString());
+                        mGamesFav.add(mDetailsGamesRellenos.get(0).get("background_image").toString());
+                        mGamesFav.add(mDetailsGamesRellenos.get(0).get("rating").toString());
+                        mGamesFav.add(mDetailsGamesRellenos.get(0).get("genres").toString());
+                        mGamesFav.add(mDetailsGamesRellenos.get(0).get("released").toString());
+                        Log.d("fav", mGamesFav.toString());
+                        Toast.makeText(DetailActivity.this,
+                                HelperGlobal.AÑADIDOFAV, Toast.LENGTH_LONG).show();
+                        guardarDatoSPFavs();
+                    }
+
+                    showSnackBar("Añadido a favoritos");
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
+            showSnackBar("Añadir a favoritos");
+            return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -351,8 +391,10 @@ public class DetailActivity extends AppCompatActivity {
                                     txtDescription.setText(mDetailsGamesRellenos.get(0).get("description_raw").toString());
 
 
+
                                     TextView txtReleased = findViewById(R.id.released);
                                     txtReleased.setText(mDetailsGamesRellenos.get(0).get("released").toString());
+
 
                                     TextView txtWebsite = findViewById(R.id.website);
                                     txtWebsite.setText(mDetailsGamesRellenos.get(0).get("website").toString());
@@ -421,12 +463,13 @@ public class DetailActivity extends AppCompatActivity {
         }
     }
 
-   /* private void leerDatosSPFavs() {
+    private void leerDatosSPFavs() {
         SharedPreferences mPrefs = getSharedPreferences(HelperGlobal.KEYARRAYFAVSPREFERENCES, MODE_PRIVATE);
         Gson gson = new Gson();
         String json = mPrefs.getString(HelperGlobal.ARRAYTIENDASFAV, "");
         Type founderListType = new TypeToken<ArrayList<String>>() {
         }.getType();
+
         ArrayList<String> restoreArray = gson.fromJson(json, founderListType);
 
         if (restoreArray != null) {
@@ -451,30 +494,7 @@ public class DetailActivity extends AppCompatActivity {
             leerDatosSPFavs();
         }
 
-    }*/
-
-
-    private void leerDatosSPFavs() {
-        SharedPreferences mPrefs = getSharedPreferences(HelperGlobal.KEYARRAYFAVSPREFERENCES, MODE_PRIVATE);
-        Gson gson = new Gson();
-        String json = mPrefs.getString(HelperGlobal.ARRAYTIENDASFAV, "");
-        Type founderListType = new TypeToken<ArrayList<GamesParse.game>>() {
-        }.getType();
-        ArrayList<GamesParse.game> restoreArray = gson.fromJson(json, founderListType);
-
-        if (restoreArray != null) {
-            mGamesFav = restoreArray;
-
-        }
     }
 
-    private void guardarDatoSPFavs() {
-        SharedPreferences mPrefs = getSharedPreferences(HelperGlobal.KEYARRAYFAVSPREFERENCES, MODE_PRIVATE);
-        SharedPreferences.Editor prefsEditor = mPrefs.edit();
-        Gson gson = new Gson();
-        String json = gson.toJson(mGamesFav);
-        prefsEditor.putString(HelperGlobal.ARRAYTIENDASFAV, json);
-        prefsEditor.commit();
-    }
 
 }

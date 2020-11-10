@@ -43,9 +43,7 @@ public class DetailParse {
             return name;
         }
 
-        public void setName(String name) {
-            this.name = name;
-        }
+
 
         public String getReleased() {
             return released;
@@ -73,9 +71,7 @@ public class DetailParse {
             return id;
         }
 
-        public void setId(String id) {
-            this.id = id;
-        }
+
 
         public String getDescription() {
             return description;
