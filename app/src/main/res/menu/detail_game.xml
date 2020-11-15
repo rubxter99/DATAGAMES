@@ -9,6 +9,11 @@
         android:title="About us"
         app:showAsAction="ifRoom" />
     <item
+        android:id="@+id/action_share"
+        android:orderInCategory="100"
+        android:title="Share"
+        app:showAsAction="ifRoom" />
+    <item
         android:id="@+id/action_profile"
         android:orderInCategory="1"
         android:title="Profile"

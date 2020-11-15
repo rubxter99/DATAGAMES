@@ -63,6 +63,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import static com.example.datagames.DetailActivity.mGamesFav;
+
 public class GameList extends AppCompatActivity {
     private ListView mLv;
     private ListView upcoming;
@@ -73,7 +75,6 @@ public class GameList extends AppCompatActivity {
     private ArrayList<GamesParse.game> mNewGamesRellenos = new ArrayList<>();
     private ArrayList<GamesParse.game> mUpcomingRellenos = new ArrayList<>();
     private ArrayList<GamesParse.game> mGamesFiltrados = new ArrayList<>();
-    public static ArrayList<GamesParse.game> mGamesFav = new ArrayList<>();
     public static ArrayList<String> mGamesFav2 = new ArrayList<>();
     private Boolean relleno;
     private GamesAdapter mAdapter = null;
@@ -351,16 +352,12 @@ public class GameList extends AppCompatActivity {
                         finish();
                         break;
                     case R.id.nav_fav:
-
-/*
                         Intent favGames = new Intent(GameList.this, FavGames.class);
                         favGames.putParcelableArrayListExtra(HelperGlobal.PARCELABLEKEYARRAY, mGamesFav);
-
                         startActivityForResult(favGames, CODINTFAVGAME);
-
                         leerDatosSPFavs();
-
-                        break;*/
+                        finish();
+                        break;
 
                     case R.id.nav_profile:
                         Intent intent2 = new Intent(GameList.this, Profile.class);
@@ -523,40 +520,7 @@ public class GameList extends AppCompatActivity {
 
     }
 
-    @Override
-    public boolean onContextItemSelected(MenuItem item) {
-        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-        switch (item.getItemId()) {
 
-            case 1:
-                boolean encontrado = false;
-                GamesParse.game gamesfav = mGamesRellenos.get(info.position);
-
-                if (mGamesFav.size() != 0) {
-                    for (int x = 0; x < mGamesFav.size(); x++) {
-                        if (mGamesFav.get(x).getName().equalsIgnoreCase(gamesfav.getName())
-                                && (mGamesFav.get(x).getImage().equalsIgnoreCase(gamesfav.getImage()))) {
-
-                            encontrado = true;
-                            break;
-                        }
-                    }
-                }
-
-                if (encontrado) {
-                    Toast.makeText(GameList.this,
-                            HelperGlobal.TIENDAYAFAV, Toast.LENGTH_LONG).show();
-                } else {
-                    mGamesFav.add(gamesfav);
-
-                    Toast.makeText(GameList.this,
-                            HelperGlobal.AÑADIDOFAV, Toast.LENGTH_LONG).show();
-                    guardarDatoSPFavs();
-                }
-                break;
-        }
-        return true;
-    }
 
     // https://api.rawg.io/api/games?dates=2019-10-10,2020-10-10&ordering=-added
     public class MainAdapter extends RecyclerView.Adapter<GameList.ViewHolder> {
@@ -868,14 +832,14 @@ public class GameList extends AppCompatActivity {
 
     private void actualizar() {
         leerDatosSPFiltro();
-        mGamesFiltrados=new ArrayList<>();
-        if (mFiltroGame!=null){
+        mGamesFiltrados = new ArrayList<>();
+        if (mFiltroGame != null) {
 
 
-        for (int i = 0; i < mGamesRellenos.size(); i++) {
-            mGamesFiltrados.add(mGamesRellenos.get(i));
+            for (int i = 0; i < mGamesRellenos.size(); i++) {
+                mGamesFiltrados.add(mGamesRellenos.get(i));
 
-        }
+            }
 
 
             String datosRating[] = mFiltroGame.getRating().split(" ");
@@ -892,8 +856,8 @@ public class GameList extends AppCompatActivity {
 
                 }
             }
-        }else{
-            mGamesFiltrados=mGamesRellenos;
+        } else {
+            mGamesFiltrados = mGamesRellenos;
         }
 
 
@@ -916,13 +880,16 @@ public class GameList extends AppCompatActivity {
         }
     }
 
+
+
+
     private void leerDatosSPFavs() {
         SharedPreferences mPrefs = getSharedPreferences(HelperGlobal.KEYARRAYFAVSPREFERENCES, MODE_PRIVATE);
         Gson gson = new Gson();
         String json = mPrefs.getString(HelperGlobal.ARRAYTIENDASFAV, "");
-        Type founderListType = new TypeToken<ArrayList<GamesParse.game>>() {
+        Type founderListType = new TypeToken<ArrayList<DetailParse.details>>() {
         }.getType();
-        ArrayList<GamesParse.game> restoreArray = gson.fromJson(json, founderListType);
+        ArrayList<DetailParse.details> restoreArray = gson.fromJson(json, founderListType);
 
         if (restoreArray != null) {
             mGamesFav = restoreArray;
@@ -930,13 +897,5 @@ public class GameList extends AppCompatActivity {
         }
     }
 
-    private void guardarDatoSPFavs() {
-        SharedPreferences mPrefs = getSharedPreferences(HelperGlobal.KEYARRAYFAVSPREFERENCES, MODE_PRIVATE);
-        SharedPreferences.Editor prefsEditor = mPrefs.edit();
-        Gson gson = new Gson();
-        String json = gson.toJson(mGamesFav);
-        prefsEditor.putString(HelperGlobal.ARRAYTIENDASFAV, json);
-        prefsEditor.commit();
-    }
 
 }

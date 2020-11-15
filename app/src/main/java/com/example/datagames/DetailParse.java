@@ -20,24 +20,25 @@ public class DetailParse {
         private String genres;
         private String id;
         private String description;
+        private String storename;
         private String store;
         private String platforms;
         private String clip;
         private String website;
         private String metacritic;
-
-        public details(String name, String released, String image, String rating, String genres, String id, String description, String platforms, String website, String metacritic) {
+        public details( String id,String image, String name,String rating,String genres, String released,String description,String platforms, String website, String metacritic,String storename,String store,String clip) {
+            this.id = id;
             this.name = name;
             this.released = released;
             this.image = image;
             this.rating = rating;
             this.genres = genres;
-            this.id = id;
-            this.description = description;
+            this.description=description;
             this.platforms = platforms;
             this.website = website;
             this.metacritic = metacritic;
         }
+
 
         public String getName() {
             return name;
@@ -130,7 +131,7 @@ public class DetailParse {
             parcel.writeString(released);
         }
 
-        public Parcelable.Creator<DetailParse.details> CREATOR =
+        public static Parcelable.Creator<DetailParse.details> CREATOR =
                 new Parcelable.Creator<DetailParse.details>() {
                     @Override
                     public DetailParse.details createFromParcel(Parcel parcel) {
@@ -240,8 +241,8 @@ public class DetailParse {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-     details detail = new details(id,name,released,image,description,metacritic,website,rating,nameplatforms,namegenres);
-        return detail;
+
+        return null;
     }
 
 

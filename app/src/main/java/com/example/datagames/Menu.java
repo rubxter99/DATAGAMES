@@ -1,5 +1,6 @@
 package com.example.datagames;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
@@ -19,7 +20,8 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
-import static com.example.datagames.GameList.mGamesFav;
+import static com.example.datagames.DetailActivity.mGamesFav;
+
 
 public class Menu extends Activity  {
     private FirebaseAuth mAuth;
@@ -94,13 +96,22 @@ public class Menu extends Activity  {
         SharedPreferences mPrefs = getSharedPreferences(HelperGlobal.KEYARRAYFAVSPREFERENCES, MODE_PRIVATE);
         Gson gson = new Gson();
         String json = mPrefs.getString(HelperGlobal.ARRAYTIENDASFAV, "");
-        Type founderListType = new TypeToken<ArrayList<GamesParse.game>>() {
+        Type founderListType = new TypeToken<ArrayList<DetailParse.details>>() {
         }.getType();
-        ArrayList<GamesParse.game> restoreArray = gson.fromJson(json, founderListType);
+        ArrayList<DetailParse.details> restoreArray = gson.fromJson(json, founderListType);
 
         if (restoreArray != null) {
             mGamesFav = restoreArray;
 
         }
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode == CODINTFAVGAME){
+            leerDatosSPFavs();
+        }
+
     }
 }
