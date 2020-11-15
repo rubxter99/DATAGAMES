@@ -9,6 +9,14 @@
     android:background="@color/colorGame"
     android:gravity="center">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Name:"
+        android:textColor="@color/logoNegro"
+        android:textSize="24dp"
+        tools:layout_editor_absoluteX="5dp"
+        tools:layout_editor_absoluteY="396dp" />
 
     <TextView
         android:id="@+id/nameprofile"
@@ -30,7 +38,6 @@
         android:id="@+id/emailprofile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
         android:textAlignment="center"
         android:textColor="@color/colorBlack"
         app:layout_constraintBottom_toTopOf="@+id/btnSignOut"
@@ -94,9 +101,7 @@
         android:id="@+id/profileImageView1"
         android:layout_width="178dp"
         android:layout_height="136dp"
-
         android:src="@drawable/logoperfil"
-
         app:layout_constraintBottom_toTopOf="@+id/nameprofile"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"

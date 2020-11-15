@@ -2,15 +2,27 @@
 <LinearLayout android:layout_height="match_parent"
     android:layout_width="match_parent"
     android:orientation="vertical"
-    android:background="@color/logoNegro"
+    android:background="@drawable/fon2"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <ImageView
         android:layout_width="wrap_content"
-        android:layout_height="400dp"
-        android:layout_marginTop="30dp"
-        android:src="@drawable/logo"
+        android:layout_height="200dp"
+        android:layout_marginTop="70dp"
+        android:src="@drawable/logo_capa"
         />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginRight="20dp"
+        android:fontFamily="monospace"
+        android:text="@string/data_games"
+        android:textAlignment="center"
+        android:textStyle="bold"
+        android:textColor="@color/colorBlack"
+        android:textSize="30sp"/>
 
     <TextView
         android:layout_width="match_parent"
@@ -18,12 +30,10 @@
         android:layout_marginLeft="20dp"
         android:layout_marginTop="50dp"
         android:layout_marginRight="20dp"
-        android:fontFamily="casual"
-        android:text="Aplicación creada por Juan Antonio Barrero, Noelia Pérez y Rubén García para el Trabajo Final de Grado de Desarrollo de Aplicaciones Multiplataforma."
+        android:fontFamily="monospace"
+        android:text="@string/aplicaci_n_creada_por_juan_antonio_barrero_noelia_p_rez_y_rub_n_garc_a_para_el_trabajo_final_de_grado_de_desarrollo_de_aplicaciones_multiplataforma"
         android:textAlignment="center"
         android:textStyle="bold"
-        android:textColor="@color/colorLogo"
-        android:textSize="20dp">
-
-    </TextView>
+        android:textColor="@color/colorBlack"
+        android:textSize="20sp"/>
 </LinearLayout>

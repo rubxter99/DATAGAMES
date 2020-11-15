@@ -14,7 +14,7 @@
 
         <androidx.cardview.widget.CardView
             android:id="@+id/card_view2"
-            app:cardBackgroundColor="@color/colorGame"
+            app:cardBackgroundColor="@color/menu5"
             app:cardCornerRadius="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

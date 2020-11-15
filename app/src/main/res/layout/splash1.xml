@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#292626"
+    android:background="@drawable/fon3"
     android:gravity="center"
     android:orientation="vertical"
     tools:context=".Splash">
@@ -13,7 +13,7 @@
         android:id="@+id/logo"
         android:layout_width="344dp"
         android:layout_height="258dp"
-        android:src="@drawable/logo_capa2"
+        android:src="@drawable/logo_capa"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.493"
@@ -28,11 +28,9 @@
         android:layout_marginBottom="184dp"
         android:fontFamily="monospace"
         android:gravity="center"
-        android:text="DATA
-
-        GAMES"
-        android:textColor="@color/colorGame"
-        android:textSize="70dp"
+        android:text="@string/data_games"
+        android:textColor="@color/logoNegro"
+        android:textSize="70sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
@@ -45,14 +43,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="monospace"
-        android:text="SINCE 2020"
-        android:textSize="20dp"
+        android:text="@string/since_2020"
+        android:textSize="20sp"
+        android:textColor="@color/logoNegro"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txt_logo"
         app:layout_constraintVertical_bias="0.114" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
