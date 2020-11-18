@@ -24,6 +24,7 @@ public class FilterGames extends AppCompatActivity {
     private String mGenres;
     private Spinner spGenres;
     private int mPostGenres=0;
+    SharedPreferences.Editor prefsEditor;
     private ObjectFilterGame filtroleidogame = null;
 
     @Override
@@ -98,6 +99,16 @@ public class FilterGames extends AppCompatActivity {
                 finish();
             }
         });
+        Button btn_savefiltros_restaurar=findViewById(R.id.btn_FILTROS_RESTAURAR);
+        btn_savefiltros_restaurar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                eliminar();
+
+                finish();
+            }
+        });
         if(filtroleidogame !=null){
             if(filtroleidogame.getPosRating()!=0 && filtroleidogame.getPlatform()!="" && filtroleidogame.getGenre()!=""  ){
                 spRating.setSelection(filtroleidogame.getPosRating());
@@ -111,10 +122,17 @@ public class FilterGames extends AppCompatActivity {
 
     private void guardarDatoSP(ObjectFilterGame objetcFiltro){
         SharedPreferences mPrefs = getSharedPreferences(HelperGlobal.KEYARRAYFILTROSPREFERENCESGAMES,MODE_PRIVATE);
-        SharedPreferences.Editor prefsEditor = mPrefs.edit();
+         prefsEditor = mPrefs.edit();
         Gson gson = new Gson();
         String json = gson.toJson(objetcFiltro);
         prefsEditor.putString(HelperGlobal.ARRAYGAMESFILTROS, json);
+        prefsEditor.commit();
+    }
+    private void eliminar(){
+        SharedPreferences mPrefs = getSharedPreferences(HelperGlobal.KEYARRAYFILTROSPREFERENCESGAMES,MODE_PRIVATE);
+        prefsEditor = mPrefs.edit();
+
+        prefsEditor.clear();
         prefsEditor.commit();
     }
 

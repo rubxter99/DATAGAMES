@@ -323,8 +323,7 @@ public class DetailActivity extends AppCompatActivity {
                         mGamesFav.add(new DetailParse.details(mId, mDetailsGamesRellenos.get(0).get("background_image").toString(), mDetailsGamesRellenos.get(0).get("name").toString(), mDetailsGamesRellenos.get(0).get("rating").toString(), mGenres, mDetailsGamesRellenos.get(0).get("released").toString(), mDetailsGamesRellenos.get(0).get("description_raw").toString(), mPlatform, mDetailsGamesRellenos.get(0).get("website").toString(), mDetailsGamesRellenos.get(0).get("metacritic").toString(), mStoreName, mStore, mVideo));
 
                         Log.d("fav", mGamesFav.get(0).getName());
-                        Toast.makeText(DetailActivity.this,
-                                HelperGlobal.AÑADIDOFAV, Toast.LENGTH_LONG).show();
+
                         guardarDatoSPFavs();
                     }
 

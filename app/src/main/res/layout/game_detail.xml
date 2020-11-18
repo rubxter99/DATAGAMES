@@ -19,7 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/app_bar"
-        android:background="@drawable/fon2"
+        android:background="@color/lightWhite"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
@@ -50,6 +50,8 @@
                     android:textColor="@color/colorBlack" />
 
             </androidx.cardview.widget.CardView>
+
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_weight="2"
@@ -57,25 +59,38 @@
                 android:orientation="horizontal"
                 >
 
+
                 <androidx.cardview.widget.CardView
                     android:layout_width="wrap_content"
-                    android:layout_height="58dp"
+                    android:layout_height="91dp"
                     android:layout_marginRight="18dp"
                     android:layout_marginBottom="50dp"
                     android:layout_weight="1"
                     app:cardBackgroundColor="#97F12E"
                     app:cardCornerRadius="20dp">
 
-
-                    <TextView
-                        android:id="@+id/metacritic"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Title"
-                        android:textColor="@color/colorBlack" />
-                    <!--Texto de ejemplo-->
+                        android:orientation="vertical">
 
+                        <TextView
+                            android:id="@+id/metacritic"
+                            android:layout_marginTop="20dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                            android:textColor="@color/colorBlack" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="Metacritic"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                            android:textColor="@color/colorBlack" />
+                    </LinearLayout>
 
                 </androidx.cardview.widget.CardView>
                 <androidx.cardview.widget.CardView
@@ -86,15 +101,26 @@
                     android:layout_marginBottom="50dp"
                     app:cardBackgroundColor="@color/colorLogin"
                     app:cardCornerRadius="30dp">
-
-                    <TextView
-                        android:id="@+id/rating"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:gravity="center"
+                        android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/rating"
+                        android:layout_marginTop="20dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:textAppearance="@style/TextAppearance.AppCompat.Title"
                         android:textColor="@color/colorBlack" />
-                    <!--Texto de ejemplo-->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="Puntuación"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                        android:textColor="@color/colorBlack" />
+                    </LinearLayout>
 
                 </androidx.cardview.widget.CardView>
             </LinearLayout>
@@ -133,6 +159,7 @@
                             android:id="@+id/video"
                             android:layout_width="match_parent"
                             android:layout_height="200dp"
+                            
                             android:layout_gravity="center|bottom" />
                     </FrameLayout>
                 </LinearLayout>
@@ -148,8 +175,6 @@
 
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-
-
                     android:orientation="vertical">
 
 
@@ -205,7 +230,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:text="Released"
+                            android:text="Salida"
                             android:textAppearance="@style/TextAppearance.AppCompat.Title"
                             android:textColor="@color/colorBlack" />
 
@@ -239,7 +264,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:text="Genres"
+                            android:text="Género"
                             android:textAppearance="@style/TextAppearance.AppCompat.Title"
                             android:textColor="@color/colorBlack" />
 
@@ -278,7 +303,7 @@
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:padding="5dp"
-                            android:text="Imagenes"
+                            android:text="Imágenes"
 
                             android:textAppearance="@style/TextAppearance.AppCompat.Title"
                             android:textColor="@color/colorBlack" />
@@ -316,7 +341,7 @@
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:layout_marginBottom="20dp"
-                    android:text="Website"
+                    android:text="Página Web"
                     android:textAppearance="@style/TextAppearance.AppCompat.Title"
                     android:textColor="@color/colorBlack" />
 
@@ -354,7 +379,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="20dp"
-                        android:text="Store"
+                        android:text="Tienda"
                         android:textAppearance="@style/TextAppearance.AppCompat.Title"
                         android:textColor="@color/colorBlack" />
 
@@ -388,7 +413,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="20dp"
                         android:gravity="right"
-                        android:text="Platform"
+                        android:text="Plataforma"
                         android:textAppearance="@style/TextAppearance.AppCompat.Title"
                         android:textColor="@color/colorBlack" />
 

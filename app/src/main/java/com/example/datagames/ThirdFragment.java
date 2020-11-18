@@ -118,7 +118,7 @@ public class ThirdFragment extends Fragment {
                 resetPassword.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        startActivity(new Intent(v.getContext(),Menu.class));
+                        startActivity(new Intent(v.getContext(),ResetPassword.class));
                     }
                 });
 

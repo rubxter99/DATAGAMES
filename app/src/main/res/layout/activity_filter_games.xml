@@ -136,7 +136,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
         <Button
             android:id="@+id/btn_FILTROS"
@@ -144,7 +144,17 @@
             android:layout_height="wrap_content"
             android:background="@color/cardview_dark_background"
             android:padding="11dp"
-            android:text="OK"
+            android:text="GUARDAR CAMBIOS"
+            android:textColor="@color/colorLogin"
+            android:layout_marginBottom="30dp"
+            android:textSize="24dp"></Button>
+        <Button
+            android:id="@+id/btn_FILTROS_RESTAURAR"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/cardview_dark_background"
+            android:padding="11dp"
+            android:text="RESTAURAR"
             android:textColor="@color/colorLogin"
             android:textSize="24dp"></Button>
     </LinearLayout>

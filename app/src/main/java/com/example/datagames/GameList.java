@@ -23,14 +23,12 @@ import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Filter;
 import android.widget.Filterable;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.SearchView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -98,18 +96,17 @@ public class GameList extends AppCompatActivity {
     private ObjectFilterGame mFiltroGame = null;
     private FirebaseUser firebaseUser;
     private ProgressDialog progress;
+    private boolean listo=false;
+    SharedPreferences.Editor prefsEditor;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_juegos);
-        mPd = new ProgressDialog(GameList.this);
-        mPd.setProgressStyle(Spinner.ACCESSIBILITY_LIVE_REGION_ASSERTIVE);
-        mPd.setTitle(HelperGlobal.PROGRESSTITTLE);
-        mPd.setMessage(HelperGlobal.PROGRESSMESSAGE);
-        mPd.setProgress(10);
-        mPd.show();
+
+
+        new MyTask().execute();
 
         mAuth = FirebaseAuth.getInstance();
         firebaseUser = mAuth.getCurrentUser();
@@ -122,9 +119,6 @@ public class GameList extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(GameList.this, LinearLayoutManager.HORIZONTAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        loadGames(200);
-        loadNewGames();
-        loadUpcomingGames();
 
 
         setToolBar();
@@ -203,6 +197,7 @@ public class GameList extends AppCompatActivity {
                 return false;
             }
         });
+        System.out.println();;
         newgames.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -247,6 +242,48 @@ public class GameList extends AppCompatActivity {
         });
 
 
+    }
+
+    public class MyTask extends AsyncTask<Void, Void, Void> {
+
+        public void onPreExecute() {
+            mPd = new ProgressDialog(GameList.this);
+            mPd.setProgressStyle(Spinner.ACCESSIBILITY_LIVE_REGION_ASSERTIVE);
+            mPd.setTitle(HelperGlobal.PROGRESSTITTLE);
+            mPd.setMessage(HelperGlobal.PROGRESSMESSAGE);
+            mPd.setProgress(10);
+            mPd.setMax(100);
+            mPd.show();
+            loadGames(200);
+            loadNewGames();
+            loadUpcomingGames();
+
+        }
+
+        public Void doInBackground(Void... unused) {
+
+
+            try {
+                Thread.sleep(20000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+
+
+
+
+
+
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+
+            mPd.dismiss();
+        }
     }
 
 
@@ -407,10 +444,9 @@ public class GameList extends AppCompatActivity {
 
                             }
 
-
                             actualizar();
-                            mPd.dismiss();
-                            // actualizar();
+
+
                         }
                     }, new Response.ErrorListener() {
                 @Override
@@ -420,6 +456,7 @@ public class GameList extends AppCompatActivity {
             });
             stringRequest.setShouldCache(false);
             queue.add(stringRequest);
+
         }
 
 
@@ -519,7 +556,6 @@ public class GameList extends AppCompatActivity {
         queue3.add(stringRequest3);
 
     }
-
 
 
     // https://api.rawg.io/api/games?dates=2019-10-10,2020-10-10&ordering=-added
@@ -825,7 +861,7 @@ public class GameList extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == CODINFILTROGAME) {
             actualizar();
-        } else if (requestCode == CODINTFAVGAME) {
+        }else if (requestCode == CODINTFAVGAME) {
             leerDatosSPFavs();
         }
     }
@@ -881,8 +917,6 @@ public class GameList extends AppCompatActivity {
     }
 
 
-
-
     private void leerDatosSPFavs() {
         SharedPreferences mPrefs = getSharedPreferences(HelperGlobal.KEYARRAYFAVSPREFERENCES, MODE_PRIVATE);
         Gson gson = new Gson();
@@ -895,6 +929,13 @@ public class GameList extends AppCompatActivity {
             mGamesFav = restoreArray;
 
         }
+    }
+    private void eliminar(){
+        SharedPreferences mPrefs = getSharedPreferences(HelperGlobal.KEYARRAYFILTROSPREFERENCESGAMES,MODE_PRIVATE);
+        prefsEditor = mPrefs.edit();
+
+        prefsEditor.clear();
+        prefsEditor.commit();
     }
 
 
