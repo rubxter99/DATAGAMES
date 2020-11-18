@@ -167,19 +167,25 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                             mMap.addMarker(new MarkerOptions()
                                     .position(location)
                                     .title(name)
-                                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
+                                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA)));
 
                         } else if (name.equalsIgnoreCase("cex")) {
                             mMap.addMarker(new MarkerOptions()
                                     .position(location)
                                     .title(name)
-                                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW)));
+                                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
+
+                        }else if (name.equalsIgnoreCase("media markt")) {
+                            mMap.addMarker(new MarkerOptions()
+                                    .position(location)
+                                    .title(name)
+                                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
 
                         } else {
                             mMap.addMarker(new MarkerOptions()
                                     .position(location)
                                     .title(name)
-                                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
+                                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW)));
 
                         }
 

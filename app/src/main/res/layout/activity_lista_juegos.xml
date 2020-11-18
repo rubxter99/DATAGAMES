@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/lightWhite"
+    android:background="@drawable/background"
     android:orientation="vertical"
     tools:context="com.example.datagames.GameList"
     >
@@ -21,10 +21,11 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <include android:id="@id/toolbar"
-                layout="@layout/toolbar1"
+           <include
+               android:id="@id/toolbar"
+               layout="@layout/toolbar1"
 
-               ></include>
+               />
 
            <ScrollView
                android:layout_width="match_parent"
@@ -50,9 +51,9 @@
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:fontFamily="@font/bungee"
-                    android:text="VideoGames"
+                    android:text="@string/videogames"
                     android:textColor="@color/colorBlack"
-                    android:textSize="30dp" />
+                    android:textSize="30sp" />
 
 
 
@@ -78,10 +79,10 @@
                        android:layout_height="wrap_content"
                        android:fontFamily="@font/bungee"
                        android:gravity="center"
-                       android:text="New Games"
+                       android:text="@string/new_games"
                        android:textAllCaps="true"
                        android:textColor="@color/colorBlack"
-                       android:textSize="20dp" />
+                       android:textSize="20sp" />
 
 
                    <LinearLayout
@@ -95,7 +96,7 @@
                        <ListView
                            android:id="@+id/recicler"
                            android:layout_width="match_parent"
-                           android:layout_height="match_parent"></ListView>
+                           android:layout_height="match_parent" />
 
 
                    </LinearLayout>
@@ -105,11 +106,11 @@
                        android:layout_height="match_parent"
                        android:fontFamily="@font/bungee"
                        android:gravity="center"
-                       android:text="Upcoming Games"
+                       android:text="@string/upcoming_games"
                        android:textAllCaps="true"
                        android:textColor="@color/colorBlack"
                        android:layout_marginTop="35dp"
-                       android:textSize="20dp" />
+                       android:textSize="20sp" />
                    <LinearLayout
                        android:id="@+id/listaupcomiggames"
                        android:layout_width="match_parent"
@@ -121,7 +122,7 @@
                        <ListView
                            android:id="@+id/upcoming"
                            android:layout_width="match_parent"
-                           android:layout_height="match_parent"></ListView>
+                           android:layout_height="match_parent" />
 
 
                    </LinearLayout>
@@ -130,11 +131,11 @@
                        android:layout_height="match_parent"
                        android:fontFamily="@font/bungee"
                        android:gravity="center"
-                       android:text="List Games"
+                       android:text="@string/list_games"
                        android:textAllCaps="true"
                        android:layout_marginTop="35dp"
                        android:textColor="@color/colorBlack"
-                       android:textSize="20dp" />
+                       android:textSize="20sp" />
 
                    <LinearLayout
                        android:id="@+id/listagames"
@@ -147,7 +148,7 @@
                        <ListView
                            android:id="@+id/list_notify"
                            android:layout_width="match_parent"
-                           android:layout_height="match_parent"></ListView>
+                           android:layout_height="match_parent" />
 
 
                    </LinearLayout>

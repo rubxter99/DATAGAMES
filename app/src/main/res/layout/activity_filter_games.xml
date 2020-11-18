@@ -40,6 +40,7 @@
         android:background="@color/logoFiltro"
         android:gravity="center"
         android:orientation="vertical"
+
         >
 
 

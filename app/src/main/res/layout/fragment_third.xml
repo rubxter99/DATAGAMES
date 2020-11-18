@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/background_dark"
+    android:background="@drawable/fon3"
     android:orientation="vertical"
     android:padding="16dp"
     tools:context=".ThirdFragment">
@@ -11,19 +11,38 @@
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="wrap_content"
-        android:layout_height="313dp"
+        android:layout_height="200dp"
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
-        android:src="@drawable/logo" />
+        android:src="@drawable/logo_capa" />
 
+    <TextView
+        android:id="@+id/title0"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/data"
+        android:fontFamily="monospace"
+        android:textColor="@color/logoNegro"
+        android:textSize="30sp"/>
+    <TextView
+        android:id="@+id/title1"
+        android:fontFamily="monospace"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/games"
+        android:textColor="@color/logoNegro"
+        android:textSize="30sp"
+        android:layout_marginBottom="20dp"/>
     <TextView
         android:id="@+id/title2"
         android:layout_width="match_parent"
         android:layout_height="57dp"
         android:gravity="center"
         android:text="@string/title3"
-        android:textColor="@color/colorGame"
-        android:textSize="30dp"
+        android:textColor="@color/logoNegro"
+        android:textSize="30sp"
         android:layout_marginBottom="20dp"/>
 
     <Button
@@ -36,11 +55,9 @@
         android:layout_marginStart="100dp"
         android:background="@drawable/shape_login_btn"
         android:text="@string/login"
+        android:textColor="@color/logoNegro"
         android:layout_gravity="center"
         android:textAllCaps="false" />
-
-
-
     <Button
         android:id="@+id/btnRegistrer1"
         android:layout_width="match_parent"
@@ -49,11 +66,11 @@
         android:layout_gravity="center"
         android:layout_marginEnd="100dp"
         android:layout_weight="1"
+        android:textColor="@color/logoNegro"
         android:textAllCaps="false"
         android:background="@drawable/shape_registrer_btn"
         android:text="@string/registrer"
         android:layout_marginBottom="20dp"
-
         />
 
     <LinearLayout
@@ -61,12 +78,7 @@
         android:layout_height="match_parent"
         android:orientation="horizontal"
         android:layout_weight="1">
-
-
-
-
         <TextView
-
             android:id="@+id/slideOneBack2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -76,14 +88,7 @@
             android:focusable="true"
             android:gravity="bottom|start"
             android:text="@string/back"
-            android:textColor="@color/colorLogo"
+            android:textColor="@color/colorBlack"
             android:textSize="30dp" />
-
-
-
-
     </LinearLayout>
-
-
-
 </LinearLayout>
