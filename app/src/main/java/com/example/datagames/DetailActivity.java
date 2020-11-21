@@ -317,14 +317,15 @@ public class DetailActivity extends AppCompatActivity {
                     }
 
                     if (encontrado) {
-                        Toast.makeText(DetailActivity.this,
-                                HelperGlobal.TIENDAYAFAV, Toast.LENGTH_LONG).show();
+
+                        showSnackBar("This Game is already added ");
                     } else {
                         mGamesFav.add(new DetailParse.details(mId, mDetailsGamesRellenos.get(0).get("background_image").toString(), mDetailsGamesRellenos.get(0).get("name").toString(), mDetailsGamesRellenos.get(0).get("rating").toString(), mGenres, mDetailsGamesRellenos.get(0).get("released").toString(), mDetailsGamesRellenos.get(0).get("description_raw").toString(), mPlatform, mDetailsGamesRellenos.get(0).get("website").toString(), mDetailsGamesRellenos.get(0).get("metacritic").toString(), mStoreName, mStore, mVideo));
 
                         Log.d("fav", mGamesFav.get(0).getName());
 
                         guardarDatoSPFavs();
+                        showSnackBar("Added to Favorites");
                     }
 
                 } catch (JSONException e) {
@@ -332,7 +333,7 @@ public class DetailActivity extends AppCompatActivity {
                 }
 
 
-                showSnackBar("Añadido a favoritos");
+
                 return true;
             case R.id.action_share:
                 try {
