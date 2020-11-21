@@ -190,6 +190,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         Log.d("name",arrayplaces.get(i).getName()+i+" "+arrayplaces.get(i).getLat());
 
                     }
+                    //dddd
                     for (int j=0;j<arrayplaces.size();j++){
                         Location location =new Location("");
                         location.setLatitude(arrayplaces.get(j).getLat());
