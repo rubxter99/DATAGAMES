@@ -56,14 +56,7 @@ public class FavGames extends AppCompatActivity {
 
         mAdapter = new MyAdapter();
         mLv.setAdapter(mAdapter);
-        mLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent i = new Intent(FavGames.this, DetailActivity.class);
-                i.putParcelableArrayListExtra(HelperGlobal.PARCELABLEKEYARRAY, mGamesFav);
-                startActivity(i);
-            }
-        });
+
        /* mLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
