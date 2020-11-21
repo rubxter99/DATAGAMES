@@ -11,16 +11,16 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Bienvenido"
+        android:text="@string/welcome"
         android:textColor="@android:color/black"
-        android:textSize="30dp"
+        android:textSize="30sp"
         android:layout_marginBottom="10dp"
         android:gravity="center"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Crea una nueva cuenta"
+        android:text="@string/create_a_new_account"
         android:textColor="@android:color/darker_gray"
         android:textSize="25dp"
         android:gravity="center"
@@ -30,7 +30,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="UserName"
-        android:textColorHint="@color/colorRegistrer"
+        android:textColorHint="@color/colorPrimary"
         android:layout_marginBottom="20dp"
         android:id="@+id/text_usernamereg"
         android:background="@drawable/shape_edit_text"
@@ -40,7 +40,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Mail"
-        android:textColorHint="@color/colorRegistrer"
+        android:textColorHint="@color/colorPrimary"
         android:layout_marginBottom="20dp"
         android:id="@+id/text_mailreg"
         android:background="@drawable/shape_edit_text"
@@ -50,7 +50,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:passwordToggleEnabled="true"
-        android:textColorHint="@color/colorRegistrer">
+        android:textColorHint="@color/colorPrimary">
 
         <EditText
             android:layout_width="match_parent"
@@ -65,21 +65,14 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-
-
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/btnRegistrer2"
-        android:layout_alignParentBottom="true"
-        android:text="Registrar"
+        android:text="@string/register"
         android:textAllCaps="false"
         android:textColor="@android:color/white"
         android:background="@drawable/shape_registrer_btn"
         android:layout_marginBottom="20dp"/>
-
-
-
-
 </LinearLayout>
 

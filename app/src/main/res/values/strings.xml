@@ -2,12 +2,11 @@
     <string name="app_name">DATAGAMES</string>
     <string name="title1">Videjuegos</string>
     <string name="title2">Tiendas</string>
-    <string name="title3">Bienvenido</string>
+    <string name="title3">Welcome</string>
     <string name="description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto facilis id minus voluptas. Architecto beatae delectus enim magnam neque ratione repellat sint veritatis. Deserunt dolorum excepturi sapiente, sunt tempora tenetur.</string>
     <string name="next">Next</string>
     <string name="back">Back</string>
     <string name="login">Login</string>
-    <string name="registrer">Registrer</string>
     <string name="title_activity_maps">Map</string>
     <string name="videogames">VideoGames</string>
     <string name="new_games">New Games</string>
@@ -30,6 +29,17 @@
     <string name="perfil">Perfil</string>
     <string name="acerca_de">Acerca de</string>
     <string name="since_2020">SINCE 2020</string>
+    <string name="password_recovery">PASSWORD RECOVERY</string>
+    <string name="enter_your_email_address">Enter your email address</string>
+    <string name="email_mail_com">email@mail.com</string>
+    <string name="reset_password">RESET PASSWORD</string>
+    <string name="welcome">Welcome</string>
+    <string name="log_in_to_your_account">Log in to your account</string>
+    <string name="emailuser">EmailUser</string>
+    <string name="password">Password</string>
+    <string name="forgot_your_password">Forgot your password?</string>
+    <string name="create_a_new_account">Create a new account</string>
+    <string name="register">Register</string>
 
     <string-array name="sp_generos">
         <item>Action</item>

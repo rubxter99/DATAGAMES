@@ -109,6 +109,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
+
+
     }
 
     //////////////////////////////////////////////////////////////GPS/////////////////////////////////////////////////////////////////
@@ -324,6 +326,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         }
 
+
         LatLng latLng = new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude());
 
         MarkerOptions markerOptions = new MarkerOptions();
@@ -334,15 +337,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         currentUserLocationMarker = mMap.addMarker(markerOptions.position(latLng));
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 13));
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 13));
-      /*  mMap.addCircle(new CircleOptions()
-                .center(latLng)
-                .radius(1000)
-                .fillColor(00000)
-        );*/
 
         if (googleApiClient != null) {
             LocationServices.FusedLocationApi.removeLocationUpdates(googleApiClient, this);
         }
+
+
     }
 
 
@@ -397,8 +397,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     1, 300,
                     (android.location.LocationListener) this);
         }
-
-
     }
 
     @Override
