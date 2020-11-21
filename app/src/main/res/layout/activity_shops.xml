@@ -26,7 +26,7 @@
                 android:id="@+id/logo"
                 android:layout_width="202dp"
                 android:layout_height="106dp"
-                android:src="@drawable/store2"
+                android:src="@drawable/compra"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.493"

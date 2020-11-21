@@ -56,6 +56,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
@@ -70,6 +71,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private static final int Request_User_Location_Code = 99;
     private static String mTitle;
     private static String name;
+    private Location mCurrentLocation;
     private static double mLat;
     private static double mLon;
     private static final Integer MY_PERMISSIONS_GPS_FINE_LOCATION = 1;
@@ -81,6 +83,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private Double latitude;
     private Double longitude;
     public FusedLocationProviderClient fusedLocationProviderClient;
+    private ArrayList<PlacesParse> arrayplaces;
 
 
     @Override
@@ -156,38 +159,71 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             mUsers.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
-
+                    PlacesParse placesParse=new PlacesParse();
+                    arrayplaces=new ArrayList<PlacesParse>();
                     for (DataSnapshot child : dataSnapshot.child("tiendas").getChildren()) {
                         latitude = (Double) child.child("latitud").getValue(Double.class);
                         longitude = (Double) child.child("longitud").getValue(Double.class);
                         name = child.child("name").getValue(String.class);
-                        LatLng location = new LatLng(Double.parseDouble(String.valueOf(latitude)), Double.parseDouble(String.valueOf(longitude)));
-                        Log.d("errorlat", latitude.toString());
-                        if (name.equalsIgnoreCase("game")) {
+                        placesParse.setLat(latitude);
+                        placesParse.setLon(longitude);
+                        placesParse.setName(name);
+                        arrayplaces.add(placesParse);
+
+
+
+                    Log.d("errorlat", latitude.toString());
+                    mLocManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+                    if (ActivityCompat.checkSelfPermission(MapsActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(MapsActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                        // TODO: Consider calling
+                        //    ActivityCompat#requestPermissions
+                        // here to request the missing permissions, and then overriding
+                        //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                        //                                          int[] grantResults)
+                        // to handle the case where the user grants the permission. See the documentation
+                        // for ActivityCompat#requestPermissions for more details.
+                        return;
+                    }
+                    mCurrentLocation = mLocManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+
+                    for(int i=0;i<arrayplaces.size();i++){
+                        Log.d("name",arrayplaces.get(i).getName()+i+" "+arrayplaces.get(i).getLat());
+
+                    }
+                    for (int j=0;j<arrayplaces.size();j++){
+                        Location location =new Location("");
+                        location.setLatitude(arrayplaces.get(j).getLat());
+                        location.setLongitude(arrayplaces.get(j).getLon());
+                        float distance = mCurrentLocation.distanceTo(location);
+                        LatLng latLng2=new LatLng(arrayplaces.get(j).getLat(),arrayplaces.get(j).getLon());
+                        if (arrayplaces.get(j).getName().equalsIgnoreCase("game") && distance<5000) {
                             mMap.addMarker(new MarkerOptions()
-                                    .position(location)
-                                    .title(name)
+                                    .position(latLng2)
+                                    .title(arrayplaces.get(j).getName())
                                     .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA)));
 
-                        } else if (name.equalsIgnoreCase("cex")) {
+                        } else if (arrayplaces.get(j).getName().equalsIgnoreCase("cex") && distance<5000) {
                             mMap.addMarker(new MarkerOptions()
-                                    .position(location)
-                                    .title(name)
+                                    .position(latLng2)
+                                    .title(arrayplaces.get(j).getName())
                                     .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
 
-                        }else if (name.equalsIgnoreCase("media markt")) {
+                        }else if (arrayplaces.get(j).getName().equalsIgnoreCase("media markt") && distance<5000) {
                             mMap.addMarker(new MarkerOptions()
-                                    .position(location)
-                                    .title(name)
+                                    .position(latLng2)
+                                    .title(arrayplaces.get(j).getName())
                                     .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
 
-                        } else {
+                        } else if ( distance<5000){
                             mMap.addMarker(new MarkerOptions()
-                                    .position(location)
-                                    .title(name)
+                                    .position(latLng2)
+                                    .title(arrayplaces.get(j).getName())
                                     .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW)));
 
                         }
+                    }
+
+
 
                     }
 
@@ -201,6 +237,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             });
 
         }
+
 
         mMap.getUiSettings().setZoomControlsEnabled(true);
     }

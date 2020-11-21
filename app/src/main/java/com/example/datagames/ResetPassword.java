@@ -57,7 +57,7 @@ public class ResetPassword extends AppCompatActivity {
         });
 
     }
-    private void resetPassword(){
+    private void resetPassword(){ //metodo reseteo
         mAuth.setLanguageCode("es");
         mAuth.sendPasswordResetEmail(email).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
