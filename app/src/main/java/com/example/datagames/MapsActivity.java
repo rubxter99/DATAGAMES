@@ -59,6 +59,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static androidx.core.location.LocationManagerCompat.isLocationEnabled;
+
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
 
     private GoogleMap mMap;
@@ -146,7 +148,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap = googleMap;
 
 
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(MapsActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             buildGoogleApiClient();
             checkPermissions();
 
@@ -159,8 +161,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             mUsers.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
-                    PlacesParse placesParse=new PlacesParse();
-                    arrayplaces=new ArrayList<PlacesParse>();
+                    PlacesParse placesParse = new PlacesParse();
+                    arrayplaces = new ArrayList<PlacesParse>();
                     for (DataSnapshot child : dataSnapshot.child("tiendas").getChildren()) {
                         latitude = (Double) child.child("latitud").getValue(Double.class);
                         longitude = (Double) child.child("longitud").getValue(Double.class);
@@ -171,59 +173,56 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         arrayplaces.add(placesParse);
 
 
+                        Log.d("errorlat", latitude.toString());
+                        mLocManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
-                    Log.d("errorlat", latitude.toString());
-                    mLocManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-                    if (ActivityCompat.checkSelfPermission(MapsActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(MapsActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                        // TODO: Consider calling
-                        //    ActivityCompat#requestPermissions
-                        // here to request the missing permissions, and then overriding
-                        //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                        //                                          int[] grantResults)
-                        // to handle the case where the user grants the permission. See the documentation
-                        // for ActivityCompat#requestPermissions for more details.
-                        return;
-                    }
-                    mCurrentLocation = mLocManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-
-                    for(int i=0;i<arrayplaces.size();i++){
-                        Log.d("name",arrayplaces.get(i).getName()+i+" "+arrayplaces.get(i).getLat());
-
-                    }
-                    //dddd
-                    for (int j=0;j<arrayplaces.size();j++){
-                        Location location =new Location("");
-                        location.setLatitude(arrayplaces.get(j).getLat());
-                        location.setLongitude(arrayplaces.get(j).getLon());
-                        float distance = mCurrentLocation.distanceTo(location);
-                        LatLng latLng2=new LatLng(arrayplaces.get(j).getLat(),arrayplaces.get(j).getLon());
-                        if (arrayplaces.get(j).getName().equalsIgnoreCase("game") && distance<5000) {
-                            mMap.addMarker(new MarkerOptions()
-                                    .position(latLng2)
-                                    .title(arrayplaces.get(j).getName())
-                                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA)));
-
-                        } else if (arrayplaces.get(j).getName().equalsIgnoreCase("cex") && distance<5000) {
-                            mMap.addMarker(new MarkerOptions()
-                                    .position(latLng2)
-                                    .title(arrayplaces.get(j).getName())
-                                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
-
-                        }else if (arrayplaces.get(j).getName().equalsIgnoreCase("media markt") && distance<5000) {
-                            mMap.addMarker(new MarkerOptions()
-                                    .position(latLng2)
-                                    .title(arrayplaces.get(j).getName())
-                                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
-
-                        } else if ( distance<5000){
-                            mMap.addMarker(new MarkerOptions()
-                                    .position(latLng2)
-                                    .title(arrayplaces.get(j).getName())
-                                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW)));
-
+                        if (ActivityCompat.checkSelfPermission(MapsActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(MapsActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                            // TODO: Consider calling
+                            //    ActivityCompat#requestPermissions
+                            // here to request the missing permissions, and then overriding
+                            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                            //                                          int[] grantResults)
+                            // to handle the case where the user grants the permission. See the documentation
+                            // for ActivityCompat#requestPermissions for more details.
+                            return;
                         }
-                    }
+                        mCurrentLocation = mLocManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 
+                        for (int j = 0; j < arrayplaces.size(); j++) {
+
+                            Location location = new Location(LocationManager.GPS_PROVIDER);
+                            location.setLatitude(arrayplaces.get(j).getLat());
+                            location.setLongitude(arrayplaces.get(j).getLon());
+                            if (location != null) {
+                                float distance = mCurrentLocation.distanceTo(location);
+                                LatLng latLng2 = new LatLng(arrayplaces.get(j).getLat(), arrayplaces.get(j).getLon());
+                                if (arrayplaces.get(j).getName().equalsIgnoreCase("game") && distance < 5000) {
+                                    mMap.addMarker(new MarkerOptions()
+                                            .position(latLng2)
+                                            .title(arrayplaces.get(j).getName())
+                                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA)));
+
+                                } else if (arrayplaces.get(j).getName().equalsIgnoreCase("cex") && distance < 5000) {
+                                    mMap.addMarker(new MarkerOptions()
+                                            .position(latLng2)
+                                            .title(arrayplaces.get(j).getName())
+                                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
+
+                                } else if (arrayplaces.get(j).getName().equalsIgnoreCase("media markt") && distance < 5000) {
+                                    mMap.addMarker(new MarkerOptions()
+                                            .position(latLng2)
+                                            .title(arrayplaces.get(j).getName())
+                                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
+
+                                } else if (distance < 5000) {
+                                    mMap.addMarker(new MarkerOptions()
+                                            .position(latLng2)
+                                            .title(arrayplaces.get(j).getName())
+                                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW)));
+
+                                }
+                            }
+                        }
 
 
                     }
@@ -314,11 +313,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onLocationChanged(Location location) {
 
 
-        if (location != null) {
-            mLat = location.getLatitude();
-            mLon = location.getLongitude();
-            lastLocation = location;
-        }
+        mLat = location.getLatitude();
+        mLon = location.getLongitude();
+        mCurrentLocation = location;
+
 
         if (currentUserLocationMarker != null) {
 
@@ -326,7 +324,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         }
 
-        LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+        LatLng latLng = new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude());
 
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(latLng);
@@ -334,7 +332,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
 
         currentUserLocationMarker = mMap.addMarker(markerOptions.position(latLng));
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,13));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 13));
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 13));
       /*  mMap.addCircle(new CircleOptions()
                 .center(latLng)
