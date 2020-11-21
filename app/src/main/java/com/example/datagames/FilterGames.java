@@ -1,5 +1,6 @@
 package com.example.datagames;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -105,7 +106,8 @@ public class FilterGames extends AppCompatActivity {
             public void onClick(View v) {
 
                 restaurar();
-
+                Intent i=new Intent(FilterGames.this,GameList.class);
+                startActivity(i);
                 finish();
             }
         });

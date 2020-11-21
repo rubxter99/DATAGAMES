@@ -105,6 +105,7 @@ public class GameList extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_juegos);
 
+        Intent i=getIntent();
 
         new MyTask().execute();
 
@@ -880,7 +881,6 @@ public class GameList extends AppCompatActivity {
 
                     mGamesFiltrados.remove(i);
                     i--;
-
 
                 }
             }
