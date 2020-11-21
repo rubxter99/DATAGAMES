@@ -269,13 +269,6 @@ public class GameList extends AppCompatActivity {
                 e.printStackTrace();
             }
 
-
-
-
-
-
-
-
             return null;
         }
 
@@ -871,7 +864,6 @@ public class GameList extends AppCompatActivity {
         mGamesFiltrados = new ArrayList<>();
         if (mFiltroGame != null) {
 
-
             for (int i = 0; i < mGamesRellenos.size(); i++) {
                 mGamesFiltrados.add(mGamesRellenos.get(i));
 
@@ -930,13 +922,7 @@ public class GameList extends AppCompatActivity {
 
         }
     }
-    private void eliminar(){
-        SharedPreferences mPrefs = getSharedPreferences(HelperGlobal.KEYARRAYFILTROSPREFERENCESGAMES,MODE_PRIVATE);
-        prefsEditor = mPrefs.edit();
 
-        prefsEditor.clear();
-        prefsEditor.commit();
-    }
 
 
 }

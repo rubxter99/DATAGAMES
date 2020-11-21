@@ -31,8 +31,8 @@ import java.util.Collections;
 import java.util.Comparator;
 
 public class FavGames extends AppCompatActivity {
-   // public static ArrayList<GamesParse.game> mGamesFav = new ArrayList<>();
-    public static ArrayList<DetailParse.details> mGamesFav ;
+    // public static ArrayList<GamesParse.game> mGamesFav = new ArrayList<>();
+    public static ArrayList<DetailParse.details> mGamesFav;
     private ListView mLv = null;
     private MyAdapter mAdapter;
     private Location mCurrentLocation = new Location("");
@@ -48,25 +48,19 @@ public class FavGames extends AppCompatActivity {
         mLv = findViewById(R.id.list_fav);
         mGamesFav = new ArrayList<>();
 
-        for(int i = 0; i<gamesIntent.size();i++){
+        for (int i = 0; i < gamesIntent.size(); i++) {
 
             mGamesFav.add(gamesIntent.get(i));
-
-            Log.d("fav2",mGamesFav.toString());
+            Log.d("fav2", mGamesFav.toString());
         }
-
-
-
-
-
 
         mAdapter = new MyAdapter();
         mLv.setAdapter(mAdapter);
         mLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent i=new Intent(FavGames.this,DetailActivity.class);
-                i.putParcelableArrayListExtra(HelperGlobal.PARCELABLEKEYARRAY,mGamesFav);
+                Intent i = new Intent(FavGames.this, DetailActivity.class);
+                i.putParcelableArrayListExtra(HelperGlobal.PARCELABLEKEYARRAY, mGamesFav);
                 startActivity(i);
             }
         });
@@ -97,8 +91,8 @@ public class FavGames extends AppCompatActivity {
         });
     }
 
-    private void guardarDatoSP(){
-        SharedPreferences mPrefs = getSharedPreferences(HelperGlobal.KEYARRAYFAVSPREFERENCES,MODE_PRIVATE);
+    private void guardarDatoSP() {
+        SharedPreferences mPrefs = getSharedPreferences(HelperGlobal.KEYARRAYFAVSPREFERENCES, MODE_PRIVATE);
         SharedPreferences.Editor prefsEditor = mPrefs.edit();
         Gson gson = new Gson();
         String json = gson.toJson(mGamesFav);
@@ -108,56 +102,6 @@ public class FavGames extends AppCompatActivity {
     }
 
 
-/*
-    private class MyAdapter extends BaseAdapter {
-
-        @Override
-        public int getCount() {
-            return mGamesFav.size();
-        }
-
-        @Override
-        public Object getItem(int i) {
-            return mGamesFav.get(i);
-        }
-
-        @Override
-        public long getItemId(int i) {
-            return i;
-        }
-
-        @Override
-        public View getView(int i, View view, ViewGroup viewGroup) {
-
-            View myview = null;
-
-            if (myview == null) {
-
-                LayoutInflater inflater = (LayoutInflater) FavGames.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-                myview = inflater.inflate(R.layout.list_fav_games, null);
-            } else
-                myview = view;
-
-            ImageView img = myview.findViewById(R.id.imageIcon);
-            Picasso.get().load(mGamesFav.get(i).getImage()).resize(2048, 1600)
-                    .into(img);
-
-            TextView tTitle = myview.findViewById(R.id.title);
-            tTitle.setText(mGamesFav.get(i).getName());
-
-            TextView txtRtaing =  myview.findViewById(R.id.rating);
-            txtRtaing.setText(mGamesFav.get(i).getRating());
-
-            TextView txtGenres =  myview.findViewById(R.id.genress);
-            txtGenres.setText(mGamesFav.get(i).getGenres());
-
-            TextView txtReleased =  myview.findViewById(R.id.releasedd);
-            txtReleased.setText(mGamesFav.get(i).getReleased());
-
-            return myview;
-        }
-    }*/
 
     private class MyAdapter extends BaseAdapter {
 
@@ -196,13 +140,13 @@ public class FavGames extends AppCompatActivity {
             TextView tTitle = myview.findViewById(R.id.title);
             tTitle.setText(mGamesFav.get(i).getName());
 
-            TextView txtRtaing =  myview.findViewById(R.id.rating);
+            TextView txtRtaing = myview.findViewById(R.id.rating);
             txtRtaing.setText(mGamesFav.get(i).getRating());
 
-            TextView txtGenres =  myview.findViewById(R.id.genress);
+            TextView txtGenres = myview.findViewById(R.id.genress);
             txtGenres.setText(mGamesFav.get(i).getGenres());
 
-            TextView txtReleased =  myview.findViewById(R.id.releasedd);
+            TextView txtReleased = myview.findViewById(R.id.releasedd);
             txtReleased.setText(mGamesFav.get(i).getReleased());
 
             return myview;
@@ -211,12 +155,12 @@ public class FavGames extends AppCompatActivity {
 
     @Override
     public boolean onContextItemSelected(@NonNull MenuItem item) {
-        AdapterView.AdapterContextMenuInfo info=(AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         switch (item.getItemId()) {
 
             case 1:
                 mGamesFav.remove(info.position);
-                Toast.makeText(FavGames.this,HelperGlobal.ELIMINADOFAV, Toast.LENGTH_SHORT).show();
+                Toast.makeText(FavGames.this, HelperGlobal.ELIMINADOFAV, Toast.LENGTH_SHORT).show();
                 guardarDatoSP();
                 mAdapter.notifyDataSetChanged();
                 break;

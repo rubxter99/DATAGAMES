@@ -104,7 +104,7 @@ public class FilterGames extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                eliminar();
+                restaurar();
 
                 finish();
             }
@@ -128,10 +128,9 @@ public class FilterGames extends AppCompatActivity {
         prefsEditor.putString(HelperGlobal.ARRAYGAMESFILTROS, json);
         prefsEditor.commit();
     }
-    private void eliminar(){
+    private void restaurar(){
         SharedPreferences mPrefs = getSharedPreferences(HelperGlobal.KEYARRAYFILTROSPREFERENCESGAMES,MODE_PRIVATE);
         prefsEditor = mPrefs.edit();
-
         prefsEditor.clear();
         prefsEditor.commit();
     }
