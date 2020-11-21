@@ -432,9 +432,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     protected void onDestroy() {
-        if (mLocManager != null) {
-            mLocManager.removeUpdates((android.location.LocationListener) this);
-        }
+
         if (gpsLocationReceiver != null)
             unregisterReceiver(gpsLocationReceiver);
         super.onDestroy();
@@ -442,9 +440,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     protected void onStop() {
-        if (mLocManager != null) {
-            mLocManager.removeUpdates((android.location.LocationListener) this);
-        }
+
+
         super.onStop();
     }
 
