@@ -96,7 +96,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
 
-
         Intent intent = getIntent();
         if (intent != null) {
             mTitle = intent.getStringExtra(HelperGlobal.TITLEINPUTTIENDASCERCANAS);
@@ -122,7 +121,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         });
 
     }
-
     //////////////////////////////////////////////////////////////GPS/////////////////////////////////////////////////////////////////
 
     private void checkPermissions() {
