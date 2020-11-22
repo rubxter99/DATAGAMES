@@ -118,6 +118,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         btn_Maps.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                mMap.clear();
                 onMapReady(mMap);
 
             }
@@ -174,7 +175,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             mUsers.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
-                    mMap.clear();
+
                     PlacesParse placesParse = new PlacesParse();
                     arrayplaces = new ArrayList<PlacesParse>();
                     for (DataSnapshot child : dataSnapshot.child("tiendas").getChildren()) {
@@ -342,7 +343,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         markerOptions.title(HelperGlobal.MARKEROPTIONSTITLE);
         markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
 
-        Marker currentUserLocationMarker2 = mMap.addMarker(markerOptions.position(latLng));
+        currentUserLocationMarker = mMap.addMarker(markerOptions.position(latLng));
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 13));
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 13));
 
