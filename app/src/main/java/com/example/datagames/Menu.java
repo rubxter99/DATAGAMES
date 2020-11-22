@@ -3,10 +3,18 @@ package com.example.datagames;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.view.View;
 
@@ -31,7 +39,9 @@ public class Menu extends Activity  {
     private CardView cdMaps;
     private CardView cdInfo;
     private CardView cdFavoritos;
+
     private static final int CODINTFAVGAME = 1;
+
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,4 +124,5 @@ public class Menu extends Activity  {
         }
 
     }
+
 }

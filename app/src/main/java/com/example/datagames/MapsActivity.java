@@ -1,6 +1,7 @@
 package com.example.datagames;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -19,6 +20,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -98,6 +100,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
 
+
         Intent intent = getIntent();
         if (intent != null) {
             mTitle = intent.getStringExtra(HelperGlobal.TITLEINPUTTIENDASCERCANAS);
@@ -118,15 +121,34 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         btn_Maps.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mMap.clear();
+                if (mMap!=null){
+                    mMap.clear();
+                }
                 onMapReady(mMap);
+
 
             }
         });
 
     }
     //////////////////////////////////////////////////////////////GPS/////////////////////////////////////////////////////////////////
+    private void pedirPermisos(){
+        // Ask user permission for location.
+        if (PackageManager.PERMISSION_GRANTED !=
+                ContextCompat.checkSelfPermission(MapsActivity.this,
+                        Manifest.permission.ACCESS_FINE_LOCATION)) {
 
+            ActivityCompat.requestPermissions(MapsActivity.this,
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                    MY_PERMISSIONS_GPS_FINE_LOCATION);
+
+        } else {
+
+
+            startLocation();
+
+        }
+    }
     private void checkPermissions() {
         if (Build.VERSION.SDK_INT >= 23) {
             if (ContextCompat.checkSelfPermission(MapsActivity.this,
@@ -163,9 +185,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
         if (ContextCompat.checkSelfPermission(MapsActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+
             buildGoogleApiClient();
             checkPermissions();
-
 
             //mMap.addMarker(new MarkerOptions().position(myloc).title(mTitle));
             mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
@@ -399,10 +421,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             Intent callGPSSettingIntent = new Intent(
                     android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
             startActivity(callGPSSettingIntent);
-        } else {
-            mLocManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
-                    1, 300,
-                    (android.location.LocationListener) this);
         }
     }
 
@@ -423,6 +441,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             Toast.makeText(getApplicationContext(),
                     HelperGlobal.PERMISSIONGRANTEDPAST,
                     Toast.LENGTH_SHORT).show();
+            startLocation();
         }
     }
 
