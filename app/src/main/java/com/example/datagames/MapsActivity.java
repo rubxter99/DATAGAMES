@@ -59,6 +59,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import static androidx.core.location.LocationManagerCompat.isLocationEnabled;
@@ -91,6 +92,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private float distance = 0;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -117,6 +119,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onClick(View view) {
                 onMapReady(mMap);
+
             }
         });
 
@@ -171,6 +174,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             mUsers.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
+                    mMap.clear();
                     PlacesParse placesParse = new PlacesParse();
                     arrayplaces = new ArrayList<PlacesParse>();
                     for (DataSnapshot child : dataSnapshot.child("tiendas").getChildren()) {
@@ -203,7 +207,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                 Location location = new Location(LocationManager.GPS_PROVIDER);
                                 location.setLatitude(arrayplaces.get(j).getLat());
                                 location.setLongitude(arrayplaces.get(j).getLon());
-                                if(mCurrentLocation !=null){
+                                if(mCurrentLocation !=null ){
+
                                 distance = mCurrentLocation.distanceTo(location);
 
                                 LatLng latLng2 = new LatLng(arrayplaces.get(j).getLat(), arrayplaces.get(j).getLon());
@@ -226,13 +231,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                             .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
 
                                 } else if (distance < 5000) {
-                                    mMap.addMarker(new MarkerOptions()
+                                   mMap.addMarker(new MarkerOptions()
                                             .position(latLng2)
                                             .title(arrayplaces.get(j).getName())
                                             .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW)));
                                 }
                             }
                         }
+
                     }
                 }
 
@@ -322,9 +328,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mLon = location.getLongitude();
         mCurrentLocation = location;
 
-        if (currentUserLocationMarker != null) {
+        if (currentUserLocationMarker != null ) {
             currentUserLocationMarker.remove();
+
+
         }
+
 
         LatLng latLng = new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude());
 
@@ -333,7 +342,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         markerOptions.title(HelperGlobal.MARKEROPTIONSTITLE);
         markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
 
-        currentUserLocationMarker = mMap.addMarker(markerOptions.position(latLng));
+        Marker currentUserLocationMarker2 = mMap.addMarker(markerOptions.position(latLng));
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 13));
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 13));
 
