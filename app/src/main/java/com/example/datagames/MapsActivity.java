@@ -17,6 +17,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -86,6 +88,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private Double longitude;
     public FusedLocationProviderClient fusedLocationProviderClient;
     private ArrayList<PlacesParse> arrayplaces;
+    private float distance = 0;
 
 
     @Override
@@ -109,7 +112,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
+        ImageButton btn_Maps = findViewById(R.id.btn_maps);
 
+        btn_Maps.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onMapReady(mMap);
+            }
+        });
 
     }
 
@@ -190,13 +200,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         }
                         mCurrentLocation = mLocManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 
-                        for (int j = 0; j < arrayplaces.size(); j++) {
+                            for (int j = 0; j < arrayplaces.size(); j++) {
 
-                            Location location = new Location(LocationManager.GPS_PROVIDER);
-                            location.setLatitude(arrayplaces.get(j).getLat());
-                            location.setLongitude(arrayplaces.get(j).getLon());
-                            if (location != null) {
-                                float distance = mCurrentLocation.distanceTo(location);
+                                Location location = new Location(LocationManager.GPS_PROVIDER);
+                                location.setLatitude(arrayplaces.get(j).getLat());
+                                location.setLongitude(arrayplaces.get(j).getLon());
+                                if(mCurrentLocation !=null){
+                                distance = mCurrentLocation.distanceTo(location);
+
                                 LatLng latLng2 = new LatLng(arrayplaces.get(j).getLat(), arrayplaces.get(j).getLon());
                                 if (arrayplaces.get(j).getName().equalsIgnoreCase("game") && distance < 5000) {
                                     mMap.addMarker(new MarkerOptions()
@@ -221,15 +232,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                             .position(latLng2)
                                             .title(arrayplaces.get(j).getName())
                                             .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW)));
-
                                 }
                             }
                         }
-
-
                     }
-
-
                 }
 
                 @Override
@@ -314,18 +320,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onLocationChanged(Location location) {
 
-
         mLat = location.getLatitude();
         mLon = location.getLongitude();
         mCurrentLocation = location;
 
-
         if (currentUserLocationMarker != null) {
-
             currentUserLocationMarker.remove();
-
         }
-
 
         LatLng latLng = new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude());
 
@@ -367,7 +368,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         locationRequest.setFastestInterval(1100);
         locationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-
             LocationServices.FusedLocationApi.requestLocationUpdates(googleApiClient, locationRequest, this);
 
         }
@@ -385,7 +385,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @SuppressWarnings({"MissingPermission"})
     private void startLocation() {
-
         mLocManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
         if (!mLocManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
@@ -416,7 +415,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             Toast.makeText(getApplicationContext(),
                     HelperGlobal.PERMISSIONGRANTEDPAST,
                     Toast.LENGTH_SHORT).show();
-
         }
     }
 
@@ -436,8 +434,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     protected void onStop() {
-
-
         super.onStop();
     }
 
