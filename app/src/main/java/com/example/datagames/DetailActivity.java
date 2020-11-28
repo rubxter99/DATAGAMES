@@ -179,16 +179,20 @@ public class DetailActivity extends AppCompatActivity {
             txtStore.setText(mStore);
 
             TextView txtStoreName = findViewById(R.id.storename);
-            txtStoreName.setText(mStoreName);
+            if(mStoreName.equalsIgnoreCase("")){
+                txtStoreName.setText("Non information");
+            }else{
+                txtStoreName.setText(mStoreName);
+            }
 
             TextView txtPlatform = findViewById(R.id.platform);
-            txtPlatform.setText(mPlatform);
+            if(mPlatform.equalsIgnoreCase("")){
+                txtPlatform.setText("Non information");
+            }else{
+                txtPlatform.setText(mPlatform);
+            }
             navigationDrawer();
-
-
         }
-
-
     }
 
     private void setToolbar() {
@@ -223,15 +227,11 @@ public class DetailActivity extends AppCompatActivity {
                         break;
 
                     case R.id.nav_fav:
-
-
                         Intent favGames = new Intent(DetailActivity.this, FavGames.class);
                         favGames.putParcelableArrayListExtra(HelperGlobal.PARCELABLEKEYARRAY, mGamesFav);
                         Log.d("this23", mGamesFav.toString());
                         startActivityForResult(favGames, CODINTFAVGAME);
-
                         leerDatosSPFavs();
-
                         break;
 
                     case R.id.nav_profile:
@@ -295,12 +295,6 @@ public class DetailActivity extends AppCompatActivity {
                 Intent intent = new Intent(DetailActivity.this, About.class);
                 startActivity(intent);
                 return true;
-            case R.id.action_profile:
-                showSnackBar("Perfil");
-                Intent intent2 = new Intent(DetailActivity.this, Profile.class);
-                startActivity(intent2);
-                return true;
-
             case R.id.action_favorite:
                 boolean encontrado = false;
 
@@ -391,7 +385,11 @@ public class DetailActivity extends AppCompatActivity {
                                     txtRtaing.setText(mDetailsGamesRellenos.get(0).get("rating").toString());
 
                                     TextView txtMetacritic = findViewById(R.id.metacritic);
-                                    txtMetacritic.setText(mDetailsGamesRellenos.get(0).get("metacritic").toString());
+                                    if(mDetailsGamesRellenos.get(0).get("metacritic").toString().equalsIgnoreCase("null")){
+                                        txtMetacritic.setText("Non Info.");
+                                    }else{
+                                        txtMetacritic.setText(mDetailsGamesRellenos.get(0).get("metacritic").toString());
+                                    }
 
                                     TextView txtDescription = findViewById(R.id.description);
                                     txtDescription.setText(mDetailsGamesRellenos.get(0).get("description_raw").toString());
@@ -402,7 +400,11 @@ public class DetailActivity extends AppCompatActivity {
 
 
                                     TextView txtWebsite = findViewById(R.id.website);
-                                    txtWebsite.setText(mDetailsGamesRellenos.get(0).get("website").toString());
+                                    if(mDetailsGamesRellenos.get(0).get("website").toString().equalsIgnoreCase("")){
+                                        txtWebsite.setText("Non information");
+                                    }else{
+                                        txtWebsite.setText(mDetailsGamesRellenos.get(0).get("website").toString());
+                                    }
 
                                     setToolbar();
 

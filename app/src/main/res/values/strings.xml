@@ -22,12 +22,12 @@
     <string name="acercadeDES">Aplicación creada por Juan Antonio Barrero, Noelia Pérez y Rubén García para el Trabajo Final de Grado de Desarrollo de Aplicaciones Multiplataforma.</string>
     <string name="data">DATA</string>
     <string name="games">GAMES</string>
-    <string name="videojuegos">Videojuegos</string>
-    <string name="tiendas">Tiendas</string>
-    <string name="mapa">Mapa</string>
-    <string name="fav_menu">Favoritos</string>
-    <string name="perfil">Perfil</string>
-    <string name="acerca_de">Acerca de</string>
+    <string name="videojuegos">Videogames</string>
+    <string name="tiendas">Store</string>
+    <string name="mapa">Map</string>
+    <string name="fav_menu">Favourites</string>
+    <string name="perfil">Profile</string>
+    <string name="acerca_de">About us</string>
     <string name="since_2020">SINCE 2020</string>
     <string name="password_recovery">PASSWORD RECOVERY</string>
     <string name="enter_your_email_address">Enter your email address</string>
@@ -63,14 +63,16 @@
     </string-array>
 
     <string-array name="sp_plataformas">
-        <item>PC</item>
-        <item>Nintendo Switch</item>
+        <item>PlayStation 5</item>
         <item>PlayStation 4</item>
+        <item>PlayStation 3</item>
+        <item>Xbox Series S/X</item>
         <item>Xbox One</item>
         <item>Xbox 360</item>
-        <item>PlayStation 3</item>
+        <item>Nintendo Switch</item>
         <item>Nintendo DS</item>
         <item>Nintendo 3DS</item>
+        <item>PC</item>
         <item>Wii</item>
     </string-array>
 

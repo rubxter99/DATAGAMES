@@ -15,7 +15,7 @@
         android:layout_height="294dp"
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
-        android:src="@drawable/store" />
+        android:src="@drawable/mapa" />
 
     <TextView
         android:id="@+id/title2"
