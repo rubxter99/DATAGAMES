@@ -35,7 +35,7 @@ import java.util.Map;
 
 public class EditProfile extends AppCompatActivity {
     private static final String TAG="TAG";
-    private EditText profileFullName,profileEmail;
+    private EditText profileFullName,profileEmail, profilePassword;
     private ImageView profileImageView;
     private Button saveBtn;
     private FirebaseAuth fAuth;
@@ -50,6 +50,7 @@ public class EditProfile extends AppCompatActivity {
         Intent getIntent = getIntent();
         String fullName=getIntent.getStringExtra("fullName");
         String email=getIntent.getStringExtra("email");
+        final String password =getIntent.getStringExtra("password");
 
         fAuth=FirebaseAuth.getInstance();
         fStore=FirebaseFirestore.getInstance();
@@ -64,8 +65,9 @@ public class EditProfile extends AppCompatActivity {
                 Picasso.get().load(uri).into(profileImageView);
             }
         });
-        profileFullName=findViewById(R.id.editextUserName);
-        profileEmail=findViewById(R.id.editTextEmail);
+        profileFullName = findViewById(R.id.editextUserName);
+        profileEmail = findViewById(R.id.editTextEmail);
+        profilePassword = findViewById(R.id.editTextPassW);
         profileImageView=findViewById(R.id.profileImageView);
         profileImageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,6 +93,7 @@ public class EditProfile extends AppCompatActivity {
                         Map<String,Object> edited=new HashMap<>();
                         edited.put("email",email);
                         edited.put("name",profileFullName.getText().toString());
+                        edited.put("password",profilePassword.getText().toString());
                         mDatabase.child("usuarios").child(id).updateChildren(edited).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
@@ -113,8 +116,9 @@ public class EditProfile extends AppCompatActivity {
 
         profileEmail.setText(email);
         profileFullName.setText(fullName);
+        profilePassword.setText(password);
 
-        Log.d(TAG,"onCreate: "+fullName+" "+email);
+        Log.d(TAG,"onCreate: "+fullName+" "+email+ " " + password);
 
     }
 

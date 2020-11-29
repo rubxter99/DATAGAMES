@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">DATAGAMES</string>
     <string name="title1">Videjuegos</string>
-    <string name="title2">Tiendas</string>
+    <string name="title2">En nuestro menu podrás encontrar una infinidad de botones que te hará más fácil la navegación por la app.</string>
     <string name="title3">Welcome</string>
     <string name="description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto facilis id minus voluptas. Architecto beatae delectus enim magnam neque ratione repellat sint veritatis. Deserunt dolorum excepturi sapiente, sunt tempora tenetur.</string>
     <string name="next">Next</string>
@@ -40,6 +40,10 @@
     <string name="forgot_your_password">Forgot your password?</string>
     <string name="create_a_new_account">Create a new account</string>
     <string name="register">Register</string>
+    <string name="save">SAVE</string>
+    <string name="your_email">Enter Your NEW Email</string>
+    <string name="your_pass">Enter Your NEW Password</string>
+    <string name="your_username">Enter Your NEW UserName</string>
 
     <string-array name="sp_generos">
         <item>Action</item>
