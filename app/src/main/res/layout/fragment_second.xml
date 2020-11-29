@@ -5,35 +5,61 @@
     android:layout_height="match_parent"
     tools:context=".SecondFragment"
     android:orientation="vertical"
-    android:padding="16dp"
-    android:background="@drawable/fon"
+    android:padding="10dp"
+    android:background="@color/menu6"
     >
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
-        android:orientation="horizontal">
+        android:layout_marginTop="70dp">
 
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="200dp"
-            android:layout_height="500dp"
+            android:layout_height="350dp"
             android:layout_gravity="center"
-            android:layout_marginTop="5dp"
-            android:src="@drawable/imframe" />
+            android:src="@drawable/imagefrsec" />
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="200dp"
+            android:layout_height="350dp"
+            android:layout_marginTop="50dp"
+            android:layout_gravity="center"
+            android:layout_toEndOf="@id/imageView"
+            android:layout_below="@id/title1"
+            android:src="@drawable/imagefrsec2"/>
 
         <TextView
-            android:id="@+id/title2"
+            android:id="@+id/title1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
             android:layout_gravity="center"
-            android:text="@string/title2"
+            android:layout_toEndOf="@id/imageView"
+            android:gravity="center"
+            android:layout_marginTop="20dp"
+            android:text="@string/fra2tit1"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="20dp" />
 
-    </LinearLayout>
+        <TextView
+            android:id="@+id/title2"
+            android:layout_marginTop="50dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_below="@id/imageView"
+            android:layout_toStartOf="@id/imageView2"
+            android:gravity="center"
+            android:layout_marginRight="10dp"
+            android:text="@string/fra2tit2"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="20dp" />
+
+
+
+    </RelativeLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -52,7 +78,6 @@
             android:textColor="@color/colorPrimaryDark"
             android:textSize="30dp" />
         <TextView
-
             android:id="@+id/slideOneNext2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -65,10 +90,6 @@
             android:textColor="@color/colorPrimaryDark"
             android:textSize="30dp" />
 
-
     </LinearLayout>
-
-
-
 
 </LinearLayout>
