@@ -26,6 +26,7 @@ public class DetailParse {
         private String clip;
         private String website;
         private String metacritic;
+
         public details( String id,String image, String name,String rating,String genres, String released,String description,String platforms, String website, String metacritic,String storename,String store,String clip) {
             this.id = id;
             this.name = name;
@@ -37,6 +38,7 @@ public class DetailParse {
             this.platforms = platforms;
             this.website = website;
             this.metacritic = metacritic;
+
         }
 
 
@@ -108,12 +110,15 @@ public class DetailParse {
             return metacritic;
         }
 
+
+
         public  details(Parcel in){
             name = in.readString();
             image = in.readString();
             rating = in.readString();
             genres=in.readString();
             released=in.readString();
+
         }
 
 
@@ -129,6 +134,7 @@ public class DetailParse {
             parcel.writeString(rating);
             parcel.writeString(genres);
             parcel.writeString(released);
+
         }
 
         public static Parcelable.Creator<DetailParse.details> CREATOR =

@@ -178,7 +178,6 @@ public class GameList extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(GameList.this, DetailActivity.class);
                 intent.putExtra(HelperGlobal.EXTRA_ID, mGamesFiltrados.get(position).getId());
-                intent.putExtra(HelperGlobal.EXTRA_SHORTSCREENSHOT, mGamesFiltrados.get(position).getShort_screenshots());
                 intent.putExtra(HelperGlobal.EXTRA_GENRE, mGamesFiltrados.get(position).getGenres());
                 intent.putExtra(HelperGlobal.EXTRA_CLIP, mGamesFiltrados.get(position).getClip());
                 intent.putExtra(HelperGlobal.EXTRA_STORENAME, mGamesFiltrados.get(position).getStorename());
@@ -204,8 +203,6 @@ public class GameList extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(GameList.this, DetailActivity.class);
                 intent.putExtra(HelperGlobal.EXTRA_ID, mNewGamesRellenos.get(position).getId());
-                Log.d("mrellenos", mNewGamesRellenos.get(position).getShort_screenshots());
-                intent.putExtra(HelperGlobal.EXTRA_SHORTSCREENSHOT, mNewGamesRellenos.get(position).getShort_screenshots());
                 intent.putExtra(HelperGlobal.EXTRA_GENRE, mNewGamesRellenos.get(position).getGenres());
                 intent.putExtra(HelperGlobal.EXTRA_CLIP, mNewGamesRellenos.get(position).getClip());
                 Log.d("holaaaa1", mNewGamesRellenos.get(position).getClip());
@@ -230,7 +227,6 @@ public class GameList extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(GameList.this, DetailActivity.class);
                 intent.putExtra(HelperGlobal.EXTRA_ID, mUpcomingRellenos.get(position).getId());
-                intent.putExtra(HelperGlobal.EXTRA_SHORTSCREENSHOT, mUpcomingRellenos.get(position).getShort_screenshots());
                 intent.putExtra(HelperGlobal.EXTRA_GENRE, mUpcomingRellenos.get(position).getGenres());
                 intent.putExtra(HelperGlobal.EXTRA_CLIP, mUpcomingRellenos.get(position).getClip());
                 intent.putExtra(HelperGlobal.EXTRA_STORENAME, mUpcomingRellenos.get(position).getStorename());
@@ -399,6 +395,11 @@ public class GameList extends AppCompatActivity {
                         mAuth.signOut();
                         Intent intent3 = new Intent(GameList.this, MainActivity.class);
                         startActivity(intent3);
+                        finish();
+                        break;
+                    case R.id.nav_shops:
+                        Intent intent5 = new Intent(GameList.this, Shops.class);
+                        startActivity(intent5);
                         finish();
                         break;
 
@@ -579,8 +580,6 @@ public class GameList extends AppCompatActivity {
                 public void onClick(View v) {
                     Intent intent = new Intent(GameList.this, DetailActivity.class);
                     intent.putExtra(HelperGlobal.EXTRA_ID, mNewGamesRellenos.get(position).getId());
-                    Log.d("mrellenos", mNewGamesRellenos.get(position).getShort_screenshots());
-                    intent.putExtra(HelperGlobal.EXTRA_SHORTSCREENSHOT, mNewGamesRellenos.get(position).getShort_screenshots());
                     intent.putExtra(HelperGlobal.EXTRA_GENRE, mNewGamesRellenos.get(position).getGenres());
                     intent.putExtra(HelperGlobal.EXTRA_CLIP, mNewGamesRellenos.get(position).getClip());
                     Log.d("holaaaa1", mNewGamesRellenos.get(position).getClip());

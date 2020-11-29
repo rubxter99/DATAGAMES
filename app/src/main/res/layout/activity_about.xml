@@ -1,10 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout android:layout_height="match_parent"
+<androidx.drawerlayout.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:orientation="vertical"
-    android:background="@drawable/fon2"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:layout_height="match_parent"
+    android:id="@+id/drawer_layout"
+    android:background="@drawable/fon3"
+    >
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <include
+            android:id="@id/toolbar"
+            layout="@layout/toolbar1"
+
+            />
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="200dp"
@@ -36,4 +49,20 @@
         android:textStyle="bold"
         android:textColor="@color/colorBlack"
         android:textSize="20sp"/>
-</LinearLayout>
+    </LinearLayout>
+
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/navview"
+        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:fitsSystemWindows="true"
+        android:theme="@style/navigationTheme"
+        app:headerLayout="@layout/header_navigation_drawer"
+        app:menu="@menu/nav_options"
+        android:layout_gravity="start">
+
+    </com.google.android.material.navigation.NavigationView>
+
+
+
+</androidx.drawerlayout.widget.DrawerLayout>
