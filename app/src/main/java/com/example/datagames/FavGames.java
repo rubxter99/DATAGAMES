@@ -21,28 +21,46 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
 import com.squareup.picasso.Picasso;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
+import static com.example.datagames.DetailActivity.mGamesFav;
+
 public class FavGames extends AppCompatActivity {
-    // public static ArrayList<GamesParse.game> mGamesFav = new ArrayList<>();
+    private FirebaseAuth mAuth;
+    private DatabaseReference mDatabase;
     public static ArrayList<DetailParse.details> mGamesFav;
     private ListView mLv = null;
     private MyAdapter mAdapter;
     private Location mCurrentLocation = new Location("");
+    private DrawerLayout drawerLayout;
+    private NavigationView navigationView;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fav_games);
-        Intent getIntent = getIntent();
+        toolbar = findViewById(R.id.toolbar);
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        navigationView = (NavigationView) findViewById(R.id.navview);
 
+        Intent getIntent = getIntent();
+        mAuth= FirebaseAuth.getInstance();
         //ArrayList<GamesParse.game> gamesIntent = getIntent.getParcelableArrayListExtra(HelperGlobal.PARCELABLEKEYARRAY);
         ArrayList<DetailParse.details> gamesIntent = getIntent.getParcelableArrayListExtra(HelperGlobal.PARCELABLEKEYARRAY);
         mLv = findViewById(R.id.list_fav);
@@ -56,7 +74,8 @@ public class FavGames extends AppCompatActivity {
 
         mAdapter = new MyAdapter();
         mLv.setAdapter(mAdapter);
-
+        setToolBar();
+        navigationDrawer();
        /* mLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
@@ -160,4 +179,79 @@ public class FavGames extends AppCompatActivity {
         }
         return true;
     }
+    private void setToolBar() {
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu_drawer);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                if (drawerLayout.isDrawerVisible(GravityCompat.START)) {
+                    drawerLayout.closeDrawer(GravityCompat.START);
+                } else {
+                    drawerLayout.openDrawer(GravityCompat.START);
+                }
+
+                //return true;
+                break;
+
+        }
+
+        return true;
+
+        // return super.onOptionsItemSelected(item);
+    }
+
+    private void navigationDrawer() {
+
+        navigationView.bringToFront();
+
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+                switch (item.getItemId()) {
+
+                    case R.id.nav_home:
+                        Intent intent1 = new Intent(FavGames.this, com.example.datagames.Menu.class);
+                        startActivity(intent1);
+                        finish();
+                        break;
+
+                    case R.id.nav_maps:
+                        Intent intent4 = new Intent(FavGames.this, MapsActivity.class);
+                        startActivity(intent4);
+                        finish();
+                        break;
+
+
+                    case R.id.nav_profile:
+                        Intent intent2 = new Intent(FavGames.this, Profile.class);
+                        startActivity(intent2);
+                        finish();
+                        break;
+                    case R.id.nav_logout:
+                        mAuth.signOut();
+                        Intent intent3 = new Intent(FavGames.this, MainActivity.class);
+                        startActivity(intent3);
+                        finish();
+                        break;
+
+                    case R.id.nav_shops:
+                        Intent intent5 = new Intent(FavGames.this, Shops.class);
+                        startActivity(intent5);
+                        finish();
+                        break;
+                }
+                return true;
+            }
+        });
+        navigationView.setCheckedItem(R.id.nav_home);
+
+    }
+
 }

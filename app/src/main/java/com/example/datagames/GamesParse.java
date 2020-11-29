@@ -20,7 +20,7 @@ public class GamesParse {
         private String rating;
         private String genres;
         private String id;
-        private String short_screenshots;
+
         private String clip;
         private String store;
         private String storename;
@@ -29,14 +29,13 @@ public class GamesParse {
         //  private String extensionImg;
         //  private String price;
 
-        public game(String name, String released, String image, String rating, String genres, String id, String short_screenshots, String clip, String storename, String urlstore, String platforms) {
+        public game(String name, String released, String image, String rating, String genres, String id, String clip, String storename, String urlstore, String platforms) {
             this.name = name;
             this.released = released;
             this.image = image;
             this.genres = genres;
             this.rating = rating;
             this.id = id;
-            this.short_screenshots = short_screenshots;
             this.clip = clip;
             this.storename = storename;
             this.urlstore = urlstore;
@@ -48,9 +47,7 @@ public class GamesParse {
             return id;
         }
 
-        public String getShort_screenshots() {
-            return short_screenshots;
-        }
+
 
         public String getClip() {
             return clip;
@@ -252,7 +249,7 @@ public class GamesParse {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        game game = new game(name, released, image, rating, namegenres, id, short_screenshotsimage, clip, namestore, urlstore, nameplatforms);
+        game game = new game(name, released, image, rating, namegenres, id, clip, namestore, urlstore, nameplatforms);
         return game;
     }
 

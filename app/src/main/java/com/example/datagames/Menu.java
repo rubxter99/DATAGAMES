@@ -31,7 +31,7 @@ import java.util.ArrayList;
 import static com.example.datagames.DetailActivity.mGamesFav;
 
 
-public class Menu extends Activity  {
+public class Menu extends Activity {
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
     private CardView cdPerfil;
@@ -39,33 +39,43 @@ public class Menu extends Activity  {
     private CardView cdMaps;
     private CardView cdInfo;
     private CardView cdFavoritos;
+    private CardView cdStore;
 
     private static final int CODINTFAVGAME = 1;
-
 
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
 
-        mAuth= FirebaseAuth.getInstance();
+        mAuth = FirebaseAuth.getInstance();
 
 
-        cdPerfil=findViewById(R.id.cd_perfil);
+        cdPerfil = findViewById(R.id.cd_perfil);
         cdPerfil.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mAuth.getCurrentUser();
-                startActivity(new Intent(Menu.this,Profile.class));
+                startActivity(new Intent(Menu.this, Profile.class));
 
             }
         });
-        cdGames=findViewById(R.id.cd_games);
-        cdGames.setOnClickListener(new View.OnClickListener(){
+        cdGames = findViewById(R.id.cd_games);
+        cdGames.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mAuth.getCurrentUser();
-                startActivity(new Intent(Menu.this,GameList.class));
+                startActivity(new Intent(Menu.this, GameList.class));
+
+            }
+        });
+        cdStore = findViewById(R.id.cd_tiendas);
+        cdStore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mAuth.getCurrentUser();
+                startActivity(new Intent(Menu.this, Shops.class));
+
 
             }
         });
@@ -75,7 +85,7 @@ public class Menu extends Activity  {
             @Override
             public void onClick(View view) {
                 mAuth.getCurrentUser();
-                startActivity(new Intent(Menu.this,MapsActivity.class));
+                startActivity(new Intent(Menu.this, MapsActivity.class));
             }
         });
 
@@ -94,7 +104,7 @@ public class Menu extends Activity  {
                 mAuth.getCurrentUser();
                 Intent favGames = new Intent(Menu.this, FavGames.class);
                 favGames.putParcelableArrayListExtra(HelperGlobal.PARCELABLEKEYARRAY, mGamesFav);
-                startActivityForResult(favGames,CODINTFAVGAME);
+                startActivityForResult(favGames, CODINTFAVGAME);
                 leerDatosSPFavs();
 
             }
@@ -102,6 +112,7 @@ public class Menu extends Activity  {
 
 
     }
+
     private void leerDatosSPFavs() {
         SharedPreferences mPrefs = getSharedPreferences(HelperGlobal.KEYARRAYFAVSPREFERENCES, MODE_PRIVATE);
         Gson gson = new Gson();
@@ -115,11 +126,12 @@ public class Menu extends Activity  {
 
         }
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode == CODINTFAVGAME){
+        if (requestCode == CODINTFAVGAME) {
             leerDatosSPFavs();
         }
 

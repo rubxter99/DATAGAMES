@@ -88,6 +88,7 @@ import androidx.core.view.GravityCompat;
 import androidx.core.widget.NestedScrollView;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -126,6 +127,10 @@ public class DetailActivity extends AppCompatActivity {
     private TextView txtTitle;
     private static final int CODINTFAVGAME = 1;
     private ArrayList<GamesParse.game> mDetailsGamesRellenoFinal = new ArrayList<>();
+    private RecyclerView recyclerView;
+    private DetailActivity.MainAdapter mainAdapter;
+    private List<String> list=new ArrayList<String>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -135,6 +140,10 @@ public class DetailActivity extends AppCompatActivity {
         navigationView = (NavigationView) findViewById(R.id.navview);
         mAuth = FirebaseAuth.getInstance();
         scrollView = findViewById(R.id.scroll);
+        recyclerView = findViewById(R.id.recycler_view);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(DetailActivity.this, LinearLayoutManager.HORIZONTAL, false);
+        //recyclerView.setLayoutManager(linearLayoutManager);
+        //recyclerView.setItemAnimator(new DefaultItemAnimator());
         // Añadir action bar
 
         if (getSupportActionBar() != null) // Habilitar up button
@@ -154,12 +163,12 @@ public class DetailActivity extends AppCompatActivity {
             mPlatform = intent.getStringExtra(HelperGlobal.EXTRA_PLATFORM);
 
             loadGameDetail(mId);
-
             ImageView shorts_imageview = findViewById(R.id.snapshot);
             Picasso.get().load(imageUrl).fit().centerCrop().into(shorts_imageview);
             TextView genresgame = findViewById(R.id.genres);
             genresgame.setText(mGenres);
             VideoView video = findViewById(R.id.video);
+
 
             Uri uri = Uri.parse(mVideo);
 
@@ -243,6 +252,11 @@ public class DetailActivity extends AppCompatActivity {
                         mAuth.signOut();
                         Intent intent3 = new Intent(DetailActivity.this, MainActivity.class);
                         startActivity(intent3);
+                        finish();
+                        break;
+                    case R.id.nav_shops:
+                        Intent intent5 = new Intent(DetailActivity.this, Shops.class);
+                        startActivity(intent5);
                         finish();
                         break;
 
@@ -373,6 +387,9 @@ public class DetailActivity extends AppCompatActivity {
 
                                     Log.d("mDetailsAdapter", mDetailsGamesRellenos.get(0).get("name").toString());
 
+
+
+
                                     ImageView img = findViewById(R.id.image_paralax);
                                     Picasso.get().load(mDetailsGamesRellenos.get(0).get("background_image").toString()).resize(2048, 1600)
                                             .into(img);
@@ -432,6 +449,56 @@ public class DetailActivity extends AppCompatActivity {
         });
         stringRequest4.setShouldCache(false);
         queue4.add(stringRequest4);
+
+    }
+    public class MainAdapter extends RecyclerView.Adapter<DetailActivity.ViewHolder> {
+
+        ArrayList<DetailParse.details> arrayList;
+        Context context;
+
+        public MainAdapter(Context context, ArrayList<DetailParse.details> arrayList) {
+            this.context = context;
+            this.arrayList = arrayList;
+        }
+
+        @NonNull
+        @Override
+        public DetailActivity.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.listview_horizontal, parent, false);
+            return new DetailActivity.ViewHolder(view);
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull DetailActivity.ViewHolder holder, int position) {
+
+
+            holder.img.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+
+                    mainAdapter.notifyDataSetChanged();
+                }
+            });
+        }
+
+
+
+        @Override
+        public int getItemCount() {
+            return arrayList.size();
+        }
+
+
+    }
+    public class ViewHolder extends RecyclerView.ViewHolder {
+        public ImageView img;
+
+        public ViewHolder(@NonNull View itemView) {
+            super(itemView);
+            img = itemView.findViewById(R.id.imageView);
+
+        }
 
     }
 
