@@ -238,7 +238,6 @@ public class DetailActivity extends AppCompatActivity {
                     case R.id.nav_fav:
                         Intent favGames = new Intent(DetailActivity.this, FavGames.class);
                         favGames.putParcelableArrayListExtra(HelperGlobal.PARCELABLEKEYARRAY, mGamesFav);
-                        Log.d("this23", mGamesFav.toString());
                         startActivityForResult(favGames, CODINTFAVGAME);
                         leerDatosSPFavs();
                         break;

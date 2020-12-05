@@ -26,7 +26,8 @@
         android:supportsRtl="true"
         android:largeHeap="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
-        <activity android:name=".Shops"></activity>
+        <activity android:name=".ForthFragment"></activity>
+        <activity android:name=".Shops" />
         <activity android:name=".About" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.

@@ -24,7 +24,7 @@ public class ThirdFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view= inflater.inflate(R.layout.fragment_second, container, false);
+        View view= inflater.inflate(R.layout.fragment_third, container, false);
         //Initialize ViewPager from Main Activity
         viewPager=getActivity().findViewById(R.id.viewPager);
         next=view.findViewById(R.id.slideOneNext3);

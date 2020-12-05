@@ -54,7 +54,7 @@ public class FourFragment extends Fragment {
     }
 
 
-    @SuppressLint("WrongViewCast")
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
