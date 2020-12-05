@@ -3,102 +3,96 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/fon3"
+    tools:context=".ThirdFragment"
     android:orientation="vertical"
-    android:padding="16dp"
-    tools:context=".ThirdFragment">
+    android:padding="10dp"
+    android:background="@drawable/fon"
+    >
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="200dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="20dp"
-        android:src="@drawable/logo_capa" />
-
-    <TextView
-        android:id="@+id/title0"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="@string/data"
-        android:fontFamily="monospace"
-        android:textColor="@color/logoNegro"
-        android:textSize="30sp"/>
-    <TextView
-        android:id="@+id/title1"
-        android:fontFamily="monospace"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="@string/games"
-        android:textColor="@color/logoNegro"
-        android:textSize="30sp"
-        android:layout_marginBottom="20dp"/>
-    <TextView
-        android:id="@+id/title2"
-        android:layout_width="match_parent"
-        android:layout_height="57dp"
-        android:gravity="center"
-        android:text="@string/title3"
-        android:textColor="@color/logoNegro"
-        android:textSize="30sp"
-        android:layout_marginBottom="20dp"/>
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:layout_marginTop="20dp"
-        android:orientation="vertical"
-        >
-        <Button
-            android:id="@+id/btnLogin1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="5dp"
-            android:layout_marginEnd="100dp"
-            android:layout_weight="1"
-            android:layout_marginBottom="20dp"
-            android:layout_marginStart="100dp"
-            android:background="@drawable/shape_login_btn"
-            android:text="@string/login"
-            android:textColor="@color/logoNegro"
-            android:layout_gravity="center"
-            android:textAllCaps="false" />
-        <Button
-            android:id="@+id/btnRegistrer1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="100dp"
-            android:layout_gravity="center"
-            android:layout_marginEnd="100dp"
-            android:layout_weight="1"
-            android:textColor="@color/logoNegro"
-            android:textAllCaps="false"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/shape_registrer_btn"
-            android:text="@string/register"
-            android:layout_marginBottom="20dp"
-            />
-    </LinearLayout>
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_weight="1">
+        android:layout_marginTop="50dp">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="200dp"
+            android:layout_height="350dp"
+            android:layout_marginRight="10dp"
+            android:layout_gravity="center"
+            android:src="@drawable/shop_map" />
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="200dp"
+            android:layout_height="350dp"
+            android:layout_marginTop="50dp"
+            android:layout_gravity="center"
+            android:layout_toEndOf="@id/imageView"
+            android:layout_below="@id/title1"
+            android:src="@drawable/shop_online"/>
+
         <TextView
+            android:id="@+id/title1"
+            android:background="@drawable/shape_fragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_toEndOf="@id/imageView"
+            android:gravity="center"
+            android:layout_marginTop="20dp"
+            android:text="@string/fra3tit1"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="20dp" />
+
+        <TextView
+            android:id="@+id/title2"
+            android:background="@drawable/shape_fragment"
+            android:layout_marginTop="50dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_below="@id/imageView"
+            android:layout_toStartOf="@id/imageView2"
+            android:gravity="center"
+            android:layout_marginRight="10dp"
+            android:text="@string/fra3tit2"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="20dp" />
+
+
+
+    </RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+        <TextView
+
             android:id="@+id/slideOneBack2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|start"
-            android:layout_weight="3"
+            android:layout_weight="1"
             android:clickable="true"
             android:focusable="true"
             android:gravity="bottom|start"
             android:text="@string/back"
-            android:textColor="@color/colorBlack"
-            android:textSize="30sp" />
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="30dp" />
+        <TextView
+            android:id="@+id/slideOneNext3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="bottom|end"
+            android:text="@string/next"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="30dp" />
+
     </LinearLayout>
+
 </LinearLayout>

@@ -1,6 +1,5 @@
 package com.example.datagames;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
@@ -20,6 +19,8 @@ public class IntroAdapter extends FragmentPagerAdapter {
                 return new SecondFragment();
             case 2:
                 return new ThirdFragment();
+            case 3:
+                return new FourFragment();
             default:
                 return null;
         }
@@ -28,6 +29,6 @@ public class IntroAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return 3;
+        return 4;
     }
 }

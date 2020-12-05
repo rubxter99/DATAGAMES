@@ -46,6 +46,8 @@
     <string name="your_username">Enter Your NEW UserName</string>
     <string name="fra2tit1">Entrando en la sección de videojuegos podrás encontrar los videojuegos estrenados recientemente</string>
     <string name="fra2tit2">Como también los que están por salir y todos los videojuegos que tenemos actualmente</string>
+    <string name="fra3tit1">Podrás elegir como quieres comprar/mirar tus videojuegos, en una tienda física</string>
+    <string name="fra3tit2">Como también podrás encontrarlos en las plataformas online que te ofrecemos</string>
 
 
     <string-array name="sp_generos">
@@ -82,5 +84,7 @@
         <item>PC</item>
         <item>Wii</item>
     </string-array>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
