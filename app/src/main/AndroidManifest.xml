@@ -24,9 +24,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/datagames_icon"
         android:supportsRtl="true"
-        android:largeHeap="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
-        <activity android:name=".ForthFragment"></activity>
         <activity android:name=".Shops" />
         <activity android:name=".About" />
         <!--

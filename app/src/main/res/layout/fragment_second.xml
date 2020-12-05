@@ -18,6 +18,7 @@
             android:id="@+id/imageView"
             android:layout_width="200dp"
             android:layout_height="350dp"
+            android:layout_marginRight="10dp"
             android:layout_gravity="center"
             android:src="@drawable/imagefrsec" />
 
@@ -38,6 +39,7 @@
             android:layout_gravity="center"
             android:layout_toEndOf="@id/imageView"
             android:gravity="center"
+            android:background="@drawable/shape_fragment"
             android:layout_marginTop="20dp"
             android:text="@string/fra2tit1"
             android:textColor="@color/colorPrimaryDark"
@@ -52,6 +54,7 @@
             android:layout_below="@id/imageView"
             android:layout_toStartOf="@id/imageView2"
             android:gravity="center"
+            android:background="@drawable/shape_fragment"
             android:layout_marginRight="10dp"
             android:text="@string/fra2tit2"
             android:textColor="@color/colorPrimaryDark"

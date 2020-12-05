@@ -5,25 +5,20 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_home"
-            android:title="Menu"
+            android:title="@string/menu"
             />
         <item
             android:id="@+id/nav_maps"
-            android:title="Maps"
+            android:title="@string/mapa"
             />
         <item
             android:id="@+id/nav_shops"
-            android:title="Shops"
+            android:title="@string/tiendas"
            />
         <item
             android:id="@+id/nav_fav"
-            android:title="Favoritos"
+            android:title="@string/fav_menu"
            />
-
-        <item android:id="@+id/nav_settings"
-            android:title="Settings"
-
-            />
     </group>
 
     <item android:title="Profile">

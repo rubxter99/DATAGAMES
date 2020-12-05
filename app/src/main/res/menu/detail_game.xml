@@ -6,17 +6,17 @@
     <item
         android:id="@+id/action_about"
         android:orderInCategory="3"
-        android:title="About us"
+        android:title="@string/about_us"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_share"
         android:orderInCategory="2"
-        android:title="Share"
+        android:title="@string/share"
         app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/action_favorite"
         android:orderInCategory="1"
-        android:title="Favorite"
+        android:title="@string/fav_menu"
         app:showAsAction="ifRoom" />
 </menu>

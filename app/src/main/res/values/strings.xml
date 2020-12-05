@@ -1,9 +1,7 @@
 <resources>
     <string name="app_name">DATAGAMES</string>
-    <string name="title1">Videjuegos</string>
-    <string name="title2">En nuestro menu podrás encontrar una infinidad de botones que te hará más fácil la navegación por la app.</string>
+    <string name="title2">In our menu you will find an infinite number of buttons that will make it easier for you to navigate through the app.</string>
     <string name="title3">Welcome</string>
-    <string name="description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto facilis id minus voluptas. Architecto beatae delectus enim magnam neque ratione repellat sint veritatis. Deserunt dolorum excepturi sapiente, sunt tempora tenetur.</string>
     <string name="next">Next</string>
     <string name="back">Back</string>
     <string name="login">Login</string>
@@ -13,11 +11,9 @@
     <string name="upcoming_games">Upcoming Games</string>
     <string name="list_games">List Games</string>
     <string name="ok">OK</string>
-    <string name="filtros">FILTROS</string>
     <string name="rating">Rating</string>
-    <string name="plataformas">Plataformas</string>
-    <string name="generos">Generos</string>
-    <string name="favoritos">FAVORITOS</string>
+    <string name="plataformas">Platforms</string>
+    <string name="generos">Genres</string>
     <string name="data_games">DATA GAMES</string>
     <string name="acercadeDES">Aplicación creada por Juan Antonio Barrero, Noelia Pérez y Rubén García para el Trabajo Final de Grado de Desarrollo de Aplicaciones Multiplataforma.</string>
     <string name="data">DATA</string>
@@ -44,10 +40,10 @@
     <string name="your_email">Enter Your NEW Email</string>
     <string name="your_pass">Enter Your NEW Password</string>
     <string name="your_username">Enter Your NEW UserName</string>
-    <string name="fra2tit1">Entrando en la sección de videojuegos podrás encontrar los videojuegos estrenados recientemente</string>
-    <string name="fra2tit2">Como también los que están por salir y todos los videojuegos que tenemos actualmente</string>
-    <string name="fra3tit1">Podrás elegir como quieres comprar/mirar tus videojuegos, en una tienda física</string>
-    <string name="fra3tit2">Como también podrás encontrarlos en las plataformas online que te ofrecemos</string>
+    <string name="fra2tit1">Entering the videogames section you can find the recently released videogames</string>
+    <string name="fra2tit2">As well as those about to come out and all the video games we currently have</string>
+    <string name="fra3tit1">You can choose how you want to buy/view your video games, in a physical shop</string>
+    <string name="fra3tit2">As you can also find them in the online platforms that we offer</string>
 
 
     <string-array name="sp_generos">
@@ -86,5 +82,15 @@
     </string-array>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="menu">Menu</string>
+    <string name="about_us">About us</string>
+    <string name="share">Share</string>
+    <string name="metacritic">Metacritic</string>
+    <string name="video">Video</string>
+    <string name="description">Description</string>
+    <string name="departure">Departure</string>
+    <string name="genre">Genre</string>
+    <string name="image">Image</string>
+    <string name="website">Website</string>
 
 </resources>
