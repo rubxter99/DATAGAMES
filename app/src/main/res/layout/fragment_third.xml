@@ -12,7 +12,7 @@
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp">
+        android:layout_marginTop="20dp">
 
         <ImageView
             android:id="@+id/imageView"
@@ -30,7 +30,7 @@
             android:layout_gravity="center"
             android:layout_toEndOf="@id/imageView"
             android:layout_below="@id/title1"
-            android:src="@drawable/shop_online"/>
+            android:src="@drawable/screen_shop"/>
 
         <TextView
             android:id="@+id/title1"

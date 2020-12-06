@@ -61,7 +61,7 @@ public class FavGames extends AppCompatActivity {
 
         Intent getIntent = getIntent();
         mAuth= FirebaseAuth.getInstance();
-        //ArrayList<GamesParse.game> gamesIntent = getIntent.getParcelableArrayListExtra(HelperGlobal.PARCELABLEKEYARRAY);
+
         ArrayList<DetailParse.details> gamesIntent = getIntent.getParcelableArrayListExtra(HelperGlobal.PARCELABLEKEYARRAY);
         mLv = findViewById(R.id.list_fav);
         mGamesFav = new ArrayList<>();
@@ -76,20 +76,6 @@ public class FavGames extends AppCompatActivity {
         mLv.setAdapter(mAdapter);
         setToolBar();
         navigationDrawer();
-       /* mLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                Intent i3=new Intent(FavGames.this,DetailActivity.class);
-                i3.putExtra(HelperGlobal.EXTRA_DRAWABLE, mGamesFav.get(position).getName());
-                i3.putExtra(HelperGlobal.EXTRA_NAME, mGamesFav.get(position).getImage());
-                i3.putExtra(HelperGlobal.EXTRA_RATING,mGamesFav.get(position).getRating());
-                i3.putExtra(HelperGlobal.EXTRA_GENRE,mGamesFav.get(position).getGenres());
-                i3.putExtra(HelperGlobal.EXTRA_RELEASED, mGamesFav.get(position).getReleased());
-                startActivity(i3);
-            }
-        });*/
 
 
         mLv.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
@@ -196,14 +182,11 @@ public class FavGames extends AppCompatActivity {
                     drawerLayout.openDrawer(GravityCompat.START);
                 }
 
-                //return true;
                 break;
 
         }
 
         return true;
-
-        // return super.onOptionsItemSelected(item);
     }
 
     private void navigationDrawer() {
