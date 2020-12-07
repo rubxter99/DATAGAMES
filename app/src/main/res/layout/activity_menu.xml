@@ -313,7 +313,7 @@
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </androidx.cardview.widget.CardView>
+            </androidx.cardview.widget.CardView>
             <androidx.cardview.widget.CardView
                 android:id="@+id/cd_settings"
                 android:layout_width="match_parent"

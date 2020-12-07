@@ -59,18 +59,11 @@ public class Profile extends AppCompatActivity {
     private TextView nameprofile;
     private ImageView user;
     private CircleImageView profileImageView;
-    private String DISPLAY_NAME = null;
-    private String PROFILE_IMAGE_URL = null;
-    private int TAKE_IMAGE_CODE = 10001;
     private Button SignOut;
-    private Button ResetPassword;
     private Button ChangeProfile;
-    private static final String TAG = "Profile";
-    static final int REQUEST_IMAGE_CAPTURE = 1;
     private StorageReference storageReference;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
-    private Toolbar toolbar;
     private static final int CODINTFAVGAME = 1;
 
     @SuppressLint("WrongViewCast")

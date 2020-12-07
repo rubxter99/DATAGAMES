@@ -26,8 +26,6 @@ public class GamesParse {
         private String storename;
         private String urlstore;
         private String platforms;
-        //  private String extensionImg;
-        //  private String price;
 
         public game(String name, String released, String image, String rating, String genres, String id, String clip, String storename, String urlstore, String platforms) {
             this.name = name;
@@ -47,8 +45,6 @@ public class GamesParse {
             return id;
         }
 
-
-
         public String getClip() {
             return clip;
         }
@@ -64,7 +60,6 @@ public class GamesParse {
         public String getPlatforms() {
             return platforms;
         }
-
 
         public String getName() {
             return name;
@@ -181,8 +176,6 @@ public class GamesParse {
                     JSONObject node = genress.getJSONObject(i);
                     if (node.has(HelperGlobal.JSONGENRESNAME))
                         namegenres = node.getString(HelperGlobal.JSONGENRESNAME);
-                    // if(node.has(HelperGlobal.JSONOBJECTEXTENSION))
-                    //  extensionImg = node.getString(HelperGlobal.JSONOBJECTEXTENSION);
                 }
 
             }
@@ -194,8 +187,6 @@ public class GamesParse {
                     JSONObject node = short_screenshotss.getJSONObject(i);
                     if (node.has(HelperGlobal.JSONSHORTSCREENIMAGE))
                         short_screenshotsimage = node.getString(HelperGlobal.JSONSHORTSCREENIMAGE);
-                    // if(node.has(HelperGlobal.JSONOBJECTEXTENSION))
-                    //  extensionImg = node.getString(HelperGlobal.JSONOBJECTEXTENSION);
                 }
 
             }
@@ -238,8 +229,6 @@ public class GamesParse {
                         JSONObject platform = node.getJSONObject(HelperGlobal.JSONPLATFORM);
                         if (platform.has(HelperGlobal.JSONPLATFORMNAME))
                             nameplatforms = platform.getString(HelperGlobal.JSONPLATFORMNAME);
-                        // if(node.has(HelperGlobal.JSONOBJECTEXTENSION))
-                        //  extensionImg = node.getString(HelperGlobal.JSONOBJECTEXTENSION);
                     }
                 }
 

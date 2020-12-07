@@ -32,13 +32,10 @@ public class MainActivity extends AppCompatActivity {
 
         mAuth= FirebaseAuth.getInstance();
 
-
         IntroAdapter adapter=new IntroAdapter(getSupportFragmentManager());
         viewPager.setAdapter(adapter);
-
-
-
     }
+
     @Override
     public void onStart() {
         super.onStart();

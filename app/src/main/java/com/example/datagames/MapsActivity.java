@@ -125,8 +125,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     mMap.clear();
                 }
                 onMapReady(mMap);
-
-
             }
         });
 
@@ -183,7 +181,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-
         if (ContextCompat.checkSelfPermission(MapsActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
 
             buildGoogleApiClient();
@@ -225,12 +222,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         }
                         mCurrentLocation = mLocManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 
-                            for (int j = 0; j < arrayplaces.size(); j++) {
+                        for (int j = 0; j < arrayplaces.size(); j++) {
 
-                                Location location = new Location(LocationManager.GPS_PROVIDER);
-                                location.setLatitude(arrayplaces.get(j).getLat());
-                                location.setLongitude(arrayplaces.get(j).getLon());
-                                if(mCurrentLocation !=null ){
+                            Location location = new Location(LocationManager.GPS_PROVIDER);
+                            location.setLatitude(arrayplaces.get(j).getLat());
+                            location.setLongitude(arrayplaces.get(j).getLon());
+                            if(mCurrentLocation !=null ){
 
                                 distance = mCurrentLocation.distanceTo(location);
 
@@ -254,7 +251,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                             .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
 
                                 } else if (distance < 5000) {
-                                   mMap.addMarker(new MarkerOptions()
+                                    mMap.addMarker(new MarkerOptions()
                                             .position(latLng2)
                                             .title(arrayplaces.get(j).getName())
                                             .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW)));
@@ -354,9 +351,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         if (currentUserLocationMarker != null ) {
             currentUserLocationMarker.remove();
 
-
         }
-
 
         LatLng latLng = new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude());
 
@@ -372,7 +367,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         if (googleApiClient != null) {
             LocationServices.FusedLocationApi.removeLocationUpdates(googleApiClient, this);
         }
-
 
     }
 

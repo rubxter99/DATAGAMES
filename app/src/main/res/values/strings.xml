@@ -92,5 +92,8 @@
     <string name="genre">Genre</string>
     <string name="image">Image</string>
     <string name="website">Website</string>
+    <string name="filtros">FILTERS</string>
+    <string name="guardar_cambios">SAVE CHANGES</string>
+    <string name="restaurar">RESTORE</string>
 
 </resources>

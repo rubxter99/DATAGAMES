@@ -124,7 +124,7 @@ public class FilterGames extends AppCompatActivity {
 
     private void guardarDatoSP(ObjectFilterGame objetcFiltro){
         SharedPreferences mPrefs = getSharedPreferences(HelperGlobal.KEYARRAYFILTROSPREFERENCESGAMES,MODE_PRIVATE);
-         prefsEditor = mPrefs.edit();
+        prefsEditor = mPrefs.edit();
         Gson gson = new Gson();
         String json = gson.toJson(objetcFiltro);
         prefsEditor.putString(HelperGlobal.ARRAYGAMESFILTROS, json);
