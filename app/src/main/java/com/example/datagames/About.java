@@ -33,14 +33,14 @@ public class About extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
-        toolbar = findViewById(R.id.toolbar);
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        navigationView = (NavigationView) findViewById(R.id.navview);
-        mAuth= FirebaseAuth.getInstance();
+        toolbar = findViewById(R.id.toolbar);//Creación menu superior
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);//Panel menu deslizante
+        navigationView = (NavigationView) findViewById(R.id.navview);//Menu deslizante
+        mAuth= FirebaseAuth.getInstance();//Conexión con la base de datos de Firebase
         setToolBar();
         navigationDrawer();
     }
-    private void setToolBar() {
+    private void setToolBar() { //Creación del menú deslizante
         setSupportActionBar(toolbar);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu_drawer);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -48,7 +48,7 @@ public class About extends AppCompatActivity {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item) {  //Mostrar menú deslizante al seleccionar el boton de tres lineas del menu superior
         switch (item.getItemId()) {
             case android.R.id.home:
                 if (drawerLayout.isDrawerVisible(GravityCompat.START)) {
@@ -64,10 +64,9 @@ public class About extends AppCompatActivity {
 
         return true;
 
-        // return super.onOptionsItemSelected(item);
     }
 
-    private void navigationDrawer() {
+    private void navigationDrawer() { //Mostrar los apartados del menú deslizante con sus respectivas direcciones a cada ventana
 
         navigationView.bringToFront();
 
@@ -80,6 +79,12 @@ public class About extends AppCompatActivity {
                     case R.id.nav_home:
                         Intent intent1 = new Intent(About.this, com.example.datagames.Menu.class);
                         startActivity(intent1);
+                        finish();
+                        break;
+
+                    case R.id.nav_games:
+                        Intent intent6 = new Intent(About.this, GameList.class);
+                        startActivity(intent6);
                         finish();
                         break;
 
@@ -121,7 +126,7 @@ public class About extends AppCompatActivity {
         navigationView.setCheckedItem(R.id.nav_home);
 
     }
-    private void leerDatosSPFavs() {
+    private void leerDatosSPFavs() { //Transforma los datos recogidos del sharedpreferences en nuestro caso los videojuegos favoritos para mostrarlos en la actividad de favoritos
         SharedPreferences mPrefs = getSharedPreferences(HelperGlobal.KEYARRAYFAVSPREFERENCES, MODE_PRIVATE);
         Gson gson = new Gson();
         String json = mPrefs.getString(HelperGlobal.ARRAYTIENDASFAV, "");

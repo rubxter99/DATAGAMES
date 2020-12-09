@@ -1,6 +1,6 @@
 package com.example.datagames;
 
-public class HelperGlobal {
+public class HelperGlobal { //Clase para globalizar todas las variables generales llamadas desde distintas actividades
     public final static  String KEYARRAYFAVSPREFERENCES = "KEYARRAYTIENDAS";
     public final static String ARRAYTIENDASFAV = "ARRAYTIENDASFAVS";
     public final static  String KEYARRAYFILTROSPREFERENCESGAMES = "KEYARRAYFILTROGAMES";
@@ -21,14 +21,6 @@ public class HelperGlobal {
     public final static String PERMISSIONDENIEDUSER= "Permission denied by user!";
     public final static String MARKEROPTIONSTITLE=" Estas aquí ";
     public final static String PERMISSIONGRANTEDPAST="[LOCATION] Permission granted in the past!";
-    public final static String GOOGLENEARBYPLACENAME="place_name";
-    public final static String GOOGLENEARBYPLACEVICITINY="vicinity";
-    public final static String GOOGLENEARBYPLACELAT="lat";
-    public final static String GOOGLENEARBYPLACELNG="lng";
-    public final static String GOOGLEPLACESNAME="name";
-    public final static String GOOGLEPLACESGEOMETRY="geometry";
-    public final static String GOOGLEPLACESLOCATION="location";
-    public final static String GOOGLEPLACESREFERENCE="reference";
     public final static String ELIMINADOFAV="ELIMINADO DE FAVORITOS";
     public final static String ELIMINARFAVCONTEXTMENU="ELIMINAR DE FAVORITOS";
     public final static String PARCELABLEKEYARRAY="KEY_ARRAY";

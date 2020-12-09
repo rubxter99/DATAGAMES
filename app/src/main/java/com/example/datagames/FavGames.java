@@ -55,28 +55,28 @@ public class FavGames extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fav_games);
+
+        mAuth = FirebaseAuth.getInstance();//Conexion Base de Datos Firebase
+        Intent getIntent = getIntent();//Recogida de la llamada de otra actividad
+        ArrayList<DetailParse.details> gamesIntent = getIntent.getParcelableArrayListExtra(HelperGlobal.PARCELABLEKEYARRAY);//Recogida de los videojuegos añadidos a favoritos
+        mGamesFav = new ArrayList<>();
+        for (int i = 0; i < gamesIntent.size(); i++) {//Añadimos los datos del array anterior a uno nuevo para poder modificarlo
+            mGamesFav.add(gamesIntent.get(i));
+        }
+        mostrarDatos(getIntent);
+
+
+    }
+
+    private void mostrarDatos(Intent intent) { //Mostrar los datos recogidos de la actividad Favoritos
         toolbar = findViewById(R.id.toolbar);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         navigationView = (NavigationView) findViewById(R.id.navview);
-
-        Intent getIntent = getIntent();
-        mAuth= FirebaseAuth.getInstance();
-
-        ArrayList<DetailParse.details> gamesIntent = getIntent.getParcelableArrayListExtra(HelperGlobal.PARCELABLEKEYARRAY);
         mLv = findViewById(R.id.list_fav);
-        mGamesFav = new ArrayList<>();
-
-        for (int i = 0; i < gamesIntent.size(); i++) {
-
-            mGamesFav.add(gamesIntent.get(i));
-            Log.d("fav2", mGamesFav.toString());
-        }
-
         mAdapter = new MyAdapter();
         mLv.setAdapter(mAdapter);
         setToolBar();
         navigationDrawer();
-
 
         mLv.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
             @Override
@@ -89,19 +89,17 @@ public class FavGames extends AppCompatActivity {
         });
     }
 
-    private void guardarDatoSP() {
+    private void guardarDatoSP() { //Envio de datos del videojuego dirigidos al sharedpreferences
         SharedPreferences mPrefs = getSharedPreferences(HelperGlobal.KEYARRAYFAVSPREFERENCES, MODE_PRIVATE);
         SharedPreferences.Editor prefsEditor = mPrefs.edit();
         Gson gson = new Gson();
         String json = gson.toJson(mGamesFav);
-
         prefsEditor.putString(HelperGlobal.ARRAYTIENDASFAV, json);
         prefsEditor.apply();
     }
 
 
-
-    private class MyAdapter extends BaseAdapter {
+    private class MyAdapter extends BaseAdapter { //Adaptador para mostrar los datos de cada videojuego favorito
 
         @Override
         public int getCount() {
@@ -152,7 +150,7 @@ public class FavGames extends AppCompatActivity {
     }
 
     @Override
-    public boolean onContextItemSelected(@NonNull MenuItem item) {
+    public boolean onContextItemSelected(@NonNull MenuItem item) { //Eliminar videojuego favorito al mantener presionado la seleccion de este
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         switch (item.getItemId()) {
 
@@ -165,7 +163,8 @@ public class FavGames extends AppCompatActivity {
         }
         return true;
     }
-    private void setToolBar() {
+
+    private void setToolBar() { //Añadirá el menu superior mediante un toolbar
         setSupportActionBar(toolbar);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu_drawer);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -173,7 +172,7 @@ public class FavGames extends AppCompatActivity {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item) { //Mostrar menú deslizante al seleccionar el boton de tres lineas del menu superior
         switch (item.getItemId()) {
             case android.R.id.home:
                 if (drawerLayout.isDrawerVisible(GravityCompat.START)) {
@@ -189,7 +188,7 @@ public class FavGames extends AppCompatActivity {
         return true;
     }
 
-    private void navigationDrawer() {
+    private void navigationDrawer() { //Mostrar las opciones que muestra nuestro menu deslizante y nos llevara a cada direccion seleccionada
 
         navigationView.bringToFront();
 
@@ -204,7 +203,11 @@ public class FavGames extends AppCompatActivity {
                         startActivity(intent1);
                         finish();
                         break;
-
+                    case R.id.nav_games:
+                        Intent intent6 = new Intent(FavGames.this, GameList.class);
+                        startActivity(intent6);
+                        finish();
+                        break;
                     case R.id.nav_maps:
                         Intent intent4 = new Intent(FavGames.this, MapsActivity.class);
                         startActivity(intent4);

@@ -1,16 +1,12 @@
 package com.example.datagames;
 
 import android.Manifest;
-import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
-import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Build;
@@ -18,9 +14,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -42,15 +36,12 @@ import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.LocationSettingsResult;
 import com.google.android.gms.location.LocationSettingsStates;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
-import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.database.DataSnapshot;
@@ -59,12 +50,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
-import static androidx.core.location.LocationManagerCompat.isLocationEnabled;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
 
@@ -72,7 +58,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private GoogleApiClient googleApiClient;
     private LocationRequest locationRequest;
     private Location lastLocation;
-    private DatabaseReference mUsers;
+    private DatabaseReference mShops;
     private Marker currentUserLocationMarker;
     private Marker marker;
     private static final int Request_User_Location_Code = 99;
@@ -94,7 +80,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private float distance = 0;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -102,26 +87,26 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
         Intent intent = getIntent();
-        if (intent != null) {
+        if (intent != null) { //Coger valores por defecto
             mTitle = intent.getStringExtra(HelperGlobal.TITLEINPUTTIENDASCERCANAS);
             mLat = intent.getDoubleExtra(HelperGlobal.LATINPUTTIENDASCERCANAS, 0.0);
             mLon = intent.getDoubleExtra(HelperGlobal.LONINPUTTIENDASCERCANAS, 0.0);
             mProximityRadius = intent.getIntExtra(HelperGlobal.RADIUSINPUTTIENDASCERCANAS, 1000);
 
         }
-        mUsers = FirebaseDatabase.getInstance().getReference("tiendas");
-        mUsers.push().setValue(marker);
+        mShops = FirebaseDatabase.getInstance().getReference("tiendas"); //Conexión a las tiendas de la base de datos de Firebase
+        mShops.push().setValue(marker);// marcadores de las tiendas
 
+        //Añadir la vista del Maps
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
         ImageButton btn_Maps = findViewById(R.id.btn_maps);
-
-        btn_Maps.setOnClickListener(new View.OnClickListener() {
+        btn_Maps.setOnClickListener(new View.OnClickListener() { //Boton Actualizar
             @Override
             public void onClick(View view) {
-                if (mMap!=null){
+                if (mMap != null) {
                     mMap.clear();
                 }
                 onMapReady(mMap);
@@ -129,25 +114,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         });
 
     }
-    //////////////////////////////////////////////////////////////GPS/////////////////////////////////////////////////////////////////
-    private void pedirPermisos(){
-        // Ask user permission for location.
-        if (PackageManager.PERMISSION_GRANTED !=
-                ContextCompat.checkSelfPermission(MapsActivity.this,
-                        Manifest.permission.ACCESS_FINE_LOCATION)) {
 
-            ActivityCompat.requestPermissions(MapsActivity.this,
-                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                    MY_PERMISSIONS_GPS_FINE_LOCATION);
-
-        } else {
-
-
-            startLocation();
-
-        }
-    }
-    private void checkPermissions() {
+    private void checkPermissions() { //Pedir permisos ubicación
         if (Build.VERSION.SDK_INT >= 23) {
             if (ContextCompat.checkSelfPermission(MapsActivity.this,
                     android.Manifest.permission.ACCESS_FINE_LOCATION)
@@ -160,7 +128,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) { //Comprobar en el log los permisos sino se cerrara la actividad
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
             case REQUEST_CHECK_SETTINGS:
@@ -178,7 +146,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     @Override
-    public void onMapReady(GoogleMap googleMap) {
+    public void onMapReady(GoogleMap googleMap) { //Añadir el mapa con los marcadores de ubicaion tanto de usuario como de las tiendas
         mMap = googleMap;
 
         if (ContextCompat.checkSelfPermission(MapsActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
@@ -186,12 +154,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             buildGoogleApiClient();
             checkPermissions();
 
-            //mMap.addMarker(new MarkerOptions().position(myloc).title(mTitle));
             mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
             mMap.setMyLocationEnabled(true);
-            mUsers = FirebaseDatabase.getInstance().getReference();
+            mShops = FirebaseDatabase.getInstance().getReference();
 
-            mUsers.addListenerForSingleValueEvent(new ValueEventListener() {
+            mShops.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -206,8 +173,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         placesParse.setName(name);
                         arrayplaces.add(placesParse);
 
-
-                        Log.d("errorlat", latitude.toString());
                         mLocManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
                         if (ActivityCompat.checkSelfPermission(MapsActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(MapsActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -220,37 +185,42 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                             // for ActivityCompat#requestPermissions for more details.
                             return;
                         }
-                        mCurrentLocation = mLocManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                        mCurrentLocation = mLocManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);//Localizacion actual del usuario
 
                         for (int j = 0; j < arrayplaces.size(); j++) {
 
                             Location location = new Location(LocationManager.GPS_PROVIDER);
                             location.setLatitude(arrayplaces.get(j).getLat());
                             location.setLongitude(arrayplaces.get(j).getLon());
-                            if(mCurrentLocation !=null ){
+                            if (mCurrentLocation != null) {
 
-                                distance = mCurrentLocation.distanceTo(location);
+                                distance = mCurrentLocation.distanceTo(location);//Radio de busqueda ubicacion actual
 
                                 LatLng latLng2 = new LatLng(arrayplaces.get(j).getLat(), arrayplaces.get(j).getLon());
+
                                 if (arrayplaces.get(j).getName().equalsIgnoreCase("game") && distance < 5000) {
+                                    //Añadir los marcadores de las tiendas para game
                                     mMap.addMarker(new MarkerOptions()
                                             .position(latLng2)
                                             .title(arrayplaces.get(j).getName())
                                             .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA)));
 
                                 } else if (arrayplaces.get(j).getName().equalsIgnoreCase("cex") && distance < 5000) {
+                                    //Añadir los marcadores de las tiendas para cex
                                     mMap.addMarker(new MarkerOptions()
                                             .position(latLng2)
                                             .title(arrayplaces.get(j).getName())
                                             .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
 
                                 } else if (arrayplaces.get(j).getName().equalsIgnoreCase("media markt") && distance < 5000) {
+                                    //Añadir los marcadores de las tiendas para media markt
                                     mMap.addMarker(new MarkerOptions()
                                             .position(latLng2)
                                             .title(arrayplaces.get(j).getName())
                                             .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
 
                                 } else if (distance < 5000) {
+                                    //Añadir los marcadores de las tiendas restantes
                                     mMap.addMarker(new MarkerOptions()
                                             .position(latLng2)
                                             .title(arrayplaces.get(j).getName())
@@ -275,7 +245,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
 
-    public boolean checkUserLocationPermision() {
+    public boolean checkUserLocationPermision() { //Comprobar los permisos del usuario del Manifest
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, Request_User_Location_Code);
@@ -299,9 +269,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                         if (googleApiClient == null) {
-                            buildGoogleApiClient();
+                            buildGoogleApiClient(); //Iniciar Cliente de Google
                         }
-                        mMap.setMyLocationEnabled(true);
+                        mMap.setMyLocationEnabled(true); //Activar localizacion del usuario
                     }
                 } else {
                     Toast.makeText(this, HelperGlobal.PERMISIONDENIED, Toast.LENGTH_SHORT).show();
@@ -310,17 +280,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 return;
 
             case 1: {
-                // If request is cancelled, the result arrays are empty.
+
+                // Si la consulta es cancelada,el resultado del array sera vacío
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
-                    // Permission granted by user
+                    // Permiso otorgado por el usuario
                     Toast.makeText(getApplicationContext(), HelperGlobal.GPSPERMISEDGARANTED,
                             Toast.LENGTH_SHORT).show();
                     startLocation();
 
                 } else {
-                    // permission denied
+                    // Permisos denegados
                     Toast.makeText(getApplicationContext(),
                             HelperGlobal.PERMISSIONDENIEDUSER, Toast.LENGTH_SHORT).show();
                 }
@@ -330,7 +301,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
-    protected synchronized void buildGoogleApiClient() {
+    protected synchronized void buildGoogleApiClient() { //Conexión con los servicios de Google
         googleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
@@ -342,13 +313,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     @Override
-    public void onLocationChanged(Location location) {
+    public void onLocationChanged(Location location) { //Actualizar marcadores al cambiar la ubicación del usuario
 
         mLat = location.getLatitude();
         mLon = location.getLongitude();
         mCurrentLocation = location;
 
-        if (currentUserLocationMarker != null ) {
+        if (currentUserLocationMarker != null) {
             currentUserLocationMarker.remove();
 
         }
@@ -371,22 +342,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
 
-    public void onStatusChanged(String provider, int status, Bundle extras) {
-
-    }
-
-
-    public void onProviderEnabled(String provider) {
-
-    }
-
-
-    public void onProviderDisabled(String provider) {
-
-    }
-
     @Override
-    public void onConnected(@Nullable Bundle bundle) {
+    public void onConnected(@Nullable Bundle bundle) { //Realizar un seguimiento del estado de conexión del usuario si esta conectado
         locationRequest = new LocationRequest();
         locationRequest.setInterval(1100);
         locationRequest.setFastestInterval(1100);
@@ -398,17 +355,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     @Override
-    public void onConnectionSuspended(int i) {
+    public void onConnectionSuspended(int i) { //Realizar un seguimiento del estado de conexión del usuario si esta en reposo
 
     }
 
     @Override
-    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) { //Realizar un seguimiento del estado de conexión del usuario si la conexión a fallado
 
     }
 
     @SuppressWarnings({"MissingPermission"})
-    private void startLocation() {
+    private void startLocation() { //Comenzar la localizacion del GPS del usuario
         mLocManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
         if (!mLocManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
@@ -422,7 +379,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     protected void onStart() {
         super.onStart();
 
-        // Ask user permission for location.
+        // Pedir permiso al usuario para conocer la ubicación.
         if (PackageManager.PERMISSION_GRANTED !=
                 ContextCompat.checkSelfPermission(MapsActivity.this,
                         Manifest.permission.ACCESS_FINE_LOCATION)) {
@@ -449,7 +406,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     protected void onDestroy() {
 
         if (gpsLocationReceiver != null)
-            unregisterReceiver(gpsLocationReceiver);
+            unregisterReceiver(gpsLocationReceiver);//No registrar el receptor de difusión
         super.onDestroy();
     }
 
@@ -465,7 +422,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     };
 
-    private void showSettingDialog() {
+    private void showSettingDialog() { //Mostrar cuadro de dialogo cuya funcion es comprobar y proporcionar la activación del GPS  del usuario
         LocationRequest locationRequest = LocationRequest.create();
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         locationRequest.setInterval(30 * 1000);

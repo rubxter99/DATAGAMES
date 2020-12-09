@@ -185,8 +185,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="10dp"
-                            android:gravity="center"
                             android:background="@color/menu6"
+                            android:gravity="center"
                             android:text="@string/description"
                             android:textAppearance="@style/TextAppearance.AppCompat.Title"
                             android:textColor="@color/colorBlack" />
@@ -230,8 +230,8 @@
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:gravity="center"
                                 android:background="@color/menu6"
+                                android:gravity="center"
                                 android:text="@string/departure"
                                 android:textAppearance="@style/TextAppearance.AppCompat.Title"
                                 android:textColor="@color/colorBlack" />
@@ -264,8 +264,8 @@
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:gravity="center"
                                 android:background="@color/menu6"
+                                android:gravity="center"
                                 android:text="@string/genre"
                                 android:textAppearance="@style/TextAppearance.AppCompat.Title"
                                 android:textColor="@color/colorBlack" />
@@ -292,10 +292,10 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:background="@color/menu6"
                         android:gravity="center"
                         android:padding="5dp"
                         android:text="@string/image"
-                        android:background="@color/menu6"
                         android:textAppearance="@style/TextAppearance.AppCompat.Title"
                         android:textColor="@color/colorBlack" />
 
@@ -326,8 +326,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginBottom="20dp"
-                        android:gravity="center"
                         android:background="@color/menu6"
+                        android:gravity="center"
                         android:text="@string/website"
                         android:textAppearance="@style/TextAppearance.AppCompat.Title"
                         android:textColor="@color/colorBlack" />
@@ -362,8 +362,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="20dp"
-                            android:text="@string/tiendas"
                             android:background="@color/menu6"
+                            android:text="@string/tiendas"
                             android:textAppearance="@style/TextAppearance.AppCompat.Title"
                             android:textColor="@color/colorBlack" />
 
@@ -394,8 +394,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="20dp"
-                            android:gravity="right"
                             android:background="@color/menu6"
+                            android:gravity="right"
                             android:text="@string/plataformas"
                             android:textAppearance="@style/TextAppearance.AppCompat.Title"
                             android:textColor="@color/colorBlack" />

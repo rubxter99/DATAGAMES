@@ -1,119 +1,119 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.drawerlayout.widget.DrawerLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     android:id="@+id/drawer_layout"
-    android:background="@drawable/fon3"
-    >
-<androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorGame"
-    android:orientation="vertical">
-    <TextView
-        android:id="@+id/nameprofile"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="56dp"
-        android:textAlignment="center"
-        android:textColor="@color/colorBlack"
-        android:textSize="24dp"
-        app:layout_constraintBottom_toTopOf="@+id/btnSignOut"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageProfile"
-        app:layout_constraintVertical_bias="0.142"
-        tools:ignore="MissingConstraints" />
+    android:background="@drawable/fon3">
 
-    <TextView
-        android:id="@+id/emailprofile"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:textColor="@color/colorBlack"
-        app:layout_constraintBottom_toTopOf="@+id/btnSignOut"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nameprofile"
-        app:layout_constraintVertical_bias="0.158"
-        tools:ignore="MissingConstraints" />
-
-
-    <Button
-        android:id="@+id/btnChangeProfile"
-        android:layout_width="262dp"
-        android:layout_height="53dp"
-        android:background="@drawable/shape_login_btn"
-        android:text="Change Profile"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageProfile"
-        app:layout_constraintVertical_bias="0.649"
-        tools:ignore="MissingConstraints" />
-
-    <Button
-        android:id="@+id/btnSignOut"
-        android:layout_width="262dp"
-        android:layout_height="53dp"
-        android:background="@drawable/shape_login_btn"
-        android:text="Sign Out"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageProfile"
-        app:layout_constraintVertical_bias="0.919"
-        tools:ignore="MissingConstraints" />
-
-    <ImageView
-        android:id="@+id/imageProfile"
-        android:layout_width="558dp"
-        android:layout_height="304dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.503"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/fondouse"
-        tools:ignore="MissingConstraints" />
-
-    <ImageView
-        android:id="@+id/fondouser"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="0dp" />
+        android:background="@color/colorGame"
+        android:orientation="vertical">
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/profileImageView1"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:src="@drawable/logoperfil"
-        app:layout_constraintBottom_toTopOf="@+id/nameprofile"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.887"
-        />
+        <TextView
+            android:id="@+id/nameprofile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="56dp"
+            android:textAlignment="center"
+            android:textColor="@color/colorBlack"
+            android:textSize="24dp"
+            app:layout_constraintBottom_toTopOf="@+id/btnSignOut"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageProfile"
+            app:layout_constraintVertical_bias="0.142"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:id="@+id/emailprofile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:textColor="@color/colorBlack"
+            app:layout_constraintBottom_toTopOf="@+id/btnSignOut"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/nameprofile"
+            app:layout_constraintVertical_bias="0.158"
+            tools:ignore="MissingConstraints" />
+
+
+        <Button
+            android:id="@+id/btnChangeProfile"
+            android:layout_width="262dp"
+            android:layout_height="53dp"
+            android:background="@drawable/shape_login_btn"
+            android:text="Change Profile"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.496"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageProfile"
+            app:layout_constraintVertical_bias="0.649"
+            tools:ignore="MissingConstraints" />
+
+        <Button
+            android:id="@+id/btnSignOut"
+            android:layout_width="262dp"
+            android:layout_height="53dp"
+            android:background="@drawable/shape_login_btn"
+            android:text="Sign Out"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.496"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageProfile"
+            app:layout_constraintVertical_bias="0.919"
+            tools:ignore="MissingConstraints" />
+
+        <ImageView
+            android:id="@+id/imageProfile"
+            android:layout_width="558dp"
+            android:layout_height="304dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.503"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            app:srcCompat="@drawable/fondouse"
+            tools:ignore="MissingConstraints" />
+
+        <ImageView
+            android:id="@+id/fondouser"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="0dp" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/profileImageView1"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:src="@drawable/logoperfil"
+            app:layout_constraintBottom_toTopOf="@+id/nameprofile"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.887" />
     </androidx.constraintlayout.widget.ConstraintLayout>
+
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/navview"
-        android:layout_height="match_parent"
         android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
         android:fitsSystemWindows="true"
         android:theme="@style/navigationTheme"
         app:headerLayout="@layout/header_navigation_drawer"
         app:menu="@menu/nav_options"
-        android:layout_gravity="start"
         tools:ignore="MissingConstraints">
 
     </com.google.android.material.navigation.NavigationView>

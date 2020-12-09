@@ -8,7 +8,7 @@ public class ObjectFilterGame {
     private String platform;
     private int postPlatform;
 
-    public ObjectFilterGame(String rating, int posRating,String platform,int postPlatform,String genre,int postGenre) {
+    public ObjectFilterGame(String rating, int posRating,String platform,int postPlatform,String genre,int postGenre) { //Constructor del Objeto Filtros
         this.rating = rating;
         this.posRating = posRating;
         this.genre = genre;
@@ -17,27 +17,27 @@ public class ObjectFilterGame {
         this.postPlatform = postPlatform;
     }
 
-    public String getRating() {
+    public String getRating() { //Obtiene la puntuación inicial de los filtros
         return rating;
     }
 
-    public int getPosRating() {
+    public int getPosRating() { //Obtiene la puntuación final de los filtros
         return posRating;
     }
 
-    public String getGenre() {
+    public String getGenre() { //Obtiene la categoria inicial de los filtros
         return genre;
     }
 
-    public int getPostGenre() {
+    public int getPostGenre() { //Obtiene la categoria final de los filtros
         return postGenre;
     }
 
-    public String getPlatform() {
+    public String getPlatform() { //Obtiene la plataforma inicial de los filtros
         return platform;
     }
 
-    public int getPostPlatform() {
+    public int getPostPlatform() { //Obtiene la plataforma final de los filtros
         return postPlatform;
     }
 }

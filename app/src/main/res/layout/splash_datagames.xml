@@ -7,7 +7,8 @@
     android:background="@drawable/fon3"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context=".Splash">
+    tools:context=".Splash"
+    tools:ignore="MissingDefaultResource">
 
     <ImageView
         android:id="@+id/logo"
@@ -44,8 +45,8 @@
         android:layout_height="wrap_content"
         android:fontFamily="monospace"
         android:text="@string/since_2020"
-        android:textSize="20sp"
         android:textColor="@color/logoNegro"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"

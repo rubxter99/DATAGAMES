@@ -14,9 +14,7 @@
 
         <include
             android:id="@id/toolbar"
-            layout="@layout/toolbar1"
-
-            />
+            layout="@layout/toolbar" />
 
         <androidx.core.widget.NestedScrollView
             android:id="@+id/scroll"

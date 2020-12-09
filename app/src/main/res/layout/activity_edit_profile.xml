@@ -1,56 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@drawable/fon"
-    android:gravity="center">
+    android:gravity="center"
+    android:orientation="vertical">
 
     <ImageView
         android:id="@+id/profileImageView"
         android:layout_width="215dp"
         android:layout_height="220dp"
-        android:src="@drawable/logoperfil"
         android:layout_marginBottom="44dp"
-        />
+        android:src="@drawable/logoperfil" />
+
     <EditText
+        android:id="@+id/editextUserName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="50dp"
         android:layout_marginRight="50dp"
         android:hint="@string/your_username"
-        android:textColorHint="@color/logoNegro"
         android:textColor="@color/logoNegro"
-        android:id="@+id/editextUserName"
-        />
+        android:textColorHint="@color/logoNegro" />
+
     <EditText
+        android:id="@+id/editTextEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="50dp"
         android:layout_marginRight="50dp"
         android:hint="@string/your_email"
         android:textColor="@color/logoNegro"
-        android:textColorHint="@color/logoNegro"
-        android:id="@+id/editTextEmail"
-        />
+        android:textColorHint="@color/logoNegro" />
+
     <EditText
+        android:id="@+id/editTextPassW"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="50dp"
         android:layout_marginRight="50dp"
         android:hint="@string/your_pass"
         android:textColor="@color/logoNegro"
-        android:textColorHint="@color/logoNegro"
-        android:id="@+id/editTextPassW"
-        />
+        android:textColorHint="@color/logoNegro" />
 
     <Button
+        android:id="@+id/btn_save"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
-        android:text="@string/save"
-        android:id="@+id/btn_save"
-        />
+        android:text="@string/save" />
 
 </LinearLayout>

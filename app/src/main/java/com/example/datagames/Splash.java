@@ -12,36 +12,36 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 
 public class Splash extends Activity {
-    public static int SPLASH_SCREEN=2800;
-    Animation topAnim,bottomAnim;
+    public static int SPLASH_SCREEN = 2800;
+    Animation topAnim, bottomAnim;
     ImageView logo;
-    TextView txt_logo,txt_slogan;
+    TextView txt_logo, txt_slogan;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.splash1);
+        setContentView(R.layout.splash_datagames);
 
-        topAnim= AnimationUtils.loadAnimation(Splash.this,R.anim.top_animation);
-        bottomAnim= AnimationUtils.loadAnimation(Splash.this,R.anim.bottom_animation);
+        topAnim = AnimationUtils.loadAnimation(Splash.this, R.anim.top_animation);//Animacion de la parte de arriba hacia abajo de la actividad
+        bottomAnim = AnimationUtils.loadAnimation(Splash.this, R.anim.bottom_animation);//Animacion de la parte de abajo hacia arriba de la actividad
 
-        logo=findViewById(R.id.logo);
-        txt_logo=findViewById(R.id.txt_logo);
-        txt_slogan=findViewById(R.id.txt_logodesc);
+        logo = findViewById(R.id.logo);
+        txt_logo = findViewById(R.id.txt_logo);
+        txt_slogan = findViewById(R.id.txt_logodesc);
 
-        logo.setAnimation(topAnim);
-        txt_logo.setAnimation(bottomAnim);
-        txt_slogan.setAnimation(bottomAnim);
+        logo.setAnimation(topAnim);//Animacion del logo desde arriba
+        txt_logo.setAnimation(bottomAnim);//Animacion del texto del logo desde abajo
+        txt_slogan.setAnimation(bottomAnim);//Animacion del texto secundario del logo desde abajo
 
 
         new Handler().postDelayed(new Runnable() {
             @Override
-            public void run() {
-                Intent intent=new Intent(Splash.this,MainActivity.class);
+            public void run() { //Al terminar el Splash nos lleve a los fragmentos de introducción
+                Intent intent = new Intent(Splash.this, MainActivity.class);
                 startActivity(intent);
                 finish();
             }
-        },SPLASH_SCREEN);
+        }, SPLASH_SCREEN);
 
     }
 }

@@ -23,8 +23,7 @@
             android:text="@string/filtros"
             android:textColor="@android:color/background_dark"
             android:textSize="30sp"
-            android:textStyle="bold"
-            />
+            android:textStyle="bold" />
     </LinearLayout>
 
     <LinearLayout
@@ -56,7 +55,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
-                android:spinnerMode="dropdown"/>
+                android:spinnerMode="dropdown" />
 
         </LinearLayout>
 
@@ -80,8 +79,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
-                android:spinnerMode="dropdown"
-                />
+                android:spinnerMode="dropdown" />
 
         </LinearLayout>
 
@@ -105,7 +103,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
-                android:spinnerMode="dropdown"/>
+                android:spinnerMode="dropdown" />
         </LinearLayout>
     </LinearLayout>
 
@@ -120,12 +118,12 @@
             android:id="@+id/btn_FILTROS"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="30dp"
             android:background="@color/cardview_dark_background"
             android:padding="11dp"
             android:text="@string/guardar_cambios"
             android:textColor="@color/colorLogin"
-            android:layout_marginBottom="30dp"
-            android:textSize="24dp"/>
+            android:textSize="24dp" />
 
         <Button
             android:id="@+id/btn_FILTROS_RESTAURAR"
@@ -135,7 +133,7 @@
             android:padding="11dp"
             android:text="@string/restaurar"
             android:textColor="@color/colorLogin"
-            android:textSize="24dp"/>
+            android:textSize="24dp" />
     </LinearLayout>
 
 </LinearLayout>

@@ -21,7 +21,7 @@ public class ResetPassword extends AppCompatActivity {
     private EditText mEditTextEmail;
     private Button btnResetPassword;
     private FirebaseAuth mAuth;
-    private String email="";
+    private String email = "";
     private ProgressDialog mDialog;
     private DatabaseReference mDatabase;
 
@@ -30,42 +30,42 @@ public class ResetPassword extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reset_password);
 
-        mEditTextEmail=findViewById(R.id.editTextEmail);
-        btnResetPassword=findViewById(R.id.btnResetPassword);
 
-        mAuth=FirebaseAuth.getInstance();
+        mAuth = FirebaseAuth.getInstance();//Conexión con la base de datos de Firebase
 
-
-        mDialog=new ProgressDialog(this);
+        mEditTextEmail = findViewById(R.id.editTextEmail);
+        btnResetPassword = findViewById(R.id.btnResetPassword);
+        mDialog = new ProgressDialog(this);
 
         btnResetPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                email=mEditTextEmail.getText().toString();
+                email = mEditTextEmail.getText().toString();
 
-                if(!email.isEmpty()){
+                if (!email.isEmpty()) { //Comprobar si el email no esta vacío que a su vez muestre un mensaje si no esta vacío y resetee la contraseña
                     mDialog.setMessage("Espera ...");
                     mDialog.setCanceledOnTouchOutside(false);
                     mDialog.show();
                     resetPassword();
 
-                }else{
-                    Toast.makeText(ResetPassword.this,"Debes ingresar el email",Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(ResetPassword.this, "Debes ingresar el email", Toast.LENGTH_SHORT).show();
                 }
 
             }
         });
 
     }
-    private void resetPassword(){ //metodo reseteo
+
+    private void resetPassword() { //Método reseteo de contraseña de usuario en la base de datos de Firebase
         mAuth.setLanguageCode("es");
         mAuth.sendPasswordResetEmail(email).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
-                if(task.isSuccessful()){
-                    Toast.makeText(ResetPassword.this,"Se envio el correo para restablecer tu contraseña",Toast.LENGTH_SHORT).show();
-                }else{
-                    Toast.makeText(ResetPassword.this,"No se pudo enviar el correo para restablecer contraseña",Toast.LENGTH_SHORT).show();
+                if (task.isSuccessful()) {
+                    Toast.makeText(ResetPassword.this, "Se envio el correo para restablecer tu contraseña", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(ResetPassword.this, "No se pudo enviar el correo para restablecer contraseña", Toast.LENGTH_SHORT).show();
                 }
                 mDialog.dismiss();
             }

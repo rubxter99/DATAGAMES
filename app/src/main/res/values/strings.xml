@@ -6,7 +6,7 @@
     <string name="back">Back</string>
     <string name="login">Login</string>
     <string name="title_activity_maps">Map</string>
-    <string name="videogames">VideoGames</string>
+    <string name="video_games">VideoGames</string>
     <string name="new_games">New Games</string>
     <string name="upcoming_games">Upcoming Games</string>
     <string name="list_games">List Games</string>
@@ -82,7 +82,6 @@
     </string-array>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="menu">Menu</string>
     <string name="about_us">About us</string>
     <string name="share">Share</string>
     <string name="metacritic">Metacritic</string>
@@ -95,5 +94,10 @@
     <string name="filtros">FILTERS</string>
     <string name="guardar_cambios">SAVE CHANGES</string>
     <string name="restaurar">RESTORE</string>
+    <string name="videogames">VideoGames</string>
+    <string name="profile">Profile</string>
+    <string name="sign_out">Sign out</string>
+    <string name="search">Search</string>
+    <string name="menu">Menu</string>
 
 </resources>

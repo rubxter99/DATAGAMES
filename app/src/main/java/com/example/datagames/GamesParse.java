@@ -20,14 +20,15 @@ public class GamesParse {
         private String rating;
         private String genres;
         private String id;
-
+        private String short_screenshotsimage;
         private String clip;
         private String store;
         private String storename;
         private String urlstore;
         private String platforms;
 
-        public game(String name, String released, String image, String rating, String genres, String id, String clip, String storename, String urlstore, String platforms) {
+        //Constructor del videojuego de para su listado
+        public game(String name, String released, String image, String rating, String genres, String id, String clip,String short_screenshotsimage, String storename, String urlstore, String platforms) {
             this.name = name;
             this.released = released;
             this.image = image;
@@ -35,53 +36,57 @@ public class GamesParse {
             this.rating = rating;
             this.id = id;
             this.clip = clip;
+            this.short_screenshotsimage=short_screenshotsimage;
             this.storename = storename;
             this.urlstore = urlstore;
             this.platforms = platforms;
         }
 
+        public String getShort_screenshotsimage() { //Obtener imagen adicional del videojuego
+            return short_screenshotsimage;
+        }
 
-        public String getId() {
+        public String getId() { //Obtener identificador del videojuego
             return id;
         }
 
-        public String getClip() {
+        public String getClip() { //Obtener video del videojuego
             return clip;
         }
 
-        public String getStorename() {
+        public String getStorename() { //Obtener el nombre de la tienda del videojuego
             return storename;
         }
 
-        public String getUrlstore() {
+        public String getUrlstore() { //Obtener el enlace de la tienda del videojuego
             return urlstore;
         }
 
-        public String getPlatforms() {
+        public String getPlatforms() { //Obtener la plataforma  del videojuego
             return platforms;
         }
 
-        public String getName() {
+        public String getName() { //Obtener el nombre  del videojuego
             return name;
         }
 
-        public String getReleased() {
+        public String getReleased() { //Obtener la fecha de lanzamiento del videojuego
             return released;
         }
 
-        public String getImage() {
+        public String getImage() { //Obtener la imagen de fondo/principal del videojuego
             return image;
         }
 
-        public String getGenres() {
+        public String getGenres() { //Obtener la categoría del videojuego
             return genres;
         }
 
-        public String getRating() {
+        public String getRating() { //Obtener la puntuación del videojuego
             return rating;
         }
 
-        public game(Parcel in) {
+        public game(Parcel in) { //Constructor Parcelable
             name = in.readString();
             image = in.readString();
             rating = in.readString();
@@ -96,7 +101,7 @@ public class GamesParse {
         }
 
         @Override
-        public void writeToParcel(Parcel parcel, int i) {
+        public void writeToParcel(Parcel parcel, int i) { //Método contenedor Parcelable del videojuego
             parcel.writeString(name);
             parcel.writeString(image);
             parcel.writeString(rating);
@@ -105,7 +110,7 @@ public class GamesParse {
         }
 
         public static Parcelable.Creator<GamesParse.game> CREATOR =
-                new Parcelable.Creator<GamesParse.game>() {
+                new Parcelable.Creator<GamesParse.game>() { //Transformar los videojuegos a parcelable
                     @Override
                     public GamesParse.game createFromParcel(Parcel parcel) {
                         return new GamesParse.game(parcel);
@@ -119,7 +124,7 @@ public class GamesParse {
     }
 
 
-    public ArrayList<game> parseGame(String content) {
+    public ArrayList<game> parseGame(String content) {  //Función para pasar los datos del xml de RAWG API mediante JSONARRAY
         ArrayList<game> lGame = new ArrayList<game>();
 
         JSONArray array;
@@ -143,7 +148,7 @@ public class GamesParse {
         }
     }
 
-    private game parseGame(JSONObject jsonData) throws JSONException {
+    private game parseGame(JSONObject jsonData) throws JSONException { //Método para parsear los JSONOBJECT del xml con la función de parseGame a un objeto game
         String id = "";
         String name = "";
         String released = "";
@@ -238,7 +243,7 @@ public class GamesParse {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        game game = new game(name, released, image, rating, namegenres, id, clip, namestore, urlstore, nameplatforms);
+        game game = new game(name, released, image, rating, namegenres, id, clip,short_screenshotsimage, namestore, urlstore, nameplatforms);
         return game;
     }
 

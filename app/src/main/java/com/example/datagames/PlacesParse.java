@@ -1,50 +1,38 @@
 package com.example.datagames;
 
 public class PlacesParse {
-    float distance;
+
     double lat;
     double lon;
     String name;
 
-    public PlacesParse(float distance, double lat, double lon, String name) {
-        this.distance = distance;
-        this.lat = lat;
-        this.lon = lon;
-        this.name = name;
-    }
-    public PlacesParse(){
+
+    public PlacesParse() { //Constructor de las tiendas físicas de videojuegos
 
     }
 
-    public float getDistance() {
-        return distance;
-    }
 
-    public void setDistance(float distance) {
-        this.distance = distance;
-    }
-
-    public double getLat() {
+    public double getLat() { //Obtener latitud de la localización de las tiendas
         return lat;
     }
 
-    public void setLat(double lat) {
+    public void setLat(double lat) { //Introducir latitud de la localización de las tiendas
         this.lat = lat;
     }
 
-    public double getLon() {
+    public double getLon() { //Obtener longitud de la localización de las tiendas
         return lon;
     }
 
-    public void setLon(double lon) {
+    public void setLon(double lon) { //Introducir longitud de la localización de las tiendas
         this.lon = lon;
     }
 
-    public String getName() {
+    public String getName() { //Obtener el nombre de la localización de las tiendas
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(String name) { //Introducir el nombre de la localización de las tiendas
         this.name = name;
     }
 }

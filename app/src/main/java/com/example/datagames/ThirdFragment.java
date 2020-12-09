@@ -16,19 +16,19 @@ public class ThirdFragment extends Fragment {
     TextView back;
     ViewPager viewPager;
 
-    public ThirdFragment() {
-        // Required empty public constructor
+    public ThirdFragment() { //Constructor de la tercera pantalla de Introduccion/Fragmento
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view= inflater.inflate(R.layout.fragment_third, container, false);
-        //Initialize ViewPager from Main Activity
-        viewPager=getActivity().findViewById(R.id.viewPager);
-        next=view.findViewById(R.id.slideOneNext3);
-
+                             Bundle savedInstanceState) { //Visualización de la vista del Segundo Fragmento
+        // Englobar el layout de este Fragmento
+        View view = inflater.inflate(R.layout.fragment_third, container, false);
+        //Inicializar el ViewPager de la actividad MainActivity
+        viewPager = getActivity().findViewById(R.id.viewPager);
+        //Función para llevar al cuarto fragmento
+        next = view.findViewById(R.id.slideOneNext3);
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -36,7 +36,8 @@ public class ThirdFragment extends Fragment {
             }
         });
 
-        back=view.findViewById(R.id.slideOneBack2);
+        //Función para llevar al segundo fragmento
+        back = view.findViewById(R.id.slideOneBack2);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

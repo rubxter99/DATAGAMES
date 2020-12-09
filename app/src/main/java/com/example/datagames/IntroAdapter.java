@@ -7,12 +7,12 @@ import androidx.fragment.app.FragmentPagerAdapter;
 
 public class IntroAdapter extends FragmentPagerAdapter {
 
-    public IntroAdapter( FragmentManager fm) {
+    public IntroAdapter( FragmentManager fm) { //Constructor de la Actividad IntroAdapter
         super(fm);
     }
 
     @Override
-    public Fragment getItem(int position) {
+    public Fragment getItem(int position) { //Manejar todos los Fragmentos y contenerlos en un Adaptador
         switch (position){
             case 0:
                 return new FirstFragment();
@@ -31,5 +31,5 @@ public class IntroAdapter extends FragmentPagerAdapter {
     @Override
     public int getCount() {
         return 4;
-    }
+    } //Contador de Fragmentos
 }

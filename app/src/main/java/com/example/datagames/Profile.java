@@ -72,30 +72,21 @@ public class Profile extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
+        //Iniciar conexión con la base de datos de Firebase
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
 
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        navigationView = (NavigationView) findViewById(R.id.navview);
-        emailprofile = findViewById(R.id.emailprofile);
-        nameprofile = findViewById(R.id.nameprofile);
-        profileImageView = findViewById(R.id.profileImageView1);
-        user = findViewById(R.id.profileImageView);
-
-
-        SignOut = (Button) findViewById(R.id.btnSignOut);
-        SignOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mAuth.signOut();
-                startActivity(new Intent(Profile.this, MainActivity.class));
-                finish();
-            }
-        });
-
+        mostrarDatos();
         navigationDrawer();
+        getStorage();
         getUser();
+
+
+
+    }
+
+    private void getStorage(){ //Método para conseguir la imagén perfil del usuario de la base de datos de Firebase
         FirebaseUser user = mAuth.getInstance().getCurrentUser();
         storageReference = FirebaseStorage.getInstance().getReference();
         StorageReference profileRef = storageReference.child("usuarios/" + mAuth.getCurrentUser().getUid() + "/profile.jpg");
@@ -105,7 +96,16 @@ public class Profile extends AppCompatActivity {
                 Picasso.get().load(uri).into(profileImageView);
             }
         });
-        ChangeProfile = findViewById(R.id.btnChangeProfile);
+    }
+    private void mostrarDatos(){ //Mostrara los datos del perfil del usuario
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        navigationView = (NavigationView) findViewById(R.id.navview);
+        emailprofile = findViewById(R.id.emailprofile);
+        nameprofile = findViewById(R.id.nameprofile);
+        profileImageView = findViewById(R.id.profileImageView1);
+        user = findViewById(R.id.profileImageView);
+
+        ChangeProfile = findViewById(R.id.btnChangeProfile);//Cambiar nombre y email de usuario
         ChangeProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -116,11 +116,18 @@ public class Profile extends AppCompatActivity {
 
             }
         });
-
-
+        SignOut = (Button) findViewById(R.id.btnSignOut);//Cerrar sesión
+        SignOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mAuth.signOut();
+                startActivity(new Intent(Profile.this, MainActivity.class));
+                finish();
+            }
+        });
     }
 
-    public void getUser() {
+    public void getUser() { //Método para acceder al usuario con su nombre y email
         String id = mAuth.getCurrentUser().getUid();
 
         mDatabase.child("usuarios").child(id).addValueEventListener(new ValueEventListener() {
@@ -129,43 +136,21 @@ public class Profile extends AppCompatActivity {
                 if (snapshot.exists()) {
                     String name = snapshot.child("name").getValue().toString();
                     String email = snapshot.child("email").getValue().toString();
-                    Log.d("perfil", email + " " + name);
                     nameprofile.setText(name);
                     emailprofile.setText(email);
 
                 }
             }
 
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
         });
-        mDatabase.child("tiendas").child("1").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    String name = snapshot.child("name").getValue().toString();
-                    String email = snapshot.child("latitud").getValue().toString();
-                    Log.d("maps", email + " " + name);
-
-
-                }
-            }
-
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-
     }
 
 
-    private void navigationDrawer() {
+    private void navigationDrawer() { //Mostrar los apartados del menú deslizante con sus respectivas direcciones a cada ventana
 
         navigationView.bringToFront();
 
@@ -178,6 +163,11 @@ public class Profile extends AppCompatActivity {
                     case R.id.nav_home:
                         Intent intent1 = new Intent(Profile.this, com.example.datagames.Menu.class);
                         startActivity(intent1);
+                        finish();
+                        break;
+                    case R.id.nav_games:
+                        Intent intent6 = new Intent(Profile.this, GameList.class);
+                        startActivity(intent6);
                         finish();
                         break;
                     case R.id.nav_maps:
@@ -211,7 +201,7 @@ public class Profile extends AppCompatActivity {
 
     }
 
-    private void leerDatosSPFavs() {
+    private void leerDatosSPFavs() { //Transforma los datos recogidos del sharedpreferences en nuestro caso los videojuegos favoritos para mostrarlos en la actividad de favoritos
         SharedPreferences mPrefs = getSharedPreferences(HelperGlobal.KEYARRAYFAVSPREFERENCES, MODE_PRIVATE);
         Gson gson = new Gson();
         String json = mPrefs.getString(HelperGlobal.ARRAYTIENDASFAV, "");

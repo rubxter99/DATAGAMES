@@ -32,12 +32,12 @@ import java.util.Map;
 
 public class FourFragment extends Fragment {
 
-   private TextView back;
+    private TextView back;
     private ViewPager viewPager;
-    private Button LoginButton,RegisterButton,LoginButton2,RegisterButton2;
-    private String name="";
-    private String email="";
-    private String password="";
+    private Button LoginButton, RegisterButton, LoginButton2, RegisterButton2;
+    private String name = "";
+    private String email = "";
+    private String password = "";
     private EditText eUserEmailLog;
     private EditText ePasswordLog;
     private EditText eUserNameReg;
@@ -48,21 +48,20 @@ public class FourFragment extends Fragment {
     DatabaseReference mDatabase;
 
 
-    public FourFragment() {
-        // Required empty public constructor
+    public FourFragment() { //Constructor de la cuarta pantalla de Introduccion/Fragmento
 
     }
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view= inflater.inflate(R.layout.fragment_four, container, false);
-        //Initialize ViewPager from Main Activity
-        viewPager=getActivity().findViewById(R.id.viewPager);
-
-        back=view.findViewById(R.id.slideOneBack4);
+                             Bundle savedInstanceState) { //Visualización de la vista del Primer Fragmento
+        // Englobar el layout de este Fragmento
+        View view = inflater.inflate(R.layout.fragment_four, container, false);
+        //Inicializar el ViewPager de la actividad MainActivity
+        viewPager = getActivity().findViewById(R.id.viewPager);
+        //Función para llevar al tercer fragmento
+        back = view.findViewById(R.id.slideOneBack4);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -70,11 +69,11 @@ public class FourFragment extends Fragment {
             }
         });
 
-        mAuth=FirebaseAuth.getInstance();
-        mDatabase= FirebaseDatabase.getInstance().getReference();
+        //Conexión con la base de datos de Firebase
+        mAuth = FirebaseAuth.getInstance();
+        mDatabase = FirebaseDatabase.getInstance().getReference();
 
         login(view);
-
         registrar(view);
 
         return view;
@@ -82,51 +81,47 @@ public class FourFragment extends Fragment {
     }
 
 
+    private void login(View view) { //Visualización de la vista de iniciar sesion de usuario para introducir los datos
 
-    private void login(View view){
 
-
-        LoginButton = (Button)view.findViewById(R.id.btnLogin1);
+        LoginButton = (Button) view.findViewById(R.id.btnLogin1);
 
         LoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                //init the bottom sheet view
 
-                final BottomSheetDialog bottomSheetDialog =new BottomSheetDialog(v.getContext());
+
+                final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(v.getContext());//Ventana del Inicio de sesión
                 bottomSheetDialog.setContentView(R.layout.btn_sheet_login);
                 bottomSheetDialog.setCanceledOnTouchOutside(false);
 
-                //Initialize And Assign Variable
 
-                ePasswordLog=bottomSheetDialog.findViewById(R.id.text_passwordlog);
-                eUserEmailLog=bottomSheetDialog.findViewById(R.id.text_useremaillog);
+                ePasswordLog = bottomSheetDialog.findViewById(R.id.text_passwordlog);
+                eUserEmailLog = bottomSheetDialog.findViewById(R.id.text_useremaillog);
 
-                resetPassword=bottomSheetDialog.findViewById(R.id.text_sendResetPassword);
+                resetPassword = bottomSheetDialog.findViewById(R.id.text_sendResetPassword); //Dirige al usuario a la ventana de la actividad ResetPassword
                 resetPassword.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        startActivity(new Intent(v.getContext(),ResetPassword.class));
+                        startActivity(new Intent(v.getContext(), ResetPassword.class));
                     }
                 });
 
 
-
-                LoginButton2 = (Button)bottomSheetDialog.findViewById(R.id.btnLogin2);
+                LoginButton2 = (Button) bottomSheetDialog.findViewById(R.id.btnLogin2);
                 LoginButton2.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View vv) {
-
-                        email=eUserEmailLog.getText().toString();
-                        password=ePasswordLog.getText().toString();
-                        //Verification
-                        if(!email.isEmpty()  && !password.isEmpty()){
+                        email = eUserEmailLog.getText().toString();
+                        password = ePasswordLog.getText().toString();
+                        //Verificación
+                        if (!email.isEmpty() && !password.isEmpty()) {
 
                             loginUser(vv);
 
-                        }else{
-                            Toast.makeText(vv.getContext(),"Debe completar los campos",Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(vv.getContext(), "Debe completar los campos", Toast.LENGTH_SHORT).show();
                         }
                         bottomSheetDialog.dismiss();
                     }
@@ -136,45 +131,43 @@ public class FourFragment extends Fragment {
             }
 
 
-
-
         });
     }
 
-    private void registrar(View view) {
+    private void registrar(View view) { //Visualización de la vista de registrar usuario para introducir los datos
 
 
-        RegisterButton = (Button)view.findViewById(R.id.btnRegistrer1);
+        RegisterButton = (Button) view.findViewById(R.id.btnRegistrer1);
         RegisterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
 
 
-                final BottomSheetDialog bottomSheetDialog2 =new BottomSheetDialog(view.getContext());
+                final BottomSheetDialog bottomSheetDialog2 = new BottomSheetDialog(view.getContext());//Ventana del Registro de usuario
                 bottomSheetDialog2.setContentView(R.layout.btn_sheet_registrer);
                 bottomSheetDialog2.setCanceledOnTouchOutside(false);
 
-                eUserNameReg=(EditText)bottomSheetDialog2.findViewById(R.id.text_usernamereg);
-                eMail=bottomSheetDialog2.findViewById(R.id.text_mailreg);
-                ePasswordReg=bottomSheetDialog2.findViewById(R.id.text_passwordreg);
+                eUserNameReg = (EditText) bottomSheetDialog2.findViewById(R.id.text_usernamereg);
+                eMail = bottomSheetDialog2.findViewById(R.id.text_mailreg);
+                ePasswordReg = bottomSheetDialog2.findViewById(R.id.text_passwordreg);
 
                 RegisterButton2 = bottomSheetDialog2.findViewById(R.id.btnRegistrer2);
                 RegisterButton2.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        name=eUserNameReg.getText().toString();
-                        password=ePasswordReg.getText().toString();
-                        email=eMail.getText().toString();
-                        //Verification
-                        if(!name.isEmpty() && !email.isEmpty() && !password.isEmpty()){
-                            if(password.length()>=6){
+                        name = eUserNameReg.getText().toString();
+                        password = ePasswordReg.getText().toString();
+                        email = eMail.getText().toString();
+                        //Verificación
+                        if (!name.isEmpty() && !email.isEmpty() && !password.isEmpty()) {
+                            if (password.length() >= 6) {
                                 registrerUser(v);
-                            }else{
-                                Toast.makeText(v.getContext(),"El password debe tener al menos 6 caracteres",Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(v.getContext(), "El password debe tener al menos 6 caracteres", Toast.LENGTH_SHORT).show();
                             }
 
-                        }else{
-                            Toast.makeText(v.getContext(),"Debe completar los campos",Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(v.getContext(), "Debe completar los campos", Toast.LENGTH_SHORT).show();
                         }
                         bottomSheetDialog2.dismiss();
 
@@ -182,62 +175,55 @@ public class FourFragment extends Fragment {
                 });
 
 
-
                 bottomSheetDialog2.show();
             }
         });
     }
 
-    public void loginUser(final View v1){
-        mAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+    public void loginUser(final View v1) { //Metodo para acceder a la base de datos de Firebase y poder comprobar el usuario introducido
+        mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                if(task.isSuccessful()){
-                    Map<String,Object> map= new HashMap<>();
-                    map.put("password",password);
-                    String id=mAuth.getCurrentUser().getUid();
-
+                if (task.isSuccessful()) {
+                    Map<String, Object> map = new HashMap<>();
+                    map.put("password", password);
+                    String id = mAuth.getCurrentUser().getUid();
                     mDatabase.child("usuarios").child(id).updateChildren(map);
-                    startActivity(new Intent(v1.getContext(),Menu.class));
+                    startActivity(new Intent(v1.getContext(), Menu.class));
                     getActivity().finish();
-                }else {
-                    Toast.makeText(v1.getContext(),"No se pudo iniciar sesion, compruebe los datos",Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(v1.getContext(), "No se pudo iniciar sesion, compruebe los datos", Toast.LENGTH_SHORT).show();
                 }
             }
         });
     }
 
-    public void registrerUser(final View v2){
-        mAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+    public void registrerUser(final View v2) { //Metodo para acceder a la base de datos de Firebase e ingresar los datos del nuevo usuario a esta misma
+        mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                if(task.isSuccessful()){
+                if (task.isSuccessful()) {
 
-                    Map<String,Object> map= new HashMap<>();
-                    map.put("name",name);
-                    map.put("email",email);
-                    map.put("password",password);
+                    Map<String, Object> map = new HashMap<>();
+                    map.put("name", name);
+                    map.put("email", email);
+                    map.put("password", password);
 
-                    String id=mAuth.getCurrentUser().getUid();
+                    String id = mAuth.getCurrentUser().getUid();
 
                     mDatabase.child("usuarios").child(id).setValue(map).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task2) {
-                            if(task2.isSuccessful()){
-                                //Actividad a donde quieres ir
-                                //startActivity(new Intent(v2.getContext(),Profile.class));
-                                //getActivity().finish();
-                                Toast.makeText(v2.getContext(),"Usuario registrado correctamente",Toast.LENGTH_SHORT).show();
-
-                            }else{
-                                Toast.makeText(v2.getContext(),"No se pudieron crear los datos correctamente",Toast.LENGTH_SHORT).show();
-
+                            if (task2.isSuccessful()) {
+                                Toast.makeText(v2.getContext(), "Usuario registrado correctamente", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(v2.getContext(), "No se pudieron crear los datos correctamente", Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
 
-                }else{
-                    Toast.makeText(v2.getContext(),"No se pudo registrar el usuario",Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(v2.getContext(), "No se pudo registrar el usuario", Toast.LENGTH_SHORT).show();
                 }
             }
         });

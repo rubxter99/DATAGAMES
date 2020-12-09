@@ -107,15 +107,11 @@ public class DetailActivity extends AppCompatActivity {
 
     private String imageUrl;
     private String mId;
-    private String mTitle;
-    private String mReleased;
     private String mGenres;
     private String mVideo;
-    private String mWebsite;
     private String mStore;
     private String mStoreName;
     private String mPlatform;
-    private Double mRating;
     private NestedScrollView scrollView;
     private FirebaseAuth mAuth;
     private DrawerLayout drawerLayout;
@@ -123,90 +119,94 @@ public class DetailActivity extends AppCompatActivity {
     private JSONObject mDetailsGames = new JSONObject();
     private ArrayList<JSONObject> mDetailsGamesRellenos = new ArrayList<>();
     public static ArrayList<DetailParse.details> mGamesFav = new ArrayList();
-    private DetailsGamesAdapter mDetailAdapter;
     private TextView txtTitle;
     private static final int CODINTFAVGAME = 1;
-    private ArrayList<GamesParse.game> mDetailsGamesRellenoFinal = new ArrayList<>();
     private RecyclerView recyclerView;
-    private DetailActivity.MainAdapter mainAdapter;
-    private List<String> list=new ArrayList<String>();
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.game_detail);
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        navigationView = (NavigationView) findViewById(R.id.navview);
-        mAuth = FirebaseAuth.getInstance();
-        scrollView = findViewById(R.id.scroll);
-        recyclerView = findViewById(R.id.recycler_view);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(DetailActivity.this, LinearLayoutManager.HORIZONTAL, false);
-        //recyclerView.setLayoutManager(linearLayoutManager);
-        //recyclerView.setItemAnimator(new DefaultItemAnimator());
-        // Añadir action bar
 
+        mAuth = FirebaseAuth.getInstance();//Conexion Base de Datos Firebase
+
+        // Añadir action bar
         if (getSupportActionBar() != null) // Habilitar up button
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-
         Intent intent = getIntent();
-
         if (intent != null) {
-
-            mId = intent.getStringExtra(HelperGlobal.EXTRA_ID);
-            imageUrl = intent.getStringExtra(HelperGlobal.EXTRA_SHORTSCREENSHOT);
-            mGenres = intent.getStringExtra(HelperGlobal.EXTRA_GENRE);
-            mVideo = intent.getStringExtra(HelperGlobal.EXTRA_CLIP);
-            mStoreName = intent.getStringExtra(HelperGlobal.EXTRA_STORENAME);
-            mStore = intent.getStringExtra(HelperGlobal.EXTRA_STORE);
-            mPlatform = intent.getStringExtra(HelperGlobal.EXTRA_PLATFORM);
-
-            loadGameDetail(mId);
-            ImageView shorts_imageview = findViewById(R.id.snapshot);
-            Picasso.get().load(imageUrl).fit().centerCrop().into(shorts_imageview);
-            TextView genresgame = findViewById(R.id.genres);
-            genresgame.setText(mGenres);
-            VideoView video = findViewById(R.id.video);
-
-
-            Uri uri = Uri.parse(mVideo);
-
-            final MediaController mediaController = new MediaController(findViewById(R.id.frame).getContext());
-            mediaController.setAnchorView(video);
-            video.setMediaController(mediaController);
-            video.setVideoURI(uri);
-            video.requestFocus();
-            scrollView.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
-
-                @Override
-                public void onScrollChanged() {
-                    mediaController.hide();
-                }
-            });
-            TextView txtStore = findViewById(R.id.store);
-            txtStore.setText(mStore);
-
-            TextView txtStoreName = findViewById(R.id.storename);
-            if(mStoreName.equalsIgnoreCase("")){
-                txtStoreName.setText("Non information");
-            }else{
-                txtStoreName.setText(mStoreName);
-            }
-
-            TextView txtPlatform = findViewById(R.id.platform);
-            if(mPlatform.equalsIgnoreCase("")){
-                txtPlatform.setText("Non information");
-            }else{
-                txtPlatform.setText(mPlatform);
-            }
-            navigationDrawer();
+            mostrarDatos(intent);
         }
     }
 
-    private void setToolbar() {
-        // Añadir la Toolbar
+    private void mostrarDatos(Intent intent) { //Mostrar todos los datos recogidos del videojuego tanto del intent como de la actividad Detalles
 
+        //Visualizacion de cada dato en la actividad
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        navigationView = (NavigationView) findViewById(R.id.navview);
+        scrollView = findViewById(R.id.scroll);
+        recyclerView = findViewById(R.id.recycler_view);
+        mId = intent.getStringExtra(HelperGlobal.EXTRA_ID);
+        imageUrl = intent.getStringExtra(HelperGlobal.EXTRA_SHORTSCREENSHOT);
+        mGenres = intent.getStringExtra(HelperGlobal.EXTRA_GENRE);
+        mVideo = intent.getStringExtra(HelperGlobal.EXTRA_CLIP);
+        mStoreName = intent.getStringExtra(HelperGlobal.EXTRA_STORENAME);
+        mStore = intent.getStringExtra(HelperGlobal.EXTRA_STORE);
+        mPlatform = intent.getStringExtra(HelperGlobal.EXTRA_PLATFORM);
+        ImageView shorts_imageview = findViewById(R.id.snapshot);
+        Picasso.get().load(imageUrl).fit().centerCrop().into(shorts_imageview);
+        TextView genresgame = findViewById(R.id.genres);
+        VideoView video = findViewById(R.id.video);
+        TextView txtStore = findViewById(R.id.store);
+        TextView txtStoreName = findViewById(R.id.storename);
+        TextView txtPlatform = findViewById(R.id.platform);
+        final MediaController mediaController = new MediaController(findViewById(R.id.frame).getContext());
+        Uri uri = Uri.parse(mVideo);
+
+        //Cargar metodos de lista de detalles del videojuego y el menu deslizante
+        loadGameDetail(mId);
+        navigationDrawer();
+
+
+        //Mostrar video del videojuego
+        mediaController.setAnchorView(video);
+        video.setMediaController(mediaController);
+        video.setVideoURI(uri);
+        video.requestFocus();
+
+        //Hacer que al deslizar se deshabilite la reproduccion del video
+        scrollView.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
+
+            @Override
+            public void onScrollChanged() {
+                mediaController.hide();
+            }
+        });
+
+        //Introducir el texto de cada campo de la actividad
+        genresgame.setText(mGenres);
+        txtStore.setText(mStore);
+
+        if (mStoreName.equalsIgnoreCase("")) {
+            txtStoreName.setText("Non information");
+        } else {
+            txtStoreName.setText(mStoreName);
+        }
+
+
+        if (mPlatform.equalsIgnoreCase("")) {
+            txtPlatform.setText("Non information");
+        } else {
+            txtPlatform.setText(mPlatform);
+        }
+
+    }
+
+    private void setToolbar() { //Añadirá el menu superior mediante un toolbar
+
+        // Añadir la Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu_drawer);
@@ -215,7 +215,7 @@ public class DetailActivity extends AppCompatActivity {
 
     }
 
-    private void navigationDrawer() {
+    private void navigationDrawer() { //Mostrar las opciones que muestra nuestro menu deslizante y nos llevará a cada dirección seleccionada
         navigationView.bringToFront();
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -226,6 +226,12 @@ public class DetailActivity extends AppCompatActivity {
                     case R.id.nav_home:
                         Intent intent1 = new Intent(DetailActivity.this, com.example.datagames.Menu.class);
                         startActivity(intent1);
+                        finish();
+                        break;
+
+                    case R.id.nav_games:
+                        Intent intent6 = new Intent(DetailActivity.this, GameList.class);
+                        startActivity(intent6);
                         finish();
                         break;
 
@@ -267,9 +273,7 @@ public class DetailActivity extends AppCompatActivity {
 
     }
 
-    /**
-     * Se carga una imagen aleatoria para el detalle
-     */
+
 
 
     /**
@@ -277,20 +281,20 @@ public class DetailActivity extends AppCompatActivity {
      *
      * @param msg Mensaje
      */
-    private void showSnackBar(String msg) {
+    private void showSnackBar(String msg) { //Mostrará un mensaje inferior al presionar favourites del menu superior
         Snackbar
                 .make(findViewById(R.id.coordinator), msg, Snackbar.LENGTH_LONG)
                 .show();
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(Menu menu) { //Coger la referencia del layout menú
         getMenuInflater().inflate(R.menu.detail_game, menu);
         return true;
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item) { //Mostrar las opciones del menu superior generico y sus respectivas funciones
         int id = item.getItemId();
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         switch (id) {
@@ -300,8 +304,6 @@ public class DetailActivity extends AppCompatActivity {
                 } else {
                     drawerLayout.openDrawer(GravityCompat.START);
                 }
-
-                //return true;
                 return true;
             case R.id.action_about:
                 showSnackBar("Sobre nosotros");
@@ -310,7 +312,6 @@ public class DetailActivity extends AppCompatActivity {
                 return true;
             case R.id.action_favorite:
                 boolean encontrado = false;
-
                 try {
                     if (mGamesFav.size() != 0) {
                         for (int x = 0; x < mGamesFav.size(); x++) {
@@ -324,13 +325,9 @@ public class DetailActivity extends AppCompatActivity {
                     }
 
                     if (encontrado) {
-
                         showSnackBar("This Game is already added ");
                     } else {
                         mGamesFav.add(new DetailParse.details(mId, mDetailsGamesRellenos.get(0).get("background_image").toString(), mDetailsGamesRellenos.get(0).get("name").toString(), mDetailsGamesRellenos.get(0).get("rating").toString(), mGenres, mDetailsGamesRellenos.get(0).get("released").toString(), mDetailsGamesRellenos.get(0).get("description_raw").toString(), mPlatform, mDetailsGamesRellenos.get(0).get("website").toString(), mDetailsGamesRellenos.get(0).get("metacritic").toString(), mStoreName, mStore, mVideo));
-
-                        Log.d("fav", mGamesFav.get(0).getName());
-
                         guardarDatoSPFavs();
                         showSnackBar("Added to Favorites");
                     }
@@ -338,7 +335,6 @@ public class DetailActivity extends AppCompatActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
 
 
                 return true;
@@ -359,11 +355,10 @@ public class DetailActivity extends AppCompatActivity {
 
     }
 
-    private void loadGameDetail(String mId) {
+    private void loadGameDetail(String mId) { //Cargar el conjunto de datos del videojuego recogiendo el id del mismo y llamada del JSONOBJECT directamente de la actividad DetailParse
 
         RequestQueue queue4 = Volley.newRequestQueue(this);
         String url4 = "https://api.rawg.io/api/games/" + mId;
-        Log.d("idgame", url4);
         StringRequest stringRequest4 = new StringRequest(Request.Method.GET, url4,
                 new Response.Listener<String>() {
                     @Override
@@ -371,9 +366,8 @@ public class DetailActivity extends AppCompatActivity {
                         DetailParse detailParse = new DetailParse();
                         mDetailsGames = detailParse.parseDetailsGame(response);
 
-
                         try {
-                            Log.d("onResponse:", mDetailsGames.get("name").toString());
+
                             if (mDetailsGames.get("name").toString() == "" || mDetailsGames.get("description").toString() == "" ||
                                     mDetailsGames.get("rating").toString().contentEquals("0") || mDetailsGames.get("released").toString() == "null" || mDetailsGames.get("genres").toString() == "" || mDetailsGames.get("id").toString() == "") {
                                 Toast.makeText(DetailActivity.this, "No hay datos necesarios del juego seleccionado", Toast.LENGTH_SHORT).show();
@@ -383,11 +377,6 @@ public class DetailActivity extends AppCompatActivity {
                                 mDetailsGamesRellenos.add(mDetailsGames);
                                 Toast.makeText(DetailActivity.this, "Puede que no se muestren los datos necesarios del juego seleccionado", Toast.LENGTH_SHORT).show();
                                 try {
-
-                                    Log.d("mDetailsAdapter", mDetailsGamesRellenos.get(0).get("name").toString());
-
-
-
 
                                     ImageView img = findViewById(R.id.image_paralax);
                                     Picasso.get().load(mDetailsGamesRellenos.get(0).get("background_image").toString()).resize(2048, 1600)
@@ -401,9 +390,9 @@ public class DetailActivity extends AppCompatActivity {
                                     txtRtaing.setText(mDetailsGamesRellenos.get(0).get("rating").toString());
 
                                     TextView txtMetacritic = findViewById(R.id.metacritic);
-                                    if(mDetailsGamesRellenos.get(0).get("metacritic").toString().equalsIgnoreCase("null")){
+                                    if (mDetailsGamesRellenos.get(0).get("metacritic").toString().equalsIgnoreCase("null")) {
                                         txtMetacritic.setText("Non Info.");
-                                    }else{
+                                    } else {
                                         txtMetacritic.setText(mDetailsGamesRellenos.get(0).get("metacritic").toString());
                                     }
 
@@ -416,9 +405,9 @@ public class DetailActivity extends AppCompatActivity {
 
 
                                     TextView txtWebsite = findViewById(R.id.website);
-                                    if(mDetailsGamesRellenos.get(0).get("website").toString().equalsIgnoreCase("")){
+                                    if (mDetailsGamesRellenos.get(0).get("website").toString().equalsIgnoreCase("")) {
                                         txtWebsite.setText("Non information");
-                                    }else{
+                                    } else {
                                         txtWebsite.setText(mDetailsGamesRellenos.get(0).get("website").toString());
                                     }
 
@@ -429,7 +418,7 @@ public class DetailActivity extends AppCompatActivity {
 
                                 }
 
-                                Log.d("mdetails", mDetailsGamesRellenos.get(0).get("background_image").toString());
+
                             }
 
 
@@ -437,8 +426,6 @@ public class DetailActivity extends AppCompatActivity {
                             e.printStackTrace();
                         }
 
-
-                        // actualizar();
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -450,93 +437,10 @@ public class DetailActivity extends AppCompatActivity {
         queue4.add(stringRequest4);
 
     }
-    public class MainAdapter extends RecyclerView.Adapter<DetailActivity.ViewHolder> {
-
-        ArrayList<DetailParse.details> arrayList;
-        Context context;
-
-        public MainAdapter(Context context, ArrayList<DetailParse.details> arrayList) {
-            this.context = context;
-            this.arrayList = arrayList;
-        }
-
-        @NonNull
-        @Override
-        public DetailActivity.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.listview_horizontal, parent, false);
-            return new DetailActivity.ViewHolder(view);
-        }
-
-        @Override
-        public void onBindViewHolder(@NonNull DetailActivity.ViewHolder holder, int position) {
-
-
-            holder.img.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-
-                    mainAdapter.notifyDataSetChanged();
-                }
-            });
-        }
 
 
 
-        @Override
-        public int getItemCount() {
-            return arrayList.size();
-        }
-
-
-    }
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        public ImageView img;
-
-        public ViewHolder(@NonNull View itemView) {
-            super(itemView);
-            img = itemView.findViewById(R.id.imageView);
-
-        }
-
-    }
-
-    public class DetailsGamesAdapter extends BaseAdapter {
-
-        Integer i = 0;
-        private Context context;
-
-        public DetailsGamesAdapter(Context context) {
-            this.context = context;
-
-        }
-
-
-        @Override
-        public int getCount() {
-            return mDetailsGamesRellenos.size();
-        }
-
-        @Override
-        public Object getItem(int i) {
-            return mDetailsGamesRellenos.get(i);
-        }
-
-        @Override
-        public long getItemId(int i) {
-            return 0;
-        }
-
-
-        @Override
-        public View getView(int i, View view1, ViewGroup viewGroup) {
-
-
-            return view1;
-        }
-    }
-
-    private void leerDatosSPFavs() {
+    private void leerDatosSPFavs() { //Llama a la recogida de datos del sharedpreferences en nuestro caso los videojuegos favoritos para mostrarlos en la actividad de favoritos
         SharedPreferences mPrefs = getSharedPreferences(HelperGlobal.KEYARRAYFAVSPREFERENCES, MODE_PRIVATE);
         Gson gson = new Gson();
         String json = mPrefs.getString(HelperGlobal.ARRAYTIENDASFAV, "");
@@ -551,7 +455,7 @@ public class DetailActivity extends AppCompatActivity {
         }
     }
 
-    private void guardarDatoSPFavs() {
+    private void guardarDatoSPFavs() { //Envio de datos del videojuego dirigidos al sharedpreferences
         SharedPreferences mPrefs = getSharedPreferences(HelperGlobal.KEYARRAYFAVSPREFERENCES, MODE_PRIVATE);
         SharedPreferences.Editor prefsEditor = mPrefs.edit();
         Gson gson = new Gson();
@@ -561,7 +465,7 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) { //Al comienzo de la llamada a la actividad se llevará los datos del sharedpreferences
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == CODINTFAVGAME) {

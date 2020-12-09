@@ -27,17 +27,16 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mAuth= FirebaseAuth.getInstance();//Inicia la conexión con la base de datos de Firebase
 
-        viewPager=findViewById(R.id.viewPager);
+        IntroAdapter adapter=new IntroAdapter(getSupportFragmentManager());//Recoge el objeto adapter de la clase IntroAdapter junto a sus datos
 
-        mAuth= FirebaseAuth.getInstance();
-
-        IntroAdapter adapter=new IntroAdapter(getSupportFragmentManager());
+        viewPager=findViewById(R.id.viewPager);//Muestra el ViewPager de la actividad
         viewPager.setAdapter(adapter);
     }
 
     @Override
-    public void onStart() {
+    public void onStart() { //Al comienzo de la aplicación comprobará el inicio de sesion de usuario y lo llevará a la Actividad Menu
         super.onStart();
         if(mAuth.getCurrentUser()!=null){
             startActivity(new Intent(MainActivity.this,Menu.class));

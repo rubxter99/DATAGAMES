@@ -15,19 +15,20 @@ public class FirstFragment extends Fragment {
     TextView next;
     ViewPager viewPager;
 
-    public FirstFragment() {
-        // Required empty public constructor
+    public FirstFragment() { //Constructor de la primera pantalla de Introduccion/Fragmento
+
     }
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-
-        View view= inflater.inflate(R.layout.fragment_first, container, false);
-        viewPager=getActivity().findViewById(R.id.viewPager);
-
-        next=view.findViewById(R.id.slideOneNext);
+                             Bundle savedInstanceState) { //Visualización de la vista del Primer Fragmento
+        // Englobar el layout de este Fragmento
+        View view = inflater.inflate(R.layout.fragment_first, container, false);
+        //Inicializar el ViewPager de la actividad MainActivity
+        viewPager = getActivity().findViewById(R.id.viewPager);
+        //Función para llevar al segundo fragmento
+        next = view.findViewById(R.id.slideOneNext);
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

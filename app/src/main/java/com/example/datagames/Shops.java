@@ -40,18 +40,26 @@ public class Shops extends AppCompatActivity {
     private NavigationView navigationView;
     private Toolbar toolbar;
     private static final int CODINTFAVGAME = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shops);
-        mAuth= FirebaseAuth.getInstance();
+        mAuth = FirebaseAuth.getInstance();
+        mostrarDatos();
 
+    }
+
+    private void mostrarDatos() { //Muestra la lista de las tiendas digitales online de la actividad Tiendas y cada uno con sus respectivos enlaces a sus páginas web
+        //Menu superior solo con el menú deslizante
         toolbar = findViewById(R.id.toolbar);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         navigationView = (NavigationView) findViewById(R.id.navview);
         setToolBar();
         navigationDrawer();
-        cdGame=findViewById(R.id.cd_game);
+
+        //Listado de las tiendas digitales de videojuegos
+        cdGame = findViewById(R.id.cd_game);
         cdGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -63,8 +71,8 @@ public class Shops extends AppCompatActivity {
 
             }
         });
-        cdSteam=findViewById(R.id.cd_steam);
-        cdSteam.setOnClickListener(new View.OnClickListener(){
+        cdSteam = findViewById(R.id.cd_steam);
+        cdSteam.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mAuth.getCurrentUser();
@@ -111,8 +119,8 @@ public class Shops extends AppCompatActivity {
 
             }
         });
-        cdPlaystation=findViewById(R.id.cd_playstationstore);
-        cdPlaystation.setOnClickListener(new View.OnClickListener(){
+        cdPlaystation = findViewById(R.id.cd_playstationstore);
+        cdPlaystation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mAuth.getCurrentUser();
@@ -147,9 +155,9 @@ public class Shops extends AppCompatActivity {
 
             }
         });
-
     }
-    private void setToolBar() {
+
+    private void setToolBar() { //Creación del menú deslizante
         setSupportActionBar(toolbar);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu_drawer);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -157,7 +165,7 @@ public class Shops extends AppCompatActivity {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item) {  //Mostrar menú deslizante al seleccionar el boton de tres lineas del menu superior
         switch (item.getItemId()) {
             case android.R.id.home:
                 if (drawerLayout.isDrawerVisible(GravityCompat.START)) {
@@ -176,7 +184,7 @@ public class Shops extends AppCompatActivity {
         // return super.onOptionsItemSelected(item);
     }
 
-    private void navigationDrawer() {
+    private void navigationDrawer() { //Mostrar los apartados del menú deslizante con sus respectivas direcciones a cada ventana
 
         navigationView.bringToFront();
 
@@ -189,6 +197,12 @@ public class Shops extends AppCompatActivity {
                     case R.id.nav_home:
                         Intent intent1 = new Intent(Shops.this, com.example.datagames.Menu.class);
                         startActivity(intent1);
+                        finish();
+                        break;
+
+                    case R.id.nav_games:
+                        Intent intent6 = new Intent(Shops.this, GameList.class);
+                        startActivity(intent6);
                         finish();
                         break;
 
@@ -225,7 +239,8 @@ public class Shops extends AppCompatActivity {
         navigationView.setCheckedItem(R.id.nav_home);
 
     }
-    private void leerDatosSPFavs() {
+
+    private void leerDatosSPFavs() { //Transforma los datos recogidos del sharedpreferences en nuestro caso los videojuegos favoritos para mostrarlos en la actividad de favoritos
         SharedPreferences mPrefs = getSharedPreferences(HelperGlobal.KEYARRAYFAVSPREFERENCES, MODE_PRIVATE);
         Gson gson = new Gson();
         String json = mPrefs.getString(HelperGlobal.ARRAYTIENDASFAV, "");

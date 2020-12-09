@@ -48,7 +48,12 @@ public class Menu extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
 
-        mAuth = FirebaseAuth.getInstance();
+        mAuth = FirebaseAuth.getInstance();//Iniciar la conexión con la base de datos de Firebase
+        mostrarDatos();
+
+    }
+
+    private void mostrarDatos() { //Muestra la lista de opciones del menú y cada uno con sus respectivas direcciones hacia su actividad
 
 
         cdPerfil = findViewById(R.id.cd_perfil);
@@ -110,10 +115,9 @@ public class Menu extends Activity {
             }
         });
 
-
     }
 
-    private void leerDatosSPFavs() {
+    private void leerDatosSPFavs() { //Llama a la recogida de datos del sharedpreferences en nuestro caso los videojuegos favoritos para mostrarlos en la actividad de favoritos
         SharedPreferences mPrefs = getSharedPreferences(HelperGlobal.KEYARRAYFAVSPREFERENCES, MODE_PRIVATE);
         Gson gson = new Gson();
         String json = mPrefs.getString(HelperGlobal.ARRAYTIENDASFAV, "");
@@ -128,7 +132,7 @@ public class Menu extends Activity {
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {//Al comienzo de la llamada a la actividad  se lleve los datos del sharedpreferences
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == CODINTFAVGAME) {
