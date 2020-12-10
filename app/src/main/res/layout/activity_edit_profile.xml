@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/fon"
+    android:background="@color/lightWhite"
     android:gravity="center"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".EditProfile">
 
     <ImageView
         android:id="@+id/profileImageView"
@@ -20,7 +23,7 @@
         android:layout_marginLeft="50dp"
         android:layout_marginRight="50dp"
         android:hint="@string/your_username"
-        android:textColor="@color/logoNegro"
+
         android:textColorHint="@color/logoNegro" />
 
     <EditText
@@ -30,7 +33,7 @@
         android:layout_marginLeft="50dp"
         android:layout_marginRight="50dp"
         android:hint="@string/your_email"
-        android:textColor="@color/logoNegro"
+
         android:textColorHint="@color/logoNegro" />
 
     <EditText
@@ -40,7 +43,7 @@
         android:layout_marginLeft="50dp"
         android:layout_marginRight="50dp"
         android:hint="@string/your_pass"
-        android:textColor="@color/logoNegro"
+
         android:textColorHint="@color/logoNegro" />
 
     <Button

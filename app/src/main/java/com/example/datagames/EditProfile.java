@@ -86,7 +86,7 @@ public class EditProfile extends AppCompatActivity {
             public void onClick(View v) {
                 Intent openGalleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(openGalleryIntent, 1000);
-                Toast.makeText(EditProfile.this, "CAMBIO CORRECTO", Toast.LENGTH_SHORT).show();
+
             }
         });
         saveBtn = findViewById(R.id.btn_save);
