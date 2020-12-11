@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/lightWhite"
+    android:background="@drawable/fon"
     android:orientation="vertical"
     android:padding="10dp"
     tools:context=".SecondFragment">
@@ -38,6 +38,7 @@
             android:layout_marginTop="20dp"
             android:layout_toEndOf="@id/imageView"
             android:gravity="center"
+            android:background="@drawable/shape_fragment"
             android:text="@string/fra2tit1"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="20dp" />
@@ -51,6 +52,7 @@
             android:layout_marginTop="50dp"
             android:layout_marginRight="10dp"
             android:layout_toStartOf="@id/imageView2"
+            android:background="@drawable/shape_fragment"
             android:gravity="center"
             android:text="@string/fra2tit2"
             android:textColor="@color/colorPrimaryDark"
