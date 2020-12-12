@@ -11,7 +11,7 @@
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp">
+        android:layout_marginTop="10dp">
 
         <ImageView
             android:id="@+id/imageView"
@@ -26,7 +26,8 @@
             android:layout_height="350dp"
             android:layout_below="@id/title1"
             android:layout_gravity="center"
-            android:layout_marginTop="50dp"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="46dp"
             android:layout_toEndOf="@id/imageView"
             android:src="@drawable/imagefrsec2" />
 

@@ -8,14 +8,17 @@ import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import com.google.firebase.auth.ActionCodeUrl;
@@ -40,7 +43,7 @@ public class Menu extends Activity {
     private CardView cdInfo;
     private CardView cdFavoritos;
     private CardView cdStore;
-
+    private boolean finish;
     private static final int CODINTFAVGAME = 1;
 
 
@@ -48,8 +51,10 @@ public class Menu extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
 
+        finish = getIntent().getBooleanExtra("finish", false);
         mAuth = FirebaseAuth.getInstance();//Iniciar la conexión con la base de datos de Firebase
         mostrarDatos();
+
 
     }
 
@@ -142,5 +147,10 @@ public class Menu extends Activity {
     }
 
 
+    @Override
+    protected void onStop() {
+        super.onStop();
 
+
+    }
 }

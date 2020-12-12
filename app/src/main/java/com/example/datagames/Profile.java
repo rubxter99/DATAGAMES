@@ -83,10 +83,9 @@ public class Profile extends AppCompatActivity {
         getUser();
 
 
-
     }
 
-    private void getStorage(){ //Método para conseguir la imagén perfil del usuario de la base de datos de Firebase
+    private void getStorage() { //Método para conseguir la imagén perfil del usuario de la base de datos de Firebase
         FirebaseUser user = mAuth.getInstance().getCurrentUser();
         storageReference = FirebaseStorage.getInstance().getReference();
         StorageReference profileRef = storageReference.child("usuarios/" + mAuth.getCurrentUser().getUid() + "/profile.jpg");
@@ -97,7 +96,8 @@ public class Profile extends AppCompatActivity {
             }
         });
     }
-    private void mostrarDatos(){ //Mostrara los datos del perfil del usuario
+
+    private void mostrarDatos() { //Mostrara los datos del perfil del usuario
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         navigationView = (NavigationView) findViewById(R.id.navview);
         emailprofile = findViewById(R.id.emailprofile);
@@ -121,8 +121,12 @@ public class Profile extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 mAuth.signOut();
-                startActivity(new Intent(Profile.this, MainActivity.class));
+                Intent intent = new Intent(Profile.this, MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); // Cierra todas las actividades anteriores
+                startActivity(intent);
                 finish();
+
+
             }
         });
     }
