@@ -92,7 +92,7 @@ public class FourFragment extends Fragment {
 
 
 
-                final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(v.getContext());//Ventana del Inicio de sesión
+                final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(v.getContext());//Ventana del inicio de sesión
                 bottomSheetDialog.setContentView(R.layout.btn_sheet_login);
                 bottomSheetDialog.setCanceledOnTouchOutside(false);
 
@@ -121,7 +121,7 @@ public class FourFragment extends Fragment {
                             loginUser(vv);
 
                         } else {
-                            Toast.makeText(vv.getContext(), "Debe completar los campos", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(vv.getContext(), "You must complete the fields", Toast.LENGTH_SHORT).show();
                         }
                         bottomSheetDialog.dismiss();
                     }
@@ -163,11 +163,11 @@ public class FourFragment extends Fragment {
                             if (password.length() >= 6) {
                                 registrerUser(v);
                             } else {
-                                Toast.makeText(v.getContext(), "El password debe tener al menos 6 caracteres", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(v.getContext(), "The password must be at least 6 characters long", Toast.LENGTH_SHORT).show();
                             }
 
                         } else {
-                            Toast.makeText(v.getContext(), "Debe completar los campos", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(v.getContext(), "You must complete the fields", Toast.LENGTH_SHORT).show();
                         }
                         bottomSheetDialog2.dismiss();
 
@@ -192,7 +192,7 @@ public class FourFragment extends Fragment {
                     startActivity(new Intent(v1.getContext(), Menu.class));
                     getActivity().finish();
                 } else {
-                    Toast.makeText(v1.getContext(), "No se pudo iniciar sesion, compruebe los datos", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(v1.getContext(), "Failed to start session, check data", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -215,15 +215,15 @@ public class FourFragment extends Fragment {
                         @Override
                         public void onComplete(@NonNull Task<Void> task2) {
                             if (task2.isSuccessful()) {
-                                Toast.makeText(v2.getContext(), "Usuario registrado correctamente", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(v2.getContext(), "Successfully registered user", Toast.LENGTH_SHORT).show();
                             } else {
-                                Toast.makeText(v2.getContext(), "No se pudieron crear los datos correctamente", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(v2.getContext(), "Failed to create data correctly", Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
 
                 } else {
-                    Toast.makeText(v2.getContext(), "No se pudo registrar el usuario", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(v2.getContext(), "Failed to register user", Toast.LENGTH_SHORT).show();
                 }
             }
         });
