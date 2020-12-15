@@ -29,6 +29,7 @@ public class About extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
     private static final int CODINTFAVGAME = 1;
+    private SharedPreferences.Editor prefsEditor;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -105,6 +106,7 @@ public class About extends AppCompatActivity {
                         Intent intent3 = new Intent(About.this, MainActivity.class);
                         intent3.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); // Cierra todas las actividades anteriores
                         startActivity(intent3);
+                        restaurar();
                         finish();
                         break;
 
@@ -139,5 +141,11 @@ public class About extends AppCompatActivity {
             mGamesFav = restoreArray;
 
         }
+    }
+    private void restaurar() { //Eliminar los filtros guardados junto con el sharedpreferences y marcarlo por defecto
+        SharedPreferences mPrefs = getSharedPreferences(HelperGlobal.KEYARRAYFAVSPREFERENCES, MODE_PRIVATE);
+        prefsEditor = mPrefs.edit();
+        prefsEditor.clear();
+        prefsEditor.commit();
     }
 }

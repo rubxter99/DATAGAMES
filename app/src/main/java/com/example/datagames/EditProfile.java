@@ -44,6 +44,7 @@ public class EditProfile extends AppCompatActivity {
     private StorageReference storageReference;
     private DatabaseReference mDatabase;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -110,7 +111,9 @@ public class EditProfile extends AppCompatActivity {
                             @Override
                             public void onSuccess(Void aVoid) {
                                 Toast.makeText(EditProfile.this, "UPDATED PROFILE", Toast.LENGTH_SHORT).show();
-                                startActivity(new Intent(getApplicationContext(), Profile.class));
+                                Intent intent = new Intent(EditProfile.this, Profile.class);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK); // Cierra todas las actividades anteriores
+                                startActivity(intent);
                                 finish();
                             }
                         });

@@ -25,7 +25,7 @@ public class FilterGames extends AppCompatActivity {
     private String mGenres;
     private Spinner spGenres;
     private int mPostGenres = 0;
-    SharedPreferences.Editor prefsEditor;
+    private SharedPreferences.Editor prefsEditor;
     private ObjectFilterGame filtroleidogame = null;
 
     @Override

@@ -122,6 +122,7 @@ public class DetailActivity extends AppCompatActivity {
     private TextView txtTitle;
     private static final int CODINTFAVGAME = 1;
     private RecyclerView recyclerView;
+    private SharedPreferences.Editor prefsEditor;
 
 
     @Override
@@ -258,6 +259,7 @@ public class DetailActivity extends AppCompatActivity {
                         Intent intent3 = new Intent(DetailActivity.this, MainActivity.class);
                         intent3.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); // Cierra todas las actividades anteriores
                         startActivity(intent3);
+                        restaurar();
                         finish();
                         break;
                     case R.id.nav_shops:
@@ -474,6 +476,11 @@ public class DetailActivity extends AppCompatActivity {
         }
 
     }
-
+    private void restaurar() { //Eliminar los filtros guardados junto con el sharedpreferences y marcarlo por defecto
+        SharedPreferences mPrefs = getSharedPreferences(HelperGlobal.KEYARRAYFAVSPREFERENCES, MODE_PRIVATE);
+        prefsEditor = mPrefs.edit();
+        prefsEditor.clear();
+        prefsEditor.commit();
+    }
 
 }

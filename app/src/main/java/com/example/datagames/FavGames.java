@@ -50,6 +50,7 @@ public class FavGames extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     private Toolbar toolbar;
+    private SharedPreferences.Editor prefsEditor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,8 +61,10 @@ public class FavGames extends AppCompatActivity {
         Intent getIntent = getIntent();//Recogida de la llamada de otra actividad
         ArrayList<DetailParse.details> gamesIntent = getIntent.getParcelableArrayListExtra(HelperGlobal.PARCELABLEKEYARRAY);//Recogida de los videojuegos añadidos a favoritos
         mGamesFav = new ArrayList<>();
+
         for (int i = 0; i < gamesIntent.size(); i++) { //Añadimos los datos del array anterior a uno nuevo para poder modificarlo
             mGamesFav.add(gamesIntent.get(i));
+
         }
         mostrarDatos(getIntent);
 
@@ -225,6 +228,7 @@ public class FavGames extends AppCompatActivity {
                         Intent intent3 = new Intent(FavGames.this, MainActivity.class);
                         intent3.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); // Cierra todas las actividades anteriores
                         startActivity(intent3);
+                        restaurar();
                         finish();
                         break;
 
@@ -241,4 +245,28 @@ public class FavGames extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        leerDatosSPFavs();
+    }
+    private void leerDatosSPFavs() { //Llama a la recogida de datos del sharedpreferences en nuestro caso los videojuegos favoritos para mostrarlos en la actividad de favoritos
+        SharedPreferences mPrefs = getSharedPreferences(HelperGlobal.KEYARRAYFAVSPREFERENCES, MODE_PRIVATE);
+        Gson gson = new Gson();
+        String json = mPrefs.getString(HelperGlobal.ARRAYTIENDASFAV, "");
+        Type founderListType = new TypeToken<ArrayList<DetailParse.details>>() {
+        }.getType();
+        ArrayList<DetailParse.details> restoreArray = gson.fromJson(json, founderListType);
+
+        if (restoreArray != null) {
+            mGamesFav = restoreArray;
+
+        }
+    }
+    private void restaurar() { //Eliminar los filtros guardados junto con el sharedpreferences y marcarlo por defecto
+        SharedPreferences mPrefs = getSharedPreferences(HelperGlobal.KEYARRAYFAVSPREFERENCES, MODE_PRIVATE);
+        prefsEditor = mPrefs.edit();
+        prefsEditor.clear();
+        prefsEditor.commit();
+    }
 }
