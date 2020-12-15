@@ -22,16 +22,16 @@ public class Splash extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash_datagames);
 
-        topAnim = AnimationUtils.loadAnimation(Splash.this, R.anim.top_animation);//Animacion de la parte de arriba hacia abajo de la actividad
-        bottomAnim = AnimationUtils.loadAnimation(Splash.this, R.anim.bottom_animation);//Animacion de la parte de abajo hacia arriba de la actividad
+        topAnim = AnimationUtils.loadAnimation(Splash.this, R.anim.top_animation);//Animación de la parte de arriba hacia abajo de la actividad
+        bottomAnim = AnimationUtils.loadAnimation(Splash.this, R.anim.bottom_animation);//Animación de la parte de abajo hacia arriba de la actividad
 
         logo = findViewById(R.id.logo);
         txt_logo = findViewById(R.id.txt_logo);
         txt_slogan = findViewById(R.id.txt_logodesc);
 
-        logo.setAnimation(topAnim);//Animacion del logo desde arriba
-        txt_logo.setAnimation(bottomAnim);//Animacion del texto del logo desde abajo
-        txt_slogan.setAnimation(bottomAnim);//Animacion del texto secundario del logo desde abajo
+        logo.setAnimation(topAnim);//Animación del logo desde arriba
+        txt_logo.setAnimation(bottomAnim);//Animación del texto del logo desde abajo
+        txt_slogan.setAnimation(bottomAnim);//Animación del texto secundario del logo desde abajo
 
 
         new Handler().postDelayed(new Runnable() {

@@ -62,7 +62,7 @@ public class EditProfile extends AppCompatActivity {
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
         StorageReference profileRef = storageReference.child("usuarios/" + fAuth.getCurrentUser().getUid() + "/profile.jpg");
-        profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+        profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() { //Coger la imagen de la base de datos de Firebase
             @Override
             public void onSuccess(Uri uri) {
                 Picasso.get().load(uri).into(profileImageView);
@@ -81,7 +81,7 @@ public class EditProfile extends AppCompatActivity {
         profileEmail = findViewById(R.id.editTextEmail);
         profilePassword = findViewById(R.id.editTextPassW);
         profileImageView = findViewById(R.id.profileImageView);
-        profileImageView.setOnClickListener(new View.OnClickListener() {
+        profileImageView.setOnClickListener(new View.OnClickListener() { //Abrir la galería del teléfono
             @Override
             public void onClick(View v) {
                 Intent openGalleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
@@ -90,11 +90,11 @@ public class EditProfile extends AppCompatActivity {
             }
         });
         saveBtn = findViewById(R.id.btn_save);
-        saveBtn.setOnClickListener(new View.OnClickListener() {
+        saveBtn.setOnClickListener(new View.OnClickListener() { //Guardar cambios recogidos por el usuario
             @Override
             public void onClick(View v) {
                 if (profileFullName.getText().toString().isEmpty() || profileEmail.getText().toString().isEmpty()) {
-                    Toast.makeText(EditProfile.this, "GUARDADO CORRECTAMENTE", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(EditProfile.this, "SAVED CORRECTLY", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 final String email = profileEmail.getText().toString();
@@ -109,7 +109,7 @@ public class EditProfile extends AppCompatActivity {
                         mDatabase.child("usuarios").child(id).updateChildren(edited).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
-                                Toast.makeText(EditProfile.this, "PERFIL ACTUALIZADO", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(EditProfile.this, "UPDATED PROFILE", Toast.LENGTH_SHORT).show();
                                 startActivity(new Intent(getApplicationContext(), Profile.class));
                                 finish();
                             }
@@ -131,7 +131,7 @@ public class EditProfile extends AppCompatActivity {
         profilePassword.setText(password);
     }
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {//Envio de datos del enlace de la imagen del perfil de usuario de Firebase
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) { //Envío de datos del enlace de la imagen del perfil de usuario de Firebase
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1000) {
             if (resultCode == Activity.RESULT_OK) {
@@ -141,7 +141,7 @@ public class EditProfile extends AppCompatActivity {
         }
     }
 
-    private void uploadImageFirebase(Uri imageUri) {//Cambiar imagen de perfil de usuario en la base de datos de Firebase
+    private void uploadImageFirebase(Uri imageUri) { //Cambiar imagen de perfil de usuario en la base de datos de Firebase
 
         final StorageReference fileRef = storageReference.child("usuarios/" + fAuth.getCurrentUser().getUid() + "/profile.jpg");
         fileRef.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -153,12 +153,12 @@ public class EditProfile extends AppCompatActivity {
                         Picasso.get().load(uri).into(profileImageView);
                     }
                 });
-                Toast.makeText(EditProfile.this, "LA IMAGEN FUE CAMBIADA", Toast.LENGTH_SHORT).show();
+                Toast.makeText(EditProfile.this, "IMAGE WAS CHANGED", Toast.LENGTH_SHORT).show();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(EditProfile.this, "LA IMAGEN FUE CAMBIADA", Toast.LENGTH_SHORT).show();
+                Toast.makeText(EditProfile.this, "IMAGE WASN´T CHANGED", Toast.LENGTH_SHORT).show();
             }
         });
     }

@@ -137,7 +137,7 @@ public class Menu extends Activity {
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {//Al comienzo de la llamada a la actividad  se lleve los datos del sharedpreferences
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {//Al comienzo de la llamada a la actividad  se llevará los datos del sharedpreferences
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == CODINTFAVGAME) {

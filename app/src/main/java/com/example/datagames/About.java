@@ -34,8 +34,8 @@ public class About extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
         toolbar = findViewById(R.id.toolbar);//Creación menu superior
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);//Panel menu deslizante
-        navigationView = (NavigationView) findViewById(R.id.navview);//Menu deslizante
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);//Panel menú deslizante
+        navigationView = (NavigationView) findViewById(R.id.navview);//Menú deslizante
         mAuth= FirebaseAuth.getInstance();//Conexión con la base de datos de Firebase
         setToolBar();
         navigationDrawer();
@@ -48,7 +48,7 @@ public class About extends AppCompatActivity {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {  //Mostrar menú deslizante al seleccionar el boton de tres lineas del menu superior
+    public boolean onOptionsItemSelected(MenuItem item) {  //Mostrar menú deslizante al seleccionar el botón de tres lineas del menú superior
         switch (item.getItemId()) {
             case android.R.id.home:
                 if (drawerLayout.isDrawerVisible(GravityCompat.START)) {
@@ -127,7 +127,7 @@ public class About extends AppCompatActivity {
         navigationView.setCheckedItem(R.id.nav_home);
 
     }
-    private void leerDatosSPFavs() { //Transforma los datos recogidos del sharedpreferences en nuestro caso los videojuegos favoritos para mostrarlos en la actividad de favoritos
+    private void leerDatosSPFavs() { //Transformación de los datos recogidos del sharedpreferences en nuestro caso los videojuegos favoritos para mostrarlos en la actividad de favoritos
         SharedPreferences mPrefs = getSharedPreferences(HelperGlobal.KEYARRAYFAVSPREFERENCES, MODE_PRIVATE);
         Gson gson = new Gson();
         String json = mPrefs.getString(HelperGlobal.ARRAYTIENDASFAV, "");

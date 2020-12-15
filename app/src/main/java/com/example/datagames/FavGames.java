@@ -56,11 +56,11 @@ public class FavGames extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fav_games);
 
-        mAuth = FirebaseAuth.getInstance();//Conexion Base de Datos Firebase
+        mAuth = FirebaseAuth.getInstance();//Conexión a la  base de datos Firebase
         Intent getIntent = getIntent();//Recogida de la llamada de otra actividad
         ArrayList<DetailParse.details> gamesIntent = getIntent.getParcelableArrayListExtra(HelperGlobal.PARCELABLEKEYARRAY);//Recogida de los videojuegos añadidos a favoritos
         mGamesFav = new ArrayList<>();
-        for (int i = 0; i < gamesIntent.size(); i++) {//Añadimos los datos del array anterior a uno nuevo para poder modificarlo
+        for (int i = 0; i < gamesIntent.size(); i++) { //Añadimos los datos del array anterior a uno nuevo para poder modificarlo
             mGamesFav.add(gamesIntent.get(i));
         }
         mostrarDatos(getIntent);
@@ -89,7 +89,7 @@ public class FavGames extends AppCompatActivity {
         });
     }
 
-    private void guardarDatoSP() { //Envio de datos del videojuego dirigidos al sharedpreferences
+    private void guardarDatoSP() { //Envío de datos del videojuego dirigidos al sharedpreferences
         SharedPreferences mPrefs = getSharedPreferences(HelperGlobal.KEYARRAYFAVSPREFERENCES, MODE_PRIVATE);
         SharedPreferences.Editor prefsEditor = mPrefs.edit();
         Gson gson = new Gson();
@@ -150,7 +150,7 @@ public class FavGames extends AppCompatActivity {
     }
 
     @Override
-    public boolean onContextItemSelected(@NonNull MenuItem item) { //Eliminar videojuego favorito al mantener presionado la seleccion de este
+    public boolean onContextItemSelected(@NonNull MenuItem item) { //Eliminar videojuego favorito al mantener presionado la selección de este mismo
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         switch (item.getItemId()) {
 
@@ -164,7 +164,7 @@ public class FavGames extends AppCompatActivity {
         return true;
     }
 
-    private void setToolBar() { //Añadirá el menu superior mediante un toolbar
+    private void setToolBar() { //Añadirá el menú superior mediante un toolbar
         setSupportActionBar(toolbar);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu_drawer);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -172,7 +172,7 @@ public class FavGames extends AppCompatActivity {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) { //Mostrar menú deslizante al seleccionar el boton de tres lineas del menu superior
+    public boolean onOptionsItemSelected(MenuItem item) { //Mostrar menú deslizante al seleccionar el botón de tres lineas del menú superior
         switch (item.getItemId()) {
             case android.R.id.home:
                 if (drawerLayout.isDrawerVisible(GravityCompat.START)) {
@@ -188,7 +188,7 @@ public class FavGames extends AppCompatActivity {
         return true;
     }
 
-    private void navigationDrawer() { //Mostrar las opciones que muestra nuestro menu deslizante y nos llevara a cada direccion seleccionada
+    private void navigationDrawer() { //Mostrar las opciones que muestra nuestro menú deslizante y nos llevará a cada dirección seleccionada
 
         navigationView.bringToFront();
 

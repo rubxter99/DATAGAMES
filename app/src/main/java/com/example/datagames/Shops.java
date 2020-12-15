@@ -165,7 +165,7 @@ public class Shops extends AppCompatActivity {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {  //Mostrar menú deslizante al seleccionar el boton de tres lineas del menu superior
+    public boolean onOptionsItemSelected(MenuItem item) {  //Mostrar menú deslizante al seleccionar el botón de tres lineas del menú superior
         switch (item.getItemId()) {
             case android.R.id.home:
                 if (drawerLayout.isDrawerVisible(GravityCompat.START)) {

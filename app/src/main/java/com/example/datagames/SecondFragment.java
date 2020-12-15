@@ -16,7 +16,7 @@ public class SecondFragment extends Fragment {
     TextView back;
     ViewPager viewPager;
 
-    public SecondFragment() { //Constructor de la segunda pantalla de Introduccion/Fragmento
+    public SecondFragment() { //Constructor de la segunda pantalla de Introducción/Fragmento
 
     }
 
@@ -29,7 +29,7 @@ public class SecondFragment extends Fragment {
         //Inicializar el ViewPager de la actividad MainActivity
         viewPager=getActivity().findViewById(R.id.viewPager);
 
-        //Función para llevar al tercer fragmento
+        //Función para llevar al Tercer fragmento
         next=view.findViewById(R.id.slideOneNext2);
         next.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -38,7 +38,7 @@ public class SecondFragment extends Fragment {
             }
         });
 
-        //Función para llevar al primer fragmento
+        //Función para llevar al Primer fragmento
         back=view.findViewById(R.id.slideOneBack1);
         back.setOnClickListener(new View.OnClickListener() {
             @Override

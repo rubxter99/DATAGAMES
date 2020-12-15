@@ -129,7 +129,7 @@ public class DetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.game_detail);
 
-        mAuth = FirebaseAuth.getInstance();//Conexion Base de Datos Firebase
+        mAuth = FirebaseAuth.getInstance();//Conexión Base de Datos Firebase
 
         // Añadir action bar
         if (getSupportActionBar() != null) // Habilitar up button
@@ -143,7 +143,7 @@ public class DetailActivity extends AppCompatActivity {
 
     private void mostrarDatos(Intent intent) { //Mostrar todos los datos recogidos del videojuego tanto del intent como de la actividad Detalles
 
-        //Visualizacion de cada dato en la actividad
+        //Visualización de cada dato en la actividad
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         navigationView = (NavigationView) findViewById(R.id.navview);
         scrollView = findViewById(R.id.scroll);
@@ -165,7 +165,7 @@ public class DetailActivity extends AppCompatActivity {
         final MediaController mediaController = new MediaController(findViewById(R.id.frame).getContext());
         Uri uri = Uri.parse(mVideo);
 
-        //Cargar metodos de lista de detalles del videojuego y el menu deslizante
+        //Cargar métodos de lista de detalles del videojuego y el menú deslizante
         loadGameDetail(mId);
         navigationDrawer();
 
@@ -176,7 +176,7 @@ public class DetailActivity extends AppCompatActivity {
         video.setVideoURI(uri);
         video.requestFocus();
 
-        //Hacer que al deslizar se deshabilite la reproduccion del video
+        //Hacer que al deslizar se deshabilite la reproducción del video
         scrollView.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
 
             @Override
@@ -204,7 +204,7 @@ public class DetailActivity extends AppCompatActivity {
 
     }
 
-    private void setToolbar() { //Añadirá el menu superior mediante un toolbar
+    private void setToolbar() { //Añadirá el menú superior mediante un toolbar
 
         // Añadir la Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -215,7 +215,7 @@ public class DetailActivity extends AppCompatActivity {
 
     }
 
-    private void navigationDrawer() { //Mostrar las opciones que muestra nuestro menu deslizante y nos llevará a cada dirección seleccionada
+    private void navigationDrawer() { //Mostrar las opciones que muestra nuestro menú deslizante y nos llevará a cada dirección seleccionada
         navigationView.bringToFront();
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -282,7 +282,7 @@ public class DetailActivity extends AppCompatActivity {
      *
      * @param msg Mensaje
      */
-    private void showSnackBar(String msg) { //Mostrará un mensaje inferior al presionar favourites del menu superior
+    private void showSnackBar(String msg) { //Mostrará un mensaje inferior al presionar favourites del menú superior
         Snackbar
                 .make(findViewById(R.id.coordinator), msg, Snackbar.LENGTH_LONG)
                 .show();
@@ -295,7 +295,7 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) { //Mostrar las opciones del menu superior generico y sus respectivas funciones
+    public boolean onOptionsItemSelected(MenuItem item) { //Mostrar las opciones del menú superior genérico y sus respectivas funciones
         int id = item.getItemId();
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         switch (id) {
@@ -307,7 +307,7 @@ public class DetailActivity extends AppCompatActivity {
                 }
                 return true;
             case R.id.action_about:
-                showSnackBar("Sobre nosotros");
+                showSnackBar("About us");
                 Intent intent = new Intent(DetailActivity.this, About.class);
                 startActivity(intent);
                 return true;
@@ -343,7 +343,7 @@ public class DetailActivity extends AppCompatActivity {
                 try {
                     Intent intent3 = new Intent(Intent.ACTION_SEND);
                     intent3.setType("text/plain");
-                    intent3.putExtra(Intent.EXTRA_TEXT, "El juego seleccionado buscalo en la web de " + mDetailsGamesRellenos.get(0).get("website").toString());
+                    intent3.putExtra(Intent.EXTRA_TEXT, "The selected game search for it on the website " + mDetailsGamesRellenos.get(0).get("website").toString());
                     startActivity(Intent.createChooser(intent3, "Share with"));
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -371,12 +371,12 @@ public class DetailActivity extends AppCompatActivity {
 
                             if (mDetailsGames.get("name").toString() == "" || mDetailsGames.get("description").toString() == "" ||
                                     mDetailsGames.get("rating").toString().contentEquals("0") || mDetailsGames.get("released").toString() == "null" || mDetailsGames.get("genres").toString() == "" || mDetailsGames.get("id").toString() == "") {
-                                Toast.makeText(DetailActivity.this, "No hay datos necesarios del juego seleccionado", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(DetailActivity.this, "No data needed from the selected game", Toast.LENGTH_SHORT).show();
 
                             } else {
 
                                 mDetailsGamesRellenos.add(mDetailsGames);
-                                Toast.makeText(DetailActivity.this, "Puede que no se muestren los datos necesarios del juego seleccionado", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(DetailActivity.this, "The required data for the selected game may not be displayed", Toast.LENGTH_SHORT).show();
                                 try {
 
                                     ImageView img = findViewById(R.id.image_paralax);
@@ -456,7 +456,7 @@ public class DetailActivity extends AppCompatActivity {
         }
     }
 
-    private void guardarDatoSPFavs() { //Envio de datos del videojuego dirigidos al sharedpreferences
+    private void guardarDatoSPFavs() { //Envío de datos del videojuego dirigidos al sharedpreferences
         SharedPreferences mPrefs = getSharedPreferences(HelperGlobal.KEYARRAYFAVSPREFERENCES, MODE_PRIVATE);
         SharedPreferences.Editor prefsEditor = mPrefs.edit();
         Gson gson = new Gson();

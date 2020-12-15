@@ -19,10 +19,10 @@ public class HelperGlobal { //Clase para globalizar todas las variables generale
     public final static String PERMISIONDENIED="Permission Denied...";
     public final static String GPSPERMISEDGARANTED="GPS Permission granted!";
     public final static String PERMISSIONDENIEDUSER= "Permission denied by user!";
-    public final static String MARKEROPTIONSTITLE=" Estas aquí ";
+    public final static String MARKEROPTIONSTITLE=" Are you here ";
     public final static String PERMISSIONGRANTEDPAST="[LOCATION] Permission granted in the past!";
-    public final static String ELIMINADOFAV="ELIMINADO DE FAVORITOS";
-    public final static String ELIMINARFAVCONTEXTMENU="ELIMINAR DE FAVORITOS";
+    public final static String ELIMINADOFAV="Removed from Favorites";
+    public final static String ELIMINARFAVCONTEXTMENU="Delete from Favourites";
     public final static String PARCELABLEKEYARRAY="KEY_ARRAY";
     public final static String JSONARRAY="results";
     public final static String JSONDATAID="id";
@@ -46,8 +46,5 @@ public class HelperGlobal { //Clase para globalizar todas las variables generale
     public final static String JSONSTORENAME="name";
     public final static String PROGRESSTITTLE="GAMES";
     public final static String PROGRESSMESSAGE="SEARCHING... WAIT A SECOND";
-    public final static String AÑADIRFAV="AÑADIR A FAVORITOS";
-    public final static String PROGRESSTITTLELIBRARIES="LIBRARIES";
-    public final static String AÑADIDOFAV="AÑADIDO A FAVORITOS";
 
 }

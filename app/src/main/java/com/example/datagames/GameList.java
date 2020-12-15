@@ -90,7 +90,7 @@ public class GameList extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_games);
 
-        //Ejecución del hilo cuya función es mostrar un cuadro de dialogo a la espera de cargar las listas de videojuegos
+        //Ejecución del hilo cuya función es mostrar un cuadro de diálogo a la espera de cargar las listas de videojuegos
         new MyTask().execute();
         //Conexión a la base de datos de Firebase
         mAuth = FirebaseAuth.getInstance();
@@ -129,10 +129,10 @@ public class GameList extends AppCompatActivity {
 
     }
 
-    private void mostrarListado() { //Mostrara las listas de videojuegos genereica,los actuales y los próximos
+    private void mostrarListado() { //Mostrara las listas de videojuegos genérica,los actuales y los próximos
         mLv.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event) { //Videojuegos genericos
+            public boolean onTouch(View v, MotionEvent event) { //Lista de videojuegos genéricos
                 v.getParent().requestDisallowInterceptTouchEvent(true);
                 return false;
 
@@ -157,7 +157,7 @@ public class GameList extends AppCompatActivity {
         });
         newgames.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public boolean onTouch(View v2, MotionEvent event) { //Videojuegos actuales
+            public boolean onTouch(View v2, MotionEvent event) { //Lista de videojuegos actuales
                 v2.getParent().requestDisallowInterceptTouchEvent(true);
                 return false;
             }
@@ -181,7 +181,7 @@ public class GameList extends AppCompatActivity {
         });
         upcoming.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public boolean onTouch(View v3, MotionEvent event) { //Videojuegos próximos
+            public boolean onTouch(View v3, MotionEvent event) { //Lista de videojuegos próximos
                 v3.getParent().requestDisallowInterceptTouchEvent(true);
                 return false;
             }
@@ -205,9 +205,9 @@ public class GameList extends AppCompatActivity {
 
     }
 
-    public class MyTask extends AsyncTask<Void, Void, Void> { //Hilo de ejecución para el cuadro de dialogo mientras cargan las listas de los videojuegos
+    public class MyTask extends AsyncTask<Void, Void, Void> { //Hilo de ejecución para el cuadro de diálogo mientras cargan las listas de los videojuegos
 
-        public void onPreExecute() { //Al comienzo de la aplicaion
+        public void onPreExecute() { //Al comienzo de la aplicación
             mPd = new ProgressDialog(GameList.this);
             mPd.setProgressStyle(Spinner.ACCESSIBILITY_LIVE_REGION_ASSERTIVE);
             mPd.setTitle(HelperGlobal.PROGRESSTITTLE);
@@ -215,13 +215,13 @@ public class GameList extends AppCompatActivity {
             mPd.setProgress(10);
             mPd.setMax(100);
             mPd.show();
-            loadGames(200); //Cargar Lista Generica de mas de 200 paginas con 50 videojuegos cada una
+            loadGames(200); //Cargar Lista genérica de mas de 200 páginas con 50 videojuegos cada una
             loadNewGames(); //Cargar Lista Videojuegos actuales con 50 de ellos
-            loadUpcomingGames(); //Cargar Lista Videojuegos proximos con 50 de ellos
+            loadUpcomingGames(); //Cargar Lista Videojuegos próximos con 50 de ellos
 
         }
 
-        public Void doInBackground(Void... unused) { //Mientras se esta ejecutando el cuadro de dialogo espere 20 segundos
+        public Void doInBackground(Void... unused) { //Mientras se esta ejecutando el cuadro de diálogo espere 20 segundos
 
             try {
                 Thread.sleep(20000);
@@ -233,21 +233,22 @@ public class GameList extends AppCompatActivity {
         }
 
         @Override
-        protected void onPostExecute(Void aVoid) { //Al terminar de cargar el metodo anterior que cierre el cuadro de dialogo
+        protected void onPostExecute(Void aVoid) { //Al terminar de cargar el método anterior se cerrará el cuadro de diálogo
 
             mPd.dismiss();
         }
     }
 
 
-    public boolean onCreateOptionsMenu(Menu menu) { //Mostrar boton de busqueda en el menu superior y aplicarle la funcion de filtrado
+    public boolean onCreateOptionsMenu(Menu menu) { //Mostrar botón de búsqueda en el menú superior y aplicarle la función de filtrado
         getMenuInflater().inflate(R.menu.menu_toolbar, menu);
         SearchManager searchManager =
                 (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView =
                 (SearchView) menu.findItem(R.id.toolbar_search).getActionView();
 
-        searchView.setBackgroundColor(Color.BLACK);
+        searchView.setBackgroundColor(Color.BLUE);
+
         searchView.setSearchableInfo(
                 searchManager.getSearchableInfo(getComponentName()));
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -265,7 +266,7 @@ public class GameList extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
-    private void setToolBar() { //Creación del menú superior junto con el menu deslizante ,busqueda y filtros
+    private void setToolBar() { //Creación del menú superior junto con el menú deslizante ,búsqueda y filtros
         setSupportActionBar(toolbar);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu_drawer);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -273,7 +274,7 @@ public class GameList extends AppCompatActivity {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) { //Mostrar menú deslizante al seleccionar el boton de tres lineas del menu superior y la aplicaion de los filtros
+    public boolean onOptionsItemSelected(MenuItem item) { //Mostrar menú deslizante al seleccionar el botón de tres lineas del menú superior y la aplicación de los filtros
         switch (item.getItemId()) {
             case android.R.id.home:
                 if (drawerLayout.isDrawerVisible(GravityCompat.START)) {
@@ -301,7 +302,7 @@ public class GameList extends AppCompatActivity {
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {//Mostrar los apartados del menú deslizante con sus respectivas direcciones a cada ventana
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) { //Mostrar los apartados del menú deslizante con sus respectivas direcciones a cada ventana
 
                 switch (item.getItemId()) {
 
@@ -351,7 +352,7 @@ public class GameList extends AppCompatActivity {
     }
 
 
-    private void loadGames(int max) { //Cargar Listado Generico de los videojuegos con un maximo de paginas en nuestro caso 200
+    private void loadGames(int max) { //Cargar Listado Genérico de los videojuegos con un máximo de páginas en nuestro caso 200
 
         RequestQueue queue = Volley.newRequestQueue(this);
         for (int page = 1; page < max; page++) {
@@ -387,7 +388,7 @@ public class GameList extends AppCompatActivity {
         }
     }
 
-    private void loadNewGames() { //Cargar Listado Actual de los  nuevos videojuegos siendo en nuestro caso 40 de ellos desde nuestra fecha actual
+    private void loadNewGames() { //Cargar Listado Actual de los nuevos videojuegos siendo en nuestro caso 40 de ellos desde nuestra fecha actual
 
         RequestQueue queue2 = Volley.newRequestQueue(this);
         Date date = new Date();
@@ -433,7 +434,7 @@ public class GameList extends AppCompatActivity {
 
     }
 
-    private void loadUpcomingGames() { //Cargar Listado Proximo de los proximos videojuegos siendo en nuestro caso 40 de ellos desde nuestra fecha actual hasta finales del 2025
+    private void loadUpcomingGames() { //Cargar Listado Próximo de los próximos videojuegos siendo en nuestro caso 40 de ellos desde nuestra fecha actual hasta finales del 2025
 
         RequestQueue queue3 = Volley.newRequestQueue(this);
         Date date = new Date();
@@ -471,7 +472,7 @@ public class GameList extends AppCompatActivity {
     }
 
 
-    public class MainAdapter extends RecyclerView.Adapter<GameList.ViewHolder> { //Adaptador para mostrar el listado de videojuegos en horizonatl en nuestro caso sera de los nuevos videojuegos
+    public class MainAdapter extends RecyclerView.Adapter<GameList.ViewHolder> { //Adaptador para mostrar el listado de videojuegos en horizontal en nuestro caso será de los nuevos videojuegos
 
         ArrayList<GamesParse.game> mNewGamesRellenos;
         Context context;
@@ -483,13 +484,13 @@ public class GameList extends AppCompatActivity {
 
         @NonNull
         @Override
-        public GameList.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) { //Creacion de la vista de la lista horizontal
+        public GameList.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) { //Creación de la vista de la lista horizontal
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.listview_horizontal, parent, false);
             return new ViewHolder(view);
         }
 
         @Override
-        public void onBindViewHolder(@NonNull GameList.ViewHolder holder, final int position) { //Contenido del listado de videojuegos ,tendra una imagen y al darle click nos llevara a la actividad Detalles
+        public void onBindViewHolder(@NonNull GameList.ViewHolder holder, final int position) { //Contenido del listado de videojuegos ,tendrá una imagen y al mantenerlo presionado nos llevará a la actividad Detalles
             Picasso.get().load(mNewGamesRellenos.get(position).getImage()).resize(2048, 1600)
                     .into(holder.img);
             holder.img.setOnClickListener(new View.OnClickListener() {
@@ -527,7 +528,7 @@ public class GameList extends AppCompatActivity {
 
     }
 
-    public class GamesAdapter extends BaseAdapter implements Filterable { //Adaptador para mostrar el listado de videojuegos en nuestro caso sera de los videojuegos genericos con 200 paginas
+    public class GamesAdapter extends BaseAdapter implements Filterable { //Adaptador para mostrar el listado de videojuegos en nuestro caso sera de los videojuegos genéricos con 200 páginas
 
         private Context context;
 
@@ -542,7 +543,7 @@ public class GameList extends AppCompatActivity {
         }
 
         @Override
-        public Object getItem(int i) { //Obtencion del objeto
+        public Object getItem(int i) { //Obtención del objeto
             return mGamesFiltrados.get(i);
         }
 
@@ -553,7 +554,7 @@ public class GameList extends AppCompatActivity {
 
 
         @Override
-        public View getView(int i, View view, ViewGroup viewGroup) { //Mostrar la vista de la lista de videojuegos generica  ya filtrados por busqueda
+        public View getView(int i, View view, ViewGroup viewGroup) { //Mostrar la vista de la lista de videojuegos genérica  ya filtrados por búsqueda
             View view1 = null;
 
             if (view == view1) {
@@ -583,7 +584,7 @@ public class GameList extends AppCompatActivity {
         }
 
         @Override
-        public Filter getFilter() { //Metodo filtrar por busqueda de la lista de videojuegos generica
+        public Filter getFilter() { //Método filtrar por búsqueda de la lista de videojuegos genérica
             Filter filter = new Filter() {
                 @SuppressWarnings("unchecked")
                 @Override
@@ -633,7 +634,7 @@ public class GameList extends AppCompatActivity {
     }
 
 
-    public class NewGamesAdapter extends BaseAdapter { //Adaptador para mostrar el listado de videojuegos en nuestro caso sera de los videojuegos actuales/nuevos
+    public class NewGamesAdapter extends BaseAdapter { //Adaptador para mostrar el listado de videojuegos en nuestro caso será de los videojuegos actuales/nuevos
 
         private Context context;
 
@@ -647,7 +648,7 @@ public class GameList extends AppCompatActivity {
         }
 
         @Override
-        public Object getItem(int i) { //Obtencion del objeto
+        public Object getItem(int i) { //Obtención del objeto
             return mNewGamesRellenos.get(i);
         }
 
@@ -689,7 +690,7 @@ public class GameList extends AppCompatActivity {
 
     }
 
-    public class UpcomingGamesAdapter extends BaseAdapter { //Adaptador para mostrar el listado de videojuegos en nuestro caso sera de los videojuegos proximos
+    public class UpcomingGamesAdapter extends BaseAdapter { //Adaptador para mostrar el listado de videojuegos en nuestro caso será de los videojuegos próximos
 
         private Context context;
 
@@ -703,7 +704,7 @@ public class GameList extends AppCompatActivity {
         }
 
         @Override
-        public Object getItem(int i) { //Obtencion del objeto
+        public Object getItem(int i) { //Obtención del objeto
             return mUpcomingRellenos.get(i);
         }
 
@@ -714,7 +715,7 @@ public class GameList extends AppCompatActivity {
 
 
         @Override
-        public View getView(int i, View view, ViewGroup viewGroup) { //Mostrar la vista de la lista de videojuegos proximos
+        public View getView(int i, View view, ViewGroup viewGroup) { //Mostrar la vista de la lista de videojuegos próximos
             View view3 = null;
 
             if (view == view3) {
@@ -748,7 +749,7 @@ public class GameList extends AppCompatActivity {
 
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) { //Al comienzo de la llamada a la actividad se llevará el listado de videojuegos generico ya filtrado junto con los datos del sharedpreferences de los videojuegos favoritos
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) { //Al comienzo de la llamada a la actividad se llevará el listado de videojuegos genérico ya filtrado junto con los datos del sharedpreferences de los videojuegos favoritos
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == CODINFILTROGAME) {
             actualizar();
@@ -757,7 +758,7 @@ public class GameList extends AppCompatActivity {
         }
     }
 
-    private void actualizar() { //Método sirve para comprobar el listado generico de los videojuegos de 200 paginas y eliminar o añadir videojuegos dependiendo  de la indicacion de filtrado
+    private void actualizar() { //Método que sirve para comprobar el listado genérico de los videojuegos de 200 páginas y eliminar o añadir videojuegos dependiendo  de la indicación de filtrado
         leerDatosSPFiltro();
         mGamesFiltrados = new ArrayList<>();
         if (mFiltroGame != null) {
@@ -774,12 +775,12 @@ public class GameList extends AppCompatActivity {
             for (int i = 0; i < mGamesFiltrados.size(); i++) {
 
                 if (Double.parseDouble(mGamesFiltrados.get(i).getRating()) > Double.parseDouble(datosRating[0]) || !mGamesFiltrados.get(i).getPlatforms().toString().equalsIgnoreCase(datosPlatform[0]) || !mGamesFiltrados.get(i).getGenres().equalsIgnoreCase(datosGenres[0])) {
-                    mGamesFiltrados.remove(i); //Eliminar los videojuegos comparados con la eleccion realizada en la actividad de Filtros
+                    mGamesFiltrados.remove(i); //Eliminar los videojuegos comparados con la elección realizada en la actividad de Filtros
                     i--;
                 }
             }
         } else {
-            mGamesFiltrados = mGamesRellenos; //Sino los añade
+            mGamesFiltrados = mGamesRellenos; //Sino los añadirá
         }
 
         if (mAdapter == null) {
@@ -790,7 +791,7 @@ public class GameList extends AppCompatActivity {
         }
     }
 
-    private void leerDatosSPFiltro() {  //Llama a la recogida de datos del sharedpreferences en nuestro caso los filtros de la actividad Filtros para mostrarlos en esta misma actividad sobre la lista generica con 200 paginas
+    private void leerDatosSPFiltro() {  //Llama a la recogida de datos del sharedpreferences en nuestro caso los filtros de la actividad Filtros para mostrarlos en esta misma actividad sobre la lista genérica con 200 páginas
         SharedPreferences mPrefs = getSharedPreferences(HelperGlobal.KEYARRAYFILTROSPREFERENCESGAMES, MODE_PRIVATE);
         Gson gson = new Gson();
         String json = mPrefs.getString(HelperGlobal.ARRAYGAMESFILTROS, "");

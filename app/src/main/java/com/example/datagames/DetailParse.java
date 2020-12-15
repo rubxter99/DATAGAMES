@@ -45,7 +45,7 @@ public class DetailParse {
         }
 
 
-        public String getName() { //Obtener el titulo del videojuego
+        public String getName() { //Obtener el título del videojuego
             return name;
         }
 
@@ -135,7 +135,7 @@ public class DetailParse {
     }
 
 
-    private details parseDetailGame(JSONObject jsonData) throws JSONException { //Método para parsear los JSONOBJECT del xml con la funcion de parseDetailsGame
+    private details parseDetailGame(JSONObject jsonData) throws JSONException { //Método para parsear los JSONOBJECT del xml con la función de parseDetailsGame
         String name = "";
         String released = "";
         String image = "";

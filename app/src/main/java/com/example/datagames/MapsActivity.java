@@ -87,7 +87,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
         Intent intent = getIntent();
-        if (intent != null) { //Coger valores por defecto
+        if (intent != null) { //Tomará valores por defecto
             mTitle = intent.getStringExtra(HelperGlobal.TITLEINPUTTIENDASCERCANAS);
             mLat = intent.getDoubleExtra(HelperGlobal.LATINPUTTIENDASCERCANAS, 0.0);
             mLon = intent.getDoubleExtra(HelperGlobal.LONINPUTTIENDASCERCANAS, 0.0);
@@ -115,7 +115,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 
-    private void checkPermissions() { //Pedir permisos ubicación
+    private void checkPermissions() { //Pedir permisos de ubicación
         if (Build.VERSION.SDK_INT >= 23) {
             if (ContextCompat.checkSelfPermission(MapsActivity.this,
                     android.Manifest.permission.ACCESS_FINE_LOCATION)
@@ -128,7 +128,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) { //Comprobar en el log los permisos sino se cerrara la actividad
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) { //Comprobar en el log los permisos ,sino se cerrará la actividad
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
             case REQUEST_CHECK_SETTINGS:
@@ -146,7 +146,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     @Override
-    public void onMapReady(GoogleMap googleMap) { //Añadir el mapa con los marcadores de ubicaion tanto de usuario como de las tiendas
+    public void onMapReady(GoogleMap googleMap) { //Añadir el mapa con los marcadores de ubicación tanto de usuario como de las tiendas
         mMap = googleMap;
 
         if (ContextCompat.checkSelfPermission(MapsActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
@@ -194,7 +194,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                             location.setLongitude(arrayplaces.get(j).getLon());
                             if (mCurrentLocation != null) {
 
-                                distance = mCurrentLocation.distanceTo(location);//Radio de busqueda ubicacion actual
+                                distance = mCurrentLocation.distanceTo(location);//Radio de búsqueda de ubicación actual
 
                                 LatLng latLng2 = new LatLng(arrayplaces.get(j).getLat(), arrayplaces.get(j).getLon());
 
@@ -271,7 +271,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         if (googleApiClient == null) {
                             buildGoogleApiClient(); //Iniciar Cliente de Google
                         }
-                        mMap.setMyLocationEnabled(true); //Activar localizacion del usuario
+                        mMap.setMyLocationEnabled(true); //Activar localización del usuario
                     }
                 } else {
                     Toast.makeText(this, HelperGlobal.PERMISIONDENIED, Toast.LENGTH_SHORT).show();
@@ -343,7 +343,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
     @Override
-    public void onConnected(@Nullable Bundle bundle) { //Realizar un seguimiento del estado de conexión del usuario si esta conectado
+    public void onConnected(@Nullable Bundle bundle) { //Realizar un seguimiento del estado de conexión del usuario si está conectado
         locationRequest = new LocationRequest();
         locationRequest.setInterval(1100);
         locationRequest.setFastestInterval(1100);
@@ -355,7 +355,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     @Override
-    public void onConnectionSuspended(int i) { //Realizar un seguimiento del estado de conexión del usuario si esta en reposo
+    public void onConnectionSuspended(int i) { //Realizar un seguimiento del estado de conexión del usuario si está en reposo
 
     }
 
@@ -365,7 +365,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     @SuppressWarnings({"MissingPermission"})
-    private void startLocation() { //Comenzar la localizacion del GPS del usuario
+    private void startLocation() { //Comenzar la localización del GPS del usuario
         mLocManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
         if (!mLocManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
@@ -422,7 +422,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     };
 
-    private void showSettingDialog() { //Mostrar cuadro de dialogo cuya funcion es comprobar y proporcionar la activación del GPS  del usuario
+    private void showSettingDialog() { //Mostrar cuadro de diálogo cuya función es comprobar y proporcionar la activación del GPS  del usuario
         LocationRequest locationRequest = LocationRequest.create();
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         locationRequest.setInterval(30 * 1000);
@@ -451,7 +451,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         }
                         break;
                     case LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE:
-                        Log.e("TAG", "GPS NO DISPONIBLE");
+                        Log.e("TAG", "GPS NOT AVAILABLE");
                         break;
                 }
             }

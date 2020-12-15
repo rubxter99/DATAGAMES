@@ -35,7 +35,7 @@ public class FilterGames extends AppCompatActivity {
         leerDatosSP();
         mostrarDatos();
 
-        if (filtroleidogame != null) { //Comprobar si el objeto de filtros no es vacio y contiene datos
+        if (filtroleidogame != null) { //Comprobar si el objeto de filtros no es vacío y contiene datos
             if (filtroleidogame.getPosRating() != 0 && filtroleidogame.getPlatform() != "" && filtroleidogame.getGenre() != "") {
                 spRating.setSelection(filtroleidogame.getPosRating());
                 spPlatform.setSelection(filtroleidogame.getPostPlatform());
@@ -101,7 +101,7 @@ public class FilterGames extends AppCompatActivity {
 
 
         Button btn_savefiltros = findViewById(R.id.btn_FILTROS);
-        btn_savefiltros.setOnClickListener(new View.OnClickListener() {
+        btn_savefiltros.setOnClickListener(new View.OnClickListener() { //Guardará los filtros
             @Override
             public void onClick(View v) {
                 ObjectFilterGame establecerFiltro = new ObjectFilterGame(mRating, mPostRating, mPlatforms, mPostPlatform, mGenres, mPostGenres);
@@ -110,7 +110,7 @@ public class FilterGames extends AppCompatActivity {
             }
         });
         Button btn_savefiltros_restaurar = findViewById(R.id.btn_FILTROS_RESTAURAR);
-        btn_savefiltros_restaurar.setOnClickListener(new View.OnClickListener() {
+        btn_savefiltros_restaurar.setOnClickListener(new View.OnClickListener() { //Formateará los filtros y los pondrá por defecto
             @Override
             public void onClick(View v) {
 
@@ -122,7 +122,7 @@ public class FilterGames extends AppCompatActivity {
         });
     }
 
-    private void guardarDatoSP(ObjectFilterGame objetcFiltro) { //Envio de datos de los filtros dirigidos al sharedpreferences
+    private void guardarDatoSP(ObjectFilterGame objetcFiltro) { //Envío de datos de los filtros dirigidos al sharedpreferences
         SharedPreferences mPrefs = getSharedPreferences(HelperGlobal.KEYARRAYFILTROSPREFERENCESGAMES, MODE_PRIVATE);
         prefsEditor = mPrefs.edit();
         Gson gson = new Gson();

@@ -25,11 +25,11 @@ public class ObjectFilterGame {
         return posRating;
     }
 
-    public String getGenre() { //Obtiene la categoria inicial de los filtros
+    public String getGenre() { //Obtiene la categoría inicial de los filtros
         return genre;
     }
 
-    public int getPostGenre() { //Obtiene la categoria final de los filtros
+    public int getPostGenre() { //Obtiene la categoría final de los filtros
         return postGenre;
     }
 

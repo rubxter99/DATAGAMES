@@ -48,7 +48,7 @@ public class FourFragment extends Fragment {
     DatabaseReference mDatabase;
 
 
-    public FourFragment() { //Constructor de la cuarta pantalla de Introduccion/Fragmento
+    public FourFragment() { //Constructor de la cuarta pantalla de Introducción/Fragmento
 
     }
 
@@ -60,7 +60,7 @@ public class FourFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_four, container, false);
         //Inicializar el ViewPager de la actividad MainActivity
         viewPager = getActivity().findViewById(R.id.viewPager);
-        //Función para llevar al tercer fragmento
+        //Función para llevar al Tercer fragmento
         back = view.findViewById(R.id.slideOneBack4);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,7 +81,7 @@ public class FourFragment extends Fragment {
     }
 
 
-    private void login(View view) { //Visualización de la vista de iniciar sesion de usuario para introducir los datos
+    private void login(View view) { //Visualización de la vista de iniciar sesión de usuario para introducir los datos
 
 
         LoginButton = (Button) view.findViewById(R.id.btnLogin1);
@@ -143,7 +143,7 @@ public class FourFragment extends Fragment {
             public void onClick(final View view) {
 
 
-                final BottomSheetDialog bottomSheetDialog2 = new BottomSheetDialog(view.getContext());//Ventana del Registro de usuario
+                final BottomSheetDialog bottomSheetDialog2 = new BottomSheetDialog(view.getContext());//Ventana del registro de usuario
                 bottomSheetDialog2.setContentView(R.layout.btn_sheet_registrer);
                 bottomSheetDialog2.setCanceledOnTouchOutside(false);
 
@@ -180,7 +180,7 @@ public class FourFragment extends Fragment {
         });
     }
 
-    public void loginUser(final View v1) { //Metodo para acceder a la base de datos de Firebase y poder comprobar el usuario introducido
+    public void loginUser(final View v1) { //Método para acceder a la base de datos de Firebase y poder comprobar el usuario introducido
         mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
@@ -198,7 +198,7 @@ public class FourFragment extends Fragment {
         });
     }
 
-    public void registrerUser(final View v2) { //Metodo para acceder a la base de datos de Firebase e ingresar los datos del nuevo usuario a esta misma
+    public void registrerUser(final View v2) { //Método para acceder a la base de datos de Firebase e ingresar los datos del nuevo usuario a esta misma
         mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {

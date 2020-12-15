@@ -43,13 +43,13 @@ public class ResetPassword extends AppCompatActivity {
                 email = mEditTextEmail.getText().toString();
 
                 if (!email.isEmpty()) { //Comprobar si el email no esta vacío que a su vez muestre un mensaje si no esta vacío y resetee la contraseña
-                    mDialog.setMessage("Espera ...");
+                    mDialog.setMessage("Wait a second ...");
                     mDialog.setCanceledOnTouchOutside(false);
                     mDialog.show();
                     resetPassword();
 
                 } else {
-                    Toast.makeText(ResetPassword.this, "Debes ingresar el email", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ResetPassword.this, "You must enter the email", Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -63,9 +63,9 @@ public class ResetPassword extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
-                    Toast.makeText(ResetPassword.this, "Se envio el correo para restablecer tu contraseña", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ResetPassword.this, "Email was sent to reset your password", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(ResetPassword.this, "No se pudo enviar el correo para restablecer contraseña", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ResetPassword.this, "Failed to send email to reset your password", Toast.LENGTH_SHORT).show();
                 }
                 mDialog.dismiss();
             }

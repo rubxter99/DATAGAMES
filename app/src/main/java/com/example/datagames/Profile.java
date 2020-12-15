@@ -85,7 +85,7 @@ public class Profile extends AppCompatActivity {
 
     }
 
-    private void getStorage() { //Método para conseguir la imagén perfil del usuario de la base de datos de Firebase
+    private void getStorage() { //Método para conseguir la imagen perfil del usuario de la base de datos de Firebase
         FirebaseUser user = mAuth.getInstance().getCurrentUser();
         storageReference = FirebaseStorage.getInstance().getReference();
         StorageReference profileRef = storageReference.child("usuarios/" + mAuth.getCurrentUser().getUid() + "/profile.jpg");

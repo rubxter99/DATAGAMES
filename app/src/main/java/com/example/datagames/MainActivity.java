@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onStart() { //Al comienzo de la aplicación comprobará el inicio de sesion de usuario y lo llevará a la Actividad Menu
+    public void onStart() { //Al comienzo de la aplicación comprobará el inicio de sesión de usuario y lo llevará a la Actividad Menu
         super.onStart();
         if(mAuth.getCurrentUser()!=null){
             startActivity(new Intent(MainActivity.this,Menu.class));
