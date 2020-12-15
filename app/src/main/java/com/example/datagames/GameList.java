@@ -247,7 +247,7 @@ public class GameList extends AppCompatActivity {
         SearchView searchView =
                 (SearchView) menu.findItem(R.id.toolbar_search).getActionView();
 
-        searchView.setBackgroundColor(Color.BLUE);
+            searchView.setBackgroundColor(Color.BLACK);
 
         searchView.setSearchableInfo(
                 searchManager.getSearchableInfo(getComponentName()));

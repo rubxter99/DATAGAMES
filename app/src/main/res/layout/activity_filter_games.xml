@@ -8,133 +8,148 @@
     android:orientation="vertical"
     tools:context=".FilterGames">
 
-    <LinearLayout
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scroll"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:orientation="horizontal">
+        android:layout_height="match_parent"
+       >
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="@string/filtros"
-            android:textColor="@android:color/background_dark"
-            android:textSize="30sp"
-            android:textStyle="bold" />
-    </LinearLayout>
+            android:layout_marginTop="100dp"
+            android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="232dp"
-        android:layout_gravity="center"
-        android:layout_margin="20dp"
-        android:background="@color/logoFiltro"
-        android:gravity="center"
-        android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="horizontal">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:orientation="horizontal"
-            android:paddingRight="40dp">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="@string/filtros"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="30sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:text="Rating"
-                android:textAlignment="center"
-                android:textColor="@android:color/black" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="232dp"
+                android:layout_gravity="center"
+                android:layout_margin="20dp"
+                android:background="@color/logoFiltro"
+                android:gravity="center"
+                android:orientation="vertical">
 
-            <Spinner
-                android:id="@+id/spRating"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="3"
-                android:spinnerMode="dropdown" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:orientation="horizontal"
+                    android:paddingRight="40dp">
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:text="Rating"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black" />
+
+                    <Spinner
+                        android:id="@+id/spRating"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        android:spinnerMode="dropdown" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:orientation="horizontal"
+                    android:paddingRight="30dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:text="@string/plataformas"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black" />
+
+                    <Spinner
+                        android:id="@+id/spPlatformas"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        android:spinnerMode="dropdown" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:orientation="horizontal"
+                    android:paddingEnd="40dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:text="@string/genre"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black" />
+
+                    <Spinner
+                        android:id="@+id/spGeneros"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        android:spinnerMode="dropdown" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="100dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/btn_FILTROS"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="30dp"
+                    android:background="@color/cardview_dark_background"
+                    android:padding="11dp"
+                    android:text="@string/guardar_cambios"
+                    android:textColor="@color/colorLogin"
+                    android:textSize="24dp" />
+
+                <Button
+                    android:id="@+id/btn_FILTROS_RESTAURAR"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/cardview_dark_background"
+                    android:padding="11dp"
+                    android:text="@string/restaurar"
+                    android:textColor="@color/colorLogin"
+                    android:textSize="24dp" />
+            </LinearLayout>
         </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:orientation="horizontal"
-            android:paddingRight="30dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:text="@string/plataformas"
-                android:textAlignment="center"
-                android:textColor="@android:color/black" />
-
-            <Spinner
-                android:id="@+id/spPlatformas"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="3"
-                android:spinnerMode="dropdown" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:orientation="horizontal"
-            android:paddingEnd="40dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:text="@string/genre"
-                android:textAlignment="center"
-                android:textColor="@android:color/black" />
-
-            <Spinner
-                android:id="@+id/spGeneros"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="3"
-                android:spinnerMode="dropdown" />
-        </LinearLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:orientation="vertical">
-
-        <Button
-            android:id="@+id/btn_FILTROS"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="30dp"
-            android:background="@color/cardview_dark_background"
-            android:padding="11dp"
-            android:text="@string/guardar_cambios"
-            android:textColor="@color/colorLogin"
-            android:textSize="24dp" />
-
-        <Button
-            android:id="@+id/btn_FILTROS_RESTAURAR"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@color/cardview_dark_background"
-            android:padding="11dp"
-            android:text="@string/restaurar"
-            android:textColor="@color/colorLogin"
-            android:textSize="24dp" />
-    </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 
 </LinearLayout>
 
