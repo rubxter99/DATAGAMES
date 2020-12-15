@@ -23,7 +23,7 @@
         android:layout_marginLeft="50dp"
         android:layout_marginRight="50dp"
         android:hint="@string/your_username"
-
+        android:textColor="@color/logoNegro"
         android:textColorHint="@color/logoNegro" />
 
     <EditText
@@ -33,7 +33,7 @@
         android:layout_marginLeft="50dp"
         android:layout_marginRight="50dp"
         android:hint="@string/your_email"
-
+        android:textColor="@color/logoNegro"
         android:textColorHint="@color/logoNegro" />
 
     <EditText
@@ -43,7 +43,7 @@
         android:layout_marginLeft="50dp"
         android:layout_marginRight="50dp"
         android:hint="@string/your_pass"
-
+        android:textColor="@color/logoNegro"
         android:textColorHint="@color/logoNegro" />
 
     <Button
