@@ -185,6 +185,7 @@ public class Profile extends AppCompatActivity {
                     case R.id.nav_logout:
                         mAuth.signOut();
                         Intent intent3 = new Intent(Profile.this, MainActivity.class);
+                        intent3.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); // Cierra todas las actividades anteriores
                         startActivity(intent3);
                         finish();
                         break;

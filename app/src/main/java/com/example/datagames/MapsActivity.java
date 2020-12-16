@@ -108,7 +108,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             public void onClick(View view) {
                 if (mMap != null) {
                     mMap.clear();
+
                 }
+
                 onMapReady(mMap);
             }
         });
@@ -116,7 +118,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     private void checkPermissions() { //Pedir permisos de ubicación
-        if (Build.VERSION.SDK_INT >= 23) {
+        if (Build.VERSION.SDK_INT >= 22) {
             if (ContextCompat.checkSelfPermission(MapsActivity.this,
                     android.Manifest.permission.ACCESS_FINE_LOCATION)
                     != PackageManager.PERMISSION_GRANTED)
@@ -288,7 +290,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     // Permiso otorgado por el usuario
                     Toast.makeText(getApplicationContext(), HelperGlobal.GPSPERMISEDGARANTED,
                             Toast.LENGTH_SHORT).show();
-                    startLocation();
+
 
                 } else {
                     // Permisos denegados
@@ -332,8 +334,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
 
         currentUserLocationMarker = mMap.addMarker(markerOptions.position(latLng));
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 13));
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 13));
+        //mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 13));
+       // mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 13));
 
         if (googleApiClient != null) {
             LocationServices.FusedLocationApi.removeLocationUpdates(googleApiClient, this);
@@ -387,6 +389,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             ActivityCompat.requestPermissions(MapsActivity.this,
                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                     MY_PERMISSIONS_GPS_FINE_LOCATION);
+
 
         } else {
             Toast.makeText(getApplicationContext(),

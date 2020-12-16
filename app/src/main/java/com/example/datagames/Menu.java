@@ -20,6 +20,7 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.google.firebase.auth.ActionCodeUrl;
 import com.google.firebase.auth.FirebaseAuth;
@@ -45,7 +46,7 @@ public class Menu extends Activity {
     private CardView cdStore;
     private boolean finish;
     private static final int CODINTFAVGAME = 1;
-
+    private static final Integer MY_PERMISSIONS_GPS_FINE_LOCATION = 1;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,6 +97,7 @@ public class Menu extends Activity {
             public void onClick(View view) {
                 mAuth.getCurrentUser();
                 startActivity(new Intent(Menu.this, MapsActivity.class));
+
             }
         });
 
@@ -151,6 +153,26 @@ public class Menu extends Activity {
         super.onPause();
         if(mAuth==null){
             finish();
+        }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (PackageManager.PERMISSION_GRANTED !=
+                ContextCompat.checkSelfPermission(Menu.this,
+                        Manifest.permission.ACCESS_FINE_LOCATION)) {
+
+            ActivityCompat.requestPermissions(Menu.this,
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                    MY_PERMISSIONS_GPS_FINE_LOCATION);
+
+
+        } else {
+            Toast.makeText(getApplicationContext(),
+                    HelperGlobal.PERMISSIONGRANTEDPAST,
+                    Toast.LENGTH_SHORT).show();
+
         }
     }
 }
