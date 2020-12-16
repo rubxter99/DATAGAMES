@@ -51,7 +51,7 @@ public class Menu extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
 
-        finish = getIntent().getBooleanExtra("finish", false);
+        finish = getIntent().getBooleanExtra("finish",false);
         mAuth = FirebaseAuth.getInstance();//Iniciar la conexión con la base de datos de Firebase
         mostrarDatos();
 
@@ -147,10 +147,8 @@ public class Menu extends Activity {
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
-        if(mAuth==null){
-            finish();
-        }
+    protected void onStart() {
+        super.onStart();
+        leerDatosSPFavs();
     }
 }
