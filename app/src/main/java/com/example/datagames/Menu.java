@@ -146,6 +146,11 @@ public class Menu extends Activity {
 
     }
 
-
-
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if(mAuth==null){
+            finish();
+        }
+    }
 }

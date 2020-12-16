@@ -60,18 +60,21 @@ public class FavGames extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();//Conexión a la  base de datos Firebase
         id = mAuth.getCurrentUser().getUid();
 
-            Intent getIntent = getIntent();//Recogida de la llamada de otra actividad
-            ArrayList<DetailParse.details> gamesIntent = getIntent.getParcelableArrayListExtra(HelperGlobal.PARCELABLEKEYARRAY);//Recogida de los videojuegos añadidos a favoritos
-            mGamesFav = new ArrayList<>();
+        Intent getIntent = getIntent();//Recogida de la llamada de otra actividad
+        ArrayList<DetailParse.details> gamesIntent = getIntent.getParcelableArrayListExtra(HelperGlobal.PARCELABLEKEYARRAY);//Recogida de los videojuegos añadidos a favoritos
+        mGamesFav = new ArrayList<>();
 
-            for (int i = 0; i < gamesIntent.size(); i++) { //Añadimos los datos del array anterior a uno nuevo para poder modificarlo
-                mGamesFav.add(gamesIntent.get(i));
+        for (int i = 0; i < gamesIntent.size(); i++) { //Añadimos los datos del array anterior a uno nuevo para poder modificarlo
+            mGamesFav.add(gamesIntent.get(i));
 
-            }
+        }
+
+        if(mAuth.getCurrentUser().getUid().equalsIgnoreCase(HelperGlobal.KEYARRAYFAVSPREFERENCES)){
             mostrarDatos(getIntent);
+            Log.d("USUARIO ACTUAL", mAuth.getCurrentUser().getUid());
+            Log.d("USUARIO ANTERIOR", HelperGlobal.KEYARRAYFAVSPREFERENCES);
 
-
-
+        }
 
     }
 
@@ -221,7 +224,6 @@ public class FavGames extends AppCompatActivity {
                         finish();
                         break;
 
-
                     case R.id.nav_profile:
                         Intent intent2 = new Intent(FavGames.this, Profile.class);
                         startActivity(intent2);
@@ -229,11 +231,12 @@ public class FavGames extends AppCompatActivity {
                         break;
                     case R.id.nav_logout:
                         mAuth.signOut();
-                        Intent intent3 = new Intent(FavGames.this, MainActivity.class);
-                        intent3.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); // Cierra todas las actividades anteriores
+                        Intent intent3 = new Intent(getBaseContext(), MainActivity.class);
+                        //intent3.addCategory(Intent.CATEGORY_HOME);
+                        intent3.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_SINGLE_TOP); // Cierra todas las actividades anteriores
                         startActivity(intent3);
-
                         finish();
+
                         break;
 
                     case R.id.nav_shops:
@@ -252,7 +255,13 @@ public class FavGames extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        leerDatosSPFavs();
+        if(mAuth.getCurrentUser().getUid().equalsIgnoreCase(HelperGlobal.KEYARRAYFAVSPREFERENCES)){
+            leerDatosSPFavs();
+            Log.d("USUARIO ACTUAL", mAuth.getCurrentUser().getUid());
+            Log.d("USUARIO ANTERIOR", HelperGlobal.KEYARRAYFAVSPREFERENCES);
+
+        }
+
     }
     private void leerDatosSPFavs() { //Llama a la recogida de datos del sharedpreferences en nuestro caso los videojuegos favoritos para mostrarlos en la actividad de favoritos
         SharedPreferences mPrefs = getSharedPreferences(HelperGlobal.KEYARRAYFAVSPREFERENCES, MODE_PRIVATE);
@@ -264,8 +273,22 @@ public class FavGames extends AppCompatActivity {
 
         if (restoreArray != null) {
             mGamesFav = restoreArray;
-
         }
     }
 
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        mostrarDatos(getIntent());
+        Log.d("Funciona Restart", "jola");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mostrarDatos(getIntent());
+        Log.d("Funciona Resume", "hola");
+
+    }
 }
