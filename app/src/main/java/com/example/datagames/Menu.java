@@ -148,11 +148,7 @@ public class Menu extends Activity {
 
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        leerDatosSPFavs();
-    }
+
 
     @Override
     protected void onStart() {
