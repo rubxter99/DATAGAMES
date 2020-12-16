@@ -51,8 +51,7 @@ public class FavGames extends AppCompatActivity {
     private NavigationView navigationView;
     private Toolbar toolbar;
     private SharedPreferences.Editor prefsEditor;
-    private String id;
-
+    private  String id ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,9 +69,12 @@ public class FavGames extends AppCompatActivity {
 
         }
 
+        if(mAuth.getCurrentUser().getUid().equalsIgnoreCase(HelperGlobal.KEYARRAYFAVSPREFERENCES)){
+            mostrarDatos(getIntent);
+            Log.d("USUARIO ACTUAL", mAuth.getCurrentUser().getUid());
+            Log.d("USUARIO ANTERIOR", HelperGlobal.KEYARRAYFAVSPREFERENCES);
 
-        mostrarDatos(getIntent);
-
+        }
 
     }
 
@@ -230,9 +232,11 @@ public class FavGames extends AppCompatActivity {
                     case R.id.nav_logout:
                         mAuth.signOut();
                         Intent intent3 = new Intent(getBaseContext(), MainActivity.class);
-                        intent3.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); // Cierra todas las actividades anteriores
+                        //intent3.addCategory(Intent.CATEGORY_HOME);
+                        intent3.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_SINGLE_TOP); // Cierra todas las actividades anteriores
                         startActivity(intent3);
                         finish();
+
                         break;
 
                     case R.id.nav_shops:
@@ -251,10 +255,14 @@ public class FavGames extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        leerDatosSPFavs();
+        if(mAuth.getCurrentUser().getUid().equalsIgnoreCase(HelperGlobal.KEYARRAYFAVSPREFERENCES)){
+            leerDatosSPFavs();
+            Log.d("USUARIO ACTUAL", mAuth.getCurrentUser().getUid());
+            Log.d("USUARIO ANTERIOR", HelperGlobal.KEYARRAYFAVSPREFERENCES);
+
+        }
+
     }
-
-
     private void leerDatosSPFavs() { //Llama a la recogida de datos del sharedpreferences en nuestro caso los videojuegos favoritos para mostrarlos en la actividad de favoritos
         SharedPreferences mPrefs = getSharedPreferences(HelperGlobal.KEYARRAYFAVSPREFERENCES, MODE_PRIVATE);
         Gson gson = new Gson();
@@ -269,4 +277,18 @@ public class FavGames extends AppCompatActivity {
     }
 
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        mostrarDatos(getIntent());
+        Log.d("Funciona Restart", "jola");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mostrarDatos(getIntent());
+        Log.d("Funciona Resume", "hola");
+
+    }
 }
