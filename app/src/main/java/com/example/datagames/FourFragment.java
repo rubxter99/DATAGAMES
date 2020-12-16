@@ -122,7 +122,7 @@ public class FourFragment extends Fragment {
                         if (!email.isEmpty() && !password.isEmpty()) {
 
                             loginUser(vv);
-                            restaurar();
+
 
                         } else {
                             Toast.makeText(vv.getContext(), "You must complete the fields", Toast.LENGTH_SHORT).show();
@@ -233,27 +233,7 @@ public class FourFragment extends Fragment {
         });
     }
 
-    private void restaurar() { //Eliminar los filtros guardados junto con el sharedpreferences y marcarlo por defecto
-        SharedPreferences mPrefs = this.getActivity().getSharedPreferences(HelperGlobal.KEYARRAYFAVSPREFERENCES, MODE_PRIVATE);
-        prefsEditor = mPrefs.edit();
-        prefsEditor.clear();
-        prefsEditor.commit();
-        SharedPreferences mPrefs2 = this.getActivity().getSharedPreferences(HelperGlobal.KEYARRAYFILTROSPREFERENCESGAMES, MODE_PRIVATE);
-        prefsEditor2 = mPrefs.edit();
-        prefsEditor2.clear();
-        prefsEditor2.commit();
-    }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        restaurar();
-    }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-        restaurar();
 
-    }
 }

@@ -1,9 +1,12 @@
 package com.example.datagames;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 public class HelperGlobal { //Clase para globalizar todas las variables generales llamadas desde distintas actividades
-    public final static  String KEYARRAYFAVSPREFERENCES = "KEYARRAYTIENDAS";
+    public final static FirebaseAuth mAuth= FirebaseAuth.getInstance();
+    public final static  String KEYARRAYFAVSPREFERENCES = mAuth.getCurrentUser().getUid().toString();
     public final static String ARRAYTIENDASFAV = "ARRAYTIENDASFAVS";
-    public final static  String KEYARRAYFILTROSPREFERENCESGAMES = "KEYARRAYFILTROGAMES";
+    public final static  String KEYARRAYFILTROSPREFERENCESGAMES = mAuth.getCurrentUser().getUid().toString();
     public final static String ARRAYGAMESFILTROS = "ARRAYGAMESFILTROS";
     public final static String TITLEINPUTTIENDASCERCANAS="TITLE";
     public static final String EXTRA_ID = "id";

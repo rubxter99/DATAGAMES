@@ -127,7 +127,6 @@ public class Profile extends AppCompatActivity {
                 Intent intent = new Intent(Profile.this, MainActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); // Cierra todas las actividades anteriores
                 startActivity(intent);
-                restaurar();
                 finish();
 
 
@@ -187,7 +186,6 @@ public class Profile extends AppCompatActivity {
                         mAuth.signOut();
                         Intent intent3 = new Intent(Profile.this, MainActivity.class);
                         startActivity(intent3);
-                        restaurar();
                         finish();
                         break;
                     case R.id.nav_shops:
@@ -223,16 +221,7 @@ public class Profile extends AppCompatActivity {
 
         }
     }
-    private void restaurar() { //Eliminar los filtros guardados junto con el sharedpreferences y marcarlo por defecto
-        SharedPreferences mPrefs = getSharedPreferences(HelperGlobal.KEYARRAYFAVSPREFERENCES, MODE_PRIVATE);
-        prefsEditor = mPrefs.edit();
-        prefsEditor.clear();
-        prefsEditor.commit();
-        SharedPreferences mPrefs2 = getSharedPreferences(HelperGlobal.KEYARRAYFILTROSPREFERENCESGAMES, MODE_PRIVATE);
-        prefsEditor2 = mPrefs.edit();
-        prefsEditor2.clear();
-        prefsEditor2.commit();
-    }
+
 
 
 }

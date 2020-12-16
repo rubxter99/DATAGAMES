@@ -51,22 +51,26 @@ public class FavGames extends AppCompatActivity {
     private NavigationView navigationView;
     private Toolbar toolbar;
     private SharedPreferences.Editor prefsEditor;
-
+    private  String id ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fav_games);
 
         mAuth = FirebaseAuth.getInstance();//Conexión a la  base de datos Firebase
-        Intent getIntent = getIntent();//Recogida de la llamada de otra actividad
-        ArrayList<DetailParse.details> gamesIntent = getIntent.getParcelableArrayListExtra(HelperGlobal.PARCELABLEKEYARRAY);//Recogida de los videojuegos añadidos a favoritos
-        mGamesFav = new ArrayList<>();
+        id = mAuth.getCurrentUser().getUid();
 
-        for (int i = 0; i < gamesIntent.size(); i++) { //Añadimos los datos del array anterior a uno nuevo para poder modificarlo
-            mGamesFav.add(gamesIntent.get(i));
+            Intent getIntent = getIntent();//Recogida de la llamada de otra actividad
+            ArrayList<DetailParse.details> gamesIntent = getIntent.getParcelableArrayListExtra(HelperGlobal.PARCELABLEKEYARRAY);//Recogida de los videojuegos añadidos a favoritos
+            mGamesFav = new ArrayList<>();
 
-        }
-        mostrarDatos(getIntent);
+            for (int i = 0; i < gamesIntent.size(); i++) { //Añadimos los datos del array anterior a uno nuevo para poder modificarlo
+                mGamesFav.add(gamesIntent.get(i));
+
+            }
+            mostrarDatos(getIntent);
+
+
 
 
     }
@@ -225,8 +229,6 @@ public class FavGames extends AppCompatActivity {
                         break;
                     case R.id.nav_logout:
                         mAuth.signOut();
-                        restaurar();
-                        restaurar2();
                         Intent intent3 = new Intent(FavGames.this, MainActivity.class);
                         intent3.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); // Cierra todas las actividades anteriores
                         startActivity(intent3);
@@ -265,17 +267,5 @@ public class FavGames extends AppCompatActivity {
 
         }
     }
-    private void restaurar() { //Eliminar los filtros guardados junto con el sharedpreferences y marcarlo por defecto
-        SharedPreferences mPrefs = getSharedPreferences(HelperGlobal.KEYARRAYFAVSPREFERENCES, MODE_PRIVATE);
-        prefsEditor = mPrefs.edit();
-        prefsEditor.clear();
-        prefsEditor.commit();
 
-    }
-    private void restaurar2() { //Eliminar los filtros guardados junto con el sharedpreferences y marcarlo por defecto
-        SharedPreferences mPrefs = getSharedPreferences(HelperGlobal.KEYARRAYFILTROSPREFERENCESGAMES, MODE_PRIVATE);
-        prefsEditor = mPrefs.edit();
-        prefsEditor.clear();
-        prefsEditor.commit();
-    }
 }
