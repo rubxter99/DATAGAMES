@@ -148,8 +148,7 @@ public class Menu extends Activity {
 
     }
 
-
-
+    
     @Override
     protected void onStart() {
         super.onStart();
