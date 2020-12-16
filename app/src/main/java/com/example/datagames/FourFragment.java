@@ -2,6 +2,7 @@ package com.example.datagames;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -29,6 +30,8 @@ import android.widget.Toast;
 import java.util.HashMap;
 import java.util.Map;
 
+import static android.content.Context.MODE_PRIVATE;
+
 
 public class FourFragment extends Fragment {
 
@@ -44,9 +47,10 @@ public class FourFragment extends Fragment {
     private EditText eMail;
     private EditText ePasswordReg;
     private TextView resetPassword;
-    FirebaseAuth mAuth;
-    DatabaseReference mDatabase;
-
+    private FirebaseAuth mAuth;
+    private DatabaseReference mDatabase;
+    private SharedPreferences.Editor prefsEditor;
+    private SharedPreferences.Editor prefsEditor2;
 
     public FourFragment() { //Constructor de la cuarta pantalla de Introducción/Fragmento
 
@@ -91,7 +95,6 @@ public class FourFragment extends Fragment {
             public void onClick(View v) {
 
 
-
                 final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(v.getContext());//Ventana del inicio de sesión
                 bottomSheetDialog.setContentView(R.layout.btn_sheet_login);
                 bottomSheetDialog.setCanceledOnTouchOutside(false);
@@ -119,6 +122,7 @@ public class FourFragment extends Fragment {
                         if (!email.isEmpty() && !password.isEmpty()) {
 
                             loginUser(vv);
+                            restaurar();
 
                         } else {
                             Toast.makeText(vv.getContext(), "You must complete the fields", Toast.LENGTH_SHORT).show();
@@ -229,16 +233,27 @@ public class FourFragment extends Fragment {
         });
     }
 
+    private void restaurar() { //Eliminar los filtros guardados junto con el sharedpreferences y marcarlo por defecto
+        SharedPreferences mPrefs = this.getActivity().getSharedPreferences(HelperGlobal.KEYARRAYFAVSPREFERENCES, MODE_PRIVATE);
+        prefsEditor = mPrefs.edit();
+        prefsEditor.clear();
+        prefsEditor.commit();
+        SharedPreferences mPrefs2 = this.getActivity().getSharedPreferences(HelperGlobal.KEYARRAYFILTROSPREFERENCESGAMES, MODE_PRIVATE);
+        prefsEditor2 = mPrefs.edit();
+        prefsEditor2.clear();
+        prefsEditor2.commit();
+    }
+
     @Override
     public void onStart() {
         super.onStart();
-
+        restaurar();
     }
 
     @Override
     public void onPause() {
         super.onPause();
-
+        restaurar();
 
     }
 }

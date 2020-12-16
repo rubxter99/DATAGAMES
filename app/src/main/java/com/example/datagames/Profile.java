@@ -65,6 +65,7 @@ public class Profile extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     private SharedPreferences.Editor prefsEditor;
+    private SharedPreferences.Editor prefsEditor2;
     private static final int CODINTFAVGAME = 1;
 
     @SuppressLint("WrongViewCast")
@@ -227,6 +228,10 @@ public class Profile extends AppCompatActivity {
         prefsEditor = mPrefs.edit();
         prefsEditor.clear();
         prefsEditor.commit();
+        SharedPreferences mPrefs2 = getSharedPreferences(HelperGlobal.KEYARRAYFILTROSPREFERENCESGAMES, MODE_PRIVATE);
+        prefsEditor2 = mPrefs.edit();
+        prefsEditor2.clear();
+        prefsEditor2.commit();
     }
 
 

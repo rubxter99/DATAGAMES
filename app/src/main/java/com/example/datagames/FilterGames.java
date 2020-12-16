@@ -136,6 +136,8 @@ public class FilterGames extends AppCompatActivity {
         prefsEditor = mPrefs.edit();
         prefsEditor.clear();
         prefsEditor.commit();
+
+
     }
 
     private void leerDatosSP() { //Cargar los datos de filtros del sharedpreferences

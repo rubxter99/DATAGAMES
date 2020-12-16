@@ -30,6 +30,8 @@ public class About extends AppCompatActivity {
     private DatabaseReference mDatabase;
     private static final int CODINTFAVGAME = 1;
     private SharedPreferences.Editor prefsEditor;
+    private SharedPreferences.Editor prefsEditor2;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -147,5 +149,9 @@ public class About extends AppCompatActivity {
         prefsEditor = mPrefs.edit();
         prefsEditor.clear();
         prefsEditor.commit();
+        SharedPreferences mPrefs2 = getSharedPreferences(HelperGlobal.KEYARRAYFILTROSPREFERENCESGAMES, MODE_PRIVATE);
+        prefsEditor2 = mPrefs.edit();
+        prefsEditor2.clear();
+        prefsEditor2.commit();
     }
 }

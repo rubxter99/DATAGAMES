@@ -62,7 +62,8 @@
         <activity android:name=".DetailActivity" />
         <activity android:name=".FilterGames" />
         <activity android:name=".FavGames" />
-        <activity android:name=".Splash">
+        <activity android:name=".Splash"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

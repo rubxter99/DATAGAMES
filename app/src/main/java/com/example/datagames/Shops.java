@@ -41,6 +41,7 @@ public class Shops extends AppCompatActivity {
     private Toolbar toolbar;
     private static final int CODINTFAVGAME = 1;
     private SharedPreferences.Editor prefsEditor;
+    private SharedPreferences.Editor prefsEditor2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -261,5 +262,9 @@ public class Shops extends AppCompatActivity {
         prefsEditor = mPrefs.edit();
         prefsEditor.clear();
         prefsEditor.commit();
+        SharedPreferences mPrefs2 = getSharedPreferences(HelperGlobal.KEYARRAYFILTROSPREFERENCESGAMES, MODE_PRIVATE);
+        prefsEditor2 = mPrefs.edit();
+        prefsEditor2.clear();
+        prefsEditor2.commit();
     }
 }
